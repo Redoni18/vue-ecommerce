@@ -1,11 +1,11 @@
 import {signin} from '../../../eCommerce-sdk/user'
-import router from '../../../router'
 
 export const loginUser = ({commit}, userData) => {
     return new Promise((resolve, reject) => {
         console.log(userData)
         signin(userData)
         .then((response) =>{
+            console.log(response)
             commit('storeUser', response)
             resolve(response)
         })

@@ -1,5 +1,5 @@
 <template>
-  <sidebar-menu :menu="user.authenticated ? menu : menu2" :relative="relative" />
+  <sidebar-menu :menu="menu" :relative="relative" />
 </template>
 
 <script>

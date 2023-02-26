@@ -1,40 +1,69 @@
 <template>
-  <div>
-    <div class="container register-card">
-      <h1>Register</h1>
-      <div class="row justify-content-center">
-        <div class="w-100">
-          <b-form @submit="registerUser">
-            <label for="text-name" class="label-text mt-3 w-100">Your Name:</label>
+    <div class="registration">
+      <div class="mt-4 register-card">
+        <h2>Register below</h2>
+        <b-form class="mt-4" @submit="registerUser">
+          <b-form-group
+            id="input-group-1"
+            label="Full Name:"
+            label-for="input-1"
+            label-cols-sm="4"
+            label-cols-lg="2"
+            content-cols-sm
+            content-cols-lg="10"
+            label-align="start"
+          >
             <b-form-input
-              id="text-name"
-              required
-              type="text"
-              placeholder="Fullname"
+              id="input-1"
               v-model="fullname"
-            />
-            <label for="text-email" class="label-text mt-3 w-100">Your Email:</label>
-            <b-form-input
-              id="text-email"
+              placeholder="Full Name"
               required
-              type="email"
-              placeholder="Email"
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="input-group-1"
+            label="Email:"
+            label-for="input-1"
+            label-cols-sm="4"
+            label-cols-lg="2"
+            content-cols="10"
+            label-align="start"
+          >
+            <b-form-input
+              id="input-1"
               v-model="email"
-            />
-            <label for="text-password" class="label-text mt-3 w-100">Your Password:</label>
-            <b-form-input
-              id="text-password"
-              type="password"
+              type="email"
+              placeholder="Enter your email"
               required
-              placeholder="Password"
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="input-group-1"
+            label="Password:"
+            label-for="input-1"
+            label-cols-sm="4"
+            label-cols-lg="2"
+            content-cols-sm
+            content-cols-lg="10"
+            label-align="start"
+          >
+            <b-form-input
+              id="input-1"
               v-model="password"
-            />
-            <b-button type="submit" variant="primary" class="mt-4">Register</b-button>
-          </b-form>
-        </div>
-      </div>
+              type="password"
+              placeholder="Enter your password"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <p class="redirect-link">Already have an account? <span @click="goToSignIn">Sign In!</span></p>
+
+
+          <b-button type="submit" variant="light" class="mt-2">Register</b-button>
+        </b-form>
     </div>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -57,23 +86,43 @@ export default {
       } catch(err) {
         console.log(err)
       }
+    },
+    goToSignIn() {
+      this.$router.push({ path: "/login"})
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-div {
+
+.registration {
+  height: 100vh;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  .register-card{
-    flex-direction: column;
+  background: #A7BFE8;  /* fallback for old browsers */
+  
+  .register-card {
+    padding: 3%;
     width: 50%;
-    padding: 3% 10%;
     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
     border-radius: 20px;
-    .label-text{
-      text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #bbd1f7;
+  }
+
+  .redirect-link{
+    text-align: center;
+    font-size: 12px;
+    color: #575656;
+
+    span {
+      color: #030303;
+      cursor: pointer;
     }
   }
 }

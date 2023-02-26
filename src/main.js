@@ -2,13 +2,15 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import BootstrapVue3 from 'bootstrap-vue-3'
-
+import BootstrapVueNext from 'bootstrap-vue-next'
 import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
+import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth'
+
+import Vue3Toasity from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 import VueSidebarMenu from 'vue-sidebar-menu'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
@@ -27,4 +29,4 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
 export { app, auth }
 
-createApp(App).use(store).use(router).use(BootstrapVue3).use(VueSidebarMenu).mount('#app')
+createApp(App).use(store).use(router).use(BootstrapVueNext).use(Vue3Toasity).use(VueSidebarMenu).mount('#app')

@@ -1,14 +1,20 @@
 <template>
-  <Sidebar />
+  <Sidebar v-if="user.authenticated"/>
   <router-view class="root"/>
 </template>
 
 <script>
 import Sidebar from './components/Sidebar.vue'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     Sidebar
-  }
+  },
+  computed: {
+    ...mapGetters({
+        user: 'getUser'
+    }),
+  },
 }
 </script>
 
