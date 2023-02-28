@@ -17,14 +17,12 @@
             <b-form-group
               id="input-group-1"
               label="Email:"
-              label-for="input-1"
               label-cols-sm="4"
               label-cols-lg="2"
               content-cols="10"
               label-align="start"
             >
               <b-form-input
-                id="input-1"
                 v-model="email"
                 type="email"
                 placeholder="Enter your email"
@@ -35,7 +33,6 @@
             <b-form-group
               id="input-group-1"
               label="Password:"
-              label-for="input-1"
               label-cols-sm="4"
               label-cols-lg="2"
               content-cols-sm
@@ -43,7 +40,6 @@
               label-align="start"
             >
               <b-form-input
-                id="input-1"
                 v-model="password"
                 type="password"
                 placeholder="Enter your password"

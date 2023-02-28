@@ -1,4 +1,4 @@
-import {signin} from '../../../eCommerce-sdk/user'
+import {signin, userSignOut} from '../../../eCommerce-sdk/user'
 
 export const loginUser = ({commit}, userData) => {
     return new Promise((resolve, reject) => {
@@ -7,6 +7,18 @@ export const loginUser = ({commit}, userData) => {
         .then((response) =>{
             console.log(response)
             commit('storeUser', response)
+            resolve(response)
+        })
+        .catch(error => { reject(error) })
+    })
+};
+
+export const logout = ({commit}) => {
+    return new Promise((resolve, reject) => {
+        userSignOut()
+        .then((response) =>{
+            console.log(response)
+            commit('removeUser')
             resolve(response)
         })
         .catch(error => { reject(error) })

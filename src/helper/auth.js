@@ -16,3 +16,9 @@ export function getUser() {
         return getLocalStorage();
     }
 }
+
+export function removeUser() {
+    if(userExists) {
+        return localStorage.removeItem('user')
+    }
+}

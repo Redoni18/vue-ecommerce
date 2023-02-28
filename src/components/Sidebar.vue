@@ -1,5 +1,5 @@
 <template>
-  <sidebar-menu :menu="menu" :relative="relative" />
+  <sidebar-menu :menu="menu" :relative="relative" @item-click="onItemClick" />
 </template>
 
 <script>
@@ -27,6 +27,11 @@ import { mapGetters } from 'vuex'
             //     title: 'Sub Link'
             //   }
             // ]
+          },
+          {
+            href: '/login',
+            title: 'Logout',
+            icon: 'fa-solid fa-right-from-bracket'
           },
         ],
         menu2: [
@@ -56,6 +61,23 @@ import { mapGetters } from 'vuex'
           user: 'getUser'
       }),
     },
+    methods: {
+      onItemClick(e,item) {
+        if(item.title === "Logout") {
+          this.signOut()
+        }
+
+      },
+
+      async signOut(){
+        try {
+          await this.$store.dispatch('logout')
+          this.$router.push({ path: "/login" })
+        } catch (err) {
+          console.log(err)
+        }
+      }
+    }
   }
 </script>
 

@@ -7,6 +7,13 @@ export const storeUser = (state, userData) => {
     auth.storeUser(JSON.stringify(userData));
 }
 
+export const removeUser = (state) => {
+    state.user.authenticated = false;
+    state.user.data = null;
+
+    auth.removeUser()
+}
+
 // export const storeId = (state, id) => {
 //     state.user.user_id = id    
 // }
