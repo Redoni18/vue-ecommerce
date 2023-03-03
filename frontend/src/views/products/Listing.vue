@@ -41,13 +41,14 @@
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                         </template>
                         <b-dropdown-item @click="editProduct(props.row)">Edit</b-dropdown-item>
-                        <b-dropdown-item @click="deleteProduct(props.row._id)">Delete</b-dropdown-item>
+                        <b-dropdown-item @click="toggleDeleteModal(props.row)">Delete</b-dropdown-item>
                     </b-dropdown>
                 </span>
             </template>
         </vue-good-table>
         
         <EditModal v-model="showModal" :showModal="showModal" :product="product" />
+        <DeleteModal v-model="showDeleteModal" :itemName="product.productName" :itemId="product._id" @deleteItem="deleteProduct"/>
     </div>
   
 </template>
@@ -55,14 +56,17 @@
 <script>
 import EditModal from './EditProduct.vue'
 import { removeProduct } from '@/eCommerce-sdk/products.js'
+import DeleteModal from '../../components/DeleteModal.vue'
 export default {
     components: {
-        EditModal
+        EditModal,
+        DeleteModal
     },
     data() {
         return {
             showModal: false,
-            product: null,
+            showDeleteModal: false,
+            product: {},
             columns: [
                 {
                     label: 'Image',
@@ -109,7 +113,14 @@ export default {
             this.product = data
         },
 
+        toggleDeleteModal(data) {
+            console.log(data)
+            this.showDeleteModal = true;
+            this.product = data;
+        },
+
         async deleteProduct(productId) {
+            console.log(productId)
             try{
                 await removeProduct(productId)
             } catch (err) {
