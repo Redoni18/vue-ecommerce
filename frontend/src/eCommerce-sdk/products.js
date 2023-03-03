@@ -1,0 +1,26 @@
+import axios from 'axios'
+const API_URL = "http://localhost:8000";
+
+console.log(API_URL)
+
+export function getProducts(){
+    return axios.get(`${API_URL}/api/products`)
+}
+
+export function insertProduct(product) {
+    console.log(product)
+    return axios.post(`${API_URL}/api/uploadProduct`, product)
+}
+
+export function editProduct(product) {
+    console.log(product)
+    return axios.put(`${API_URL}/api/editProduct/${product._id}`, product)
+}
+
+export function removeProduct(productId) {
+    return axios.delete(`${API_URL}/api/products/delete/${productId}`)
+}
+
+export function getProduct(productId) {
+    return axios.get(`${API_URL}/api/product/${productId}`)
+}
