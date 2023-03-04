@@ -30,6 +30,22 @@ import { mapGetters } from 'vuex'
                 href: '/products/insert',
                 title: 'Insert Product',
                 icon: "fa-solid fa-plus"
+              },
+              {
+                title: 'Categories',
+                icon: 'fa-regular fa-folder',
+                child: [
+                {
+                href: '/categories',
+                title: 'Categories',
+                icon: "fa-solid fa-list-ul"
+              },
+              {
+                href: '/categories/insert',
+                title: 'Insert Category',
+                icon: "fa-solid fa-plus"
+              }
+                ]
               }
             ]
           },
