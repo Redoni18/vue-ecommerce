@@ -20,6 +20,9 @@ import VueGoodTablePlugin from 'vue-good-table-next';
 // import the styles
 import 'vue-good-table-next/dist/vue-good-table-next.css'
 
+import 'vue-select/dist/vue-select.css';
+import vSelect from 'vue-select'
+
 var firebaseConfig = {
     apiKey: "AIzaSyDjhzE9aaeDQw46_iWSLHLOek6TzP6QlsI",
     authDomain: "ecommerce-vuejs-5d4b6.firebaseapp.com",
@@ -34,4 +37,4 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
 export { app, auth }
 
-createApp(App).use(store).use(router).use(BootstrapVueNext).use(Vue3Toasity).use(VueGoodTablePlugin).use(VueSidebarMenu).mount('#app')
+createApp(App).use(store).use(router).use(BootstrapVueNext).use(Vue3Toasity).use(VueGoodTablePlugin).use(VueSidebarMenu).component('v-select', vSelect).mount('#app')

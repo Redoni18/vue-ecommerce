@@ -31,11 +31,13 @@ import { mapGetters } from 'vuex'
                 title: 'Insert Product',
                 icon: "fa-solid fa-plus"
               },
+            ]
+          },
+          {
+            title: 'Categories',
+            icon: 'fa-solid fa-layer-group',
+            child: [
               {
-                title: 'Categories',
-                icon: 'fa-regular fa-folder',
-                child: [
-                {
                 href: '/categories',
                 title: 'Categories',
                 icon: "fa-solid fa-list-ul"
@@ -44,8 +46,6 @@ import { mapGetters } from 'vuex'
                 href: '/categories/insert',
                 title: 'Insert Category',
                 icon: "fa-solid fa-plus"
-              }
-                ]
               }
             ]
           },

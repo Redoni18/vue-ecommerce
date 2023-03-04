@@ -34,11 +34,11 @@ const productSchema = new Schema({
     insertDate: {
         type: String,
         required: true
-    }
-    // productCategory: [{ 
-    //     type: mongoose.Schema.Types.Mixed, 
-    //     ref: 'categories' 
-    // }]
+    },
+    productCategory: [{ 
+        type: mongoose.Schema.Types.Mixed, 
+        ref: 'categories' 
+    }]
 });
 
 
