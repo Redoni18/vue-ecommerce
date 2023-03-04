@@ -79,9 +79,8 @@ export default {
     },
     methods: {
         async onSubmit() {
-            const timeElapsed = Date.now()
-            const today = new Date(timeElapsed)
-            this.product.insertDate = today.toUTCString();
+            const today = new Date()
+            this.product.insertDate = today.toLocaleString();
             await insertProduct(this.product)
             this.resetForm()
         },
