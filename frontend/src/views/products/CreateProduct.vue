@@ -71,22 +71,27 @@ export default {
                 productDescription: '',
                 stock: null,
                 imageUrl: '',
-                productPrice: null
+                productPrice: null,
+                insertedBy: this.$store.state.authenticate.user.data.user.displayName,
+                insertDate: null,
             }
         }
     },
     methods: {
         async onSubmit() {
+            const timeElapsed = Date.now()
+            const today = new Date(timeElapsed)
+            this.product.insertDate = today.toUTCString();
             await insertProduct(this.product)
             this.resetForm()
         },
 
         resetForm() {
-            this.product.name = ""
-            this.product.description = ""
+            this.product.productName = ""
+            this.product.productDescription = ""
             this.product.imageUrl = ""
             this.product.stock = ""
-            this.product.price = ""
+            this.product.productPrice = ""
         }
     }
 }
