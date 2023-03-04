@@ -37,6 +37,22 @@ const routes = [
     }
   },
   {
+    path: '/categories',
+    name: 'categories',
+    component: () => import(/* webpackChunkName: "about" */ '../views/categories/Listing.vue'),
+    beforeEnter: (to, from, next) => {
+      beforeEnter.authenticate(to, from, next)
+    }
+  },
+  {
+    path: '/categories/insert',
+    name: 'categoryInsert',
+    component: () => import(/* webpackChunkName: "about" */ '../views/categories/CreateCategory.vue'),
+    beforeEnter: (to, from, next) => {
+      beforeEnter.authenticate(to, from, next)
+    }
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting
