@@ -6,10 +6,10 @@ exports.upload_user = function (req, res) {
 
     console.log(req.body)
 
-    let newUser = new Users({
+    let newUser = new User({
         userFullName: req.body.userFullName,
         userEmail: req.body.userEmail,
-        userPassword: req.body.userPassword,
+        userIsAdmin: req.body.email.includes('@eCommerce') ? true : false,
     });
 
     newUser.save();
