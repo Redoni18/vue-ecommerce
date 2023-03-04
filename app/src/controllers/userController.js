@@ -2,14 +2,14 @@ const User = require('../models/Users');
 var ObjectID = require('mongoose').Types.ObjectId
 
 
-exports.upload_user = function (req, res) {
+exports.insert_user = function (req, res) {
 
     console.log(req.body)
 
     let newUser = new User({
-        userFullName: req.body.userFullName,
-        userEmail: req.body.userEmail,
-        userIsAdmin: req.body.email.includes('@eCommerce') ? true : false,
+        fullName: req.body.fullName,
+        email: req.body.email,
+        isAdmin: req.body.email.includes('@eCommerce') ? true : false,
     });
 
     newUser.save();

@@ -3,15 +3,15 @@ const Schema = mongoose.Schema;
 
 
 const userSchema = new Schema({
-    userFullName: {
+    fullName: {
         type: String,
         required: true
     },
-    userEmail: {
+    email: {
         type: String,
         required: true
     },
-    userIsAdmin: {
+    isAdmin: {
         type: boolean,
         required: true
     },
