@@ -49,6 +49,24 @@ import { mapGetters } from 'vuex'
               }
             ]
           },
+
+          
+          {
+            title: 'Upcomings',
+            icon: 'fa-regular fa-clock',
+            child: [
+              {
+                href: '/upcomings',
+                title: 'Upcomings',
+                icon: "fa-solid fa-list-ul"
+              },
+              {
+                href: '/upcomings/insert',
+                title: 'Insert Upcoming',
+                icon: "fa-solid fa-plus"
+              },
+            ]
+          },
           {
             href: '/about',
             title: 'About Us',
