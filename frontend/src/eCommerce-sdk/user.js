@@ -1,3 +1,6 @@
+import axios from 'axios'
+const API_URL = "http://localhost:8000";
+
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 export async function signin(userData) {
@@ -16,4 +19,9 @@ export async function userSignOut() {
     } catch(err) {
         console.log(err)
     }
+}
+
+export function insertUser(user) {
+    console.log(user)
+    return axios.post(`${API_URL}/api/insertUser`, user)
 }

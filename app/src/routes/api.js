@@ -6,9 +6,9 @@ const router = express.Router();
  * Controllers
  */
 const productController = require('../controllers/productController');
+const userController = require('../controllers/userController');
 const categoryController = require('../controllers/categoryController');
 const upcomingController = require('../controllers/upcomingController');
-
 
 /**
  * Routes
@@ -34,6 +34,11 @@ router.get('/api/upcoming/:id', upcomingController.get_upcoming);
 router.post('/api/uploadUpcoming', upcomingController.upload_upcoming);
 router.put('/api/editUpcoming/:id', upcomingController.edit_upcoming);
 router.delete('/api/upcomings/delete/:id', upcomingController.delete_upcoming);
+
+
+
+router.post('/api/insertUser', userController.insert_user);
+router.get('/api/user/:id', userController.get_user);
 
 
 module.exports = router;
