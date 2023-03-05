@@ -9,12 +9,14 @@ const productController = require('../controllers/productController');
 const userController = require('../controllers/userController');
 const categoryController = require('../controllers/categoryController');
 const upcomingController = require('../controllers/upcomingController');
+const brandsController = require('../controllers/brandsController');
 
 /**
  * Routes
  */
 
 
+//products
 router.get('/api/products', productController.get_products);
 router.get('/api/product/:id', productController.get_product);
 router.post('/api/uploadProduct', productController.upload_product);
@@ -34,6 +36,13 @@ router.get('/api/upcoming/:id', upcomingController.get_upcoming);
 router.post('/api/uploadUpcoming', upcomingController.upload_upcoming);
 router.put('/api/editUpcoming/:id', upcomingController.edit_upcoming);
 router.delete('/api/upcomings/delete/:id', upcomingController.delete_upcoming);
+
+//Brands
+router.get('/api/brands', brandsController.get_brands);
+router.get('/api/brands/:id', brandsController.get_brand);
+router.post('/api/uploadBrand', brandsController.upload_brand);
+router.put('/api/editBrand/:id', brandsController.edit_brand);
+router.delete('/api/brands/delete/:id', brandsController.delete_brand);
 
 
 
