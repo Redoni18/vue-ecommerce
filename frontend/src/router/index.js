@@ -5,76 +5,122 @@ import HomeView from '../views/HomeView.vue'
 
 import * as beforeEnter from './beforeEnter'
 
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView,
-    beforeEnter: (to, from, next) => {
-      beforeEnter.authenticate(to, from, next)
+const routes = [{
+        path: '/',
+        name: 'home',
+        component: HomeView,
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
+    {
+        path: '/products',
+        name: 'products',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/products/Listing.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
+    {
+        path: '/products/insert',
+        name: 'productsInsert',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/products/CreateProduct.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
+    {
+        path: '/categories',
+        name: 'categories',
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/categories/Listing.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
+    {
+        path: '/categories/insert',
+        name: 'categoryInsert',
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/categories/CreateCategory.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
+    {
+        path: '/upcomings',
+        name: 'upcomings',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/upcomings/Listing.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
+    {
+        path: '/upcomings/insert',
+        name: 'upcomingsInsert',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/upcomings/CreateUpcoming.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
+    {
+        path: '/about',
+        name: 'about',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/AboutView.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.isAuthenticated(to, from, next)
+        }
+    },
+    {
+        path: '/register',
+        name: 'register',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "register" */ '../views/auth/Register.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.isAuthenticated(to, from, next)
+        }
+    },
+    {
+        path: '/login',
+        name: 'login',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "login" */ '../views/auth/Login.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.isAuthenticated(to, from, next)
+        }
     }
-  },
-  {
-    path: '/products',
-    name: 'products',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/products/Listing.vue'),
-    beforeEnter: (to, from, next) => {
-      beforeEnter.authenticate(to, from, next)
-    }
-  },
-  {
-    path: '/products/insert',
-    name: 'productsInsert',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/products/CreateProduct.vue'),
-    beforeEnter: (to, from, next) => {
-      beforeEnter.authenticate(to, from, next)
-    }
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
-    beforeEnter: (to, from, next) => {
-      beforeEnter.isAuthenticated(to, from, next)
-    }
-  },
-  {
-    path: '/register',
-    name: 'register',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "register" */ '../views/auth/Register.vue'),
-    beforeEnter: (to, from, next) => {
-      beforeEnter.isAuthenticated(to, from, next)
-    }
-  },
-  {
-    path: '/login',
-    name: 'login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "login" */ '../views/auth/Login.vue'),
-    beforeEnter: (to, from, next) => {
-      beforeEnter.isAuthenticated(to, from, next)
-    }
-  }
 ]
 
 
 const router = createRouter({
-  history: createWebHashHistory(),
-  routes
+    history: createWebHashHistory(),
+    routes
 })
 
 // router.beforeEach((to, from, next) => {

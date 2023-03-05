@@ -30,7 +30,41 @@ import { mapGetters } from 'vuex'
                 href: '/products/insert',
                 title: 'Insert Product',
                 icon: "fa-solid fa-plus"
+              },
+            ]
+          },
+          {
+            title: 'Categories',
+            icon: 'fa-solid fa-layer-group',
+            child: [
+              {
+                href: '/categories',
+                title: 'Categories',
+                icon: "fa-solid fa-list-ul"
+              },
+              {
+                href: '/categories/insert',
+                title: 'Insert Category',
+                icon: "fa-solid fa-plus"
               }
+            ]
+          },
+
+          
+          {
+            title: 'Upcomings',
+            icon: 'fa-regular fa-clock',
+            child: [
+              {
+                href: '/upcomings',
+                title: 'Upcomings',
+                icon: "fa-solid fa-list-ul"
+              },
+              {
+                href: '/upcomings/insert',
+                title: 'Insert Upcoming',
+                icon: "fa-solid fa-plus"
+              },
             ]
           },
           {

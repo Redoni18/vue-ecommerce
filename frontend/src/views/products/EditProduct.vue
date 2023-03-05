@@ -1,7 +1,13 @@
 <template>
   <b-modal @ok="onSubmit" size="lg">
         <template v-slot:header>
-            <h4>Edit Product</h4>
+            <div class="d-flex justify-content-between w-100 text-secondary">
+                <h4>Edit Product</h4>
+                <div class="d-flex flex-column">
+                    <small>Created by: {{product.insertedBy}}</small>
+                    <small>Date created: {{product.insertDate}}</small>
+                </div>
+            </div>
         </template>
         <div v-if="showModal" class="insert-form">
             <b-form>
@@ -52,6 +58,12 @@
                         required
                     ></b-form-input>
                 </b-form-group>
+
+                <b-form-group
+                    label="Product Category"
+                >
+                    <v-select multiple label="categoryName" :options="allCategories" v-model="product.productCategory" placeholder="Product Category"></v-select>
+                </b-form-group>
             </b-form>
         </div>
     </b-modal>
@@ -68,6 +80,23 @@ export default {
         product: {
             type: Object,
             default: null,
+        }
+    },
+    data() {
+        return {
+            categories: []
+        }
+    },
+    async mounted() {
+        if(this.showModal) {
+            console.log(this.product)
+            const response = await this.$store.dispatch('fetchCategories')
+            this.categories = response.data
+        }
+    },
+    computed: {
+        allCategories() {
+            return this.categories
         }
     },
     methods: {

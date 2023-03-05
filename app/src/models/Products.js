@@ -27,10 +27,18 @@ const productSchema = new Schema({
         type: Number,
         required: true
     },
-    // productCategory: [{ 
-    //     type: mongoose.Schema.Types.Mixed, 
-    //     ref: 'categories' 
-    // }]
+    insertedBy: {
+        type: String,
+        required: true
+    },
+    insertDate: {
+        type: String,
+        required: true
+    },
+    productCategory: [{ 
+        type: mongoose.Schema.Types.Mixed, 
+        ref: 'categories' 
+    }]
 });
 
 

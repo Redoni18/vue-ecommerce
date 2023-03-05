@@ -50,6 +50,12 @@
                         required
                     ></b-form-input>
                 </b-form-group>
+
+                <b-form-group
+                    label="Product Category"
+                >
+                    <v-select multiple label="categoryName" :options="allCategories" v-model="product.productCategory" placeholder="Product Category"></v-select>
+                </b-form-group>
                 
                 <div class="d-flex gap-2 justify-content-center">
                     <b-button type="submit" variant="primary">Upload</b-button>
@@ -71,22 +77,39 @@ export default {
                 productDescription: '',
                 stock: null,
                 imageUrl: '',
-                productPrice: null
-            }
+                productPrice: null,
+                insertedBy: this.$store.state.authenticate.user.data.user.displayName,
+                insertDate: null,
+                productCategory: [],
+            },
+            categories: []
+        }
+    },
+    async mounted() {
+        const response = await this.$store.dispatch('fetchCategories')
+        this.categories = response.data
+        console.log(this.categories)
+    },
+    computed: {
+        allCategories() {
+            return this.categories
         }
     },
     methods: {
         async onSubmit() {
+            const today = new Date()
+            this.product.insertDate = today.toLocaleString();
             await insertProduct(this.product)
             this.resetForm()
         },
 
         resetForm() {
-            this.product.name = ""
-            this.product.description = ""
+            this.product.productName = ""
+            this.product.productDescription = ""
             this.product.imageUrl = ""
             this.product.stock = ""
-            this.product.price = ""
+            this.product.productPrice = ""
+            this.product.productCategory = []
         }
     }
 }
