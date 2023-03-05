@@ -27,6 +27,7 @@
             :line-numbers="true"
         >
             <template v-slot:table-row="props">
+                
                 <span v-if="props.column.field == 'imageUrl'" class="image-cell">
                     <img :src="props.row.imageUrl" alt="product-image" class="product-image">
                 </span>
@@ -79,6 +80,11 @@ export default {
                 {
                     label: 'Brand',
                     field: 'productBrand',
+                },
+                {
+                    label: '',
+                    field: 'moreOptions',
+                     width: '20px',
                 },
             ],
         }
