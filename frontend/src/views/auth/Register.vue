@@ -62,6 +62,7 @@
 
 <script>
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { insertUser } from '@/eCommerce-sdk/user.js'
 export default {
   data() {
     return {
@@ -79,7 +80,12 @@ export default {
         this.$router.push({ path: "/login" })
       } catch(err) {
         console.log(err)
+      } finally {
+        this.registerUserWithRole({fullname: this.fullname, email: this.email})
       }
+    },
+    async registerUserWithRole(user) {
+      await insertUser(user)
     },
     goToSignIn() {
       this.$router.push({ path: "/login"})

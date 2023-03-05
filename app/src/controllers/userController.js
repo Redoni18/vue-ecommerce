@@ -7,7 +7,7 @@ exports.insert_user = function (req, res) {
     console.log(req.body)
 
     let newUser = new User({
-        fullname: req.body.fullname,
+        fullName: req.body.fullname,
         email: req.body.email,
         isAdmin: req.body.email.includes('@eCommerce') ? true : false,
     });
