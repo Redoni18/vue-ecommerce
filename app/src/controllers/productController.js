@@ -24,7 +24,7 @@ exports.upload_product = function (req, res) {
         productPrice: req.body.productPrice,
         insertedBy: req.body.insertedBy,
         insertDate: req.body.insertDate,
-        productCategory: req.body.selectedCategories
+        productCategory: req.body.productCategory
     });
 
     newProduct.save();
@@ -47,7 +47,7 @@ exports.edit_product = function (req, res) {
         image: req.body.image,
         imageUrl: req.body.imageUrl,
         productPrice: req.body.productPrice,
-        productCategory: req.body.selectedCategories
+        productCategory: req.body.productCategory
     }
 
     Products.findByIdAndUpdate(req.body._id, {$set: updatedProduct}, {new: true}, (err, doc) => {

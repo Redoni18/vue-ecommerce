@@ -54,7 +54,7 @@
                 <b-form-group
                     label="Product Category"
                 >
-                    <v-select multiple label="categoryName" :options="allCategories" v-model="product.selectedCategories" placeholder="Product Category"></v-select>
+                    <v-select multiple label="categoryName" :options="allCategories" v-model="product.productCategory" placeholder="Product Category"></v-select>
                 </b-form-group>
                 
                 <div class="d-flex gap-2 justify-content-center">
@@ -80,7 +80,7 @@ export default {
                 productPrice: null,
                 insertedBy: this.$store.state.authenticate.user.data.user.displayName,
                 insertDate: null,
-                selectedCategories: [],
+                productCategory: [],
             },
             categories: []
         }
@@ -109,7 +109,7 @@ export default {
             this.product.imageUrl = ""
             this.product.stock = ""
             this.product.productPrice = ""
-            this.product.selectedCategories = []
+            this.product.productCategory = []
         }
     }
 }
