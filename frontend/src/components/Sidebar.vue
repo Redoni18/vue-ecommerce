@@ -1,12 +1,14 @@
 <template>
-  <sidebar-menu :menu="menu" :relative="relative" @item-click="onItemClick" />
+  <sidebar-menu v-if="currentUser" :menu="currentUser.isAdmin ? menu : deliveryMenu" :relative="relative" @item-click="onItemClick" />
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { getUser } from '@/eCommerce-sdk/user.js'
   export default {
     data() {
       return {
+        currentUser: null,
         menu: [
           {
             header: 'eCommerce',
@@ -48,9 +50,7 @@ import { mapGetters } from 'vuex'
                 icon: "fa-solid fa-plus"
               }
             ]
-          },
-
-          
+          },   
           {
             title: 'Upcomings',
             icon: 'fa-regular fa-clock',
@@ -100,6 +100,27 @@ import { mapGetters } from 'vuex'
             icon: 'fa-solid fa-right-to-bracket'
           }
         ],
+        deliveryMenu: [
+          {
+            header: 'eCommerce',
+            hiddenOnCollapse: true
+          },
+          {
+            href: '/',
+            title: 'Home',
+            icon: 'fa fa-home'
+          },
+          {
+            href: '/orders',
+            title: 'Orders',
+            icon: 'fa-solid fa-bag-shopping'
+          },
+          {
+            href: '/login',
+            title: 'Logout',
+            icon: 'fa-solid fa-right-from-bracket'
+          },
+        ],
         relative: {
           type: Boolean,
           default: true
@@ -110,6 +131,12 @@ import { mapGetters } from 'vuex'
       ...mapGetters({
           user: 'getUser'
       }),
+    },
+    async mounted(){
+        const response = await getUser(this.user.data.user.uid)
+        console.log(response)
+        this.currentUser = response.data
+
     },
     methods: {
       onItemClick(e,item) {
