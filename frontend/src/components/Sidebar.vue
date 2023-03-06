@@ -52,17 +52,33 @@ import { getUser } from '@/eCommerce-sdk/user.js'
             ]
           },   
           {
-            title: 'Upcomings',
+            title: 'Coming Soon',
             icon: 'fa-regular fa-clock',
             child: [
               {
                 href: '/upcomings',
-                title: 'Upcomings',
+                title: 'Upcoming Products',
                 icon: "fa-solid fa-list-ul"
               },
               {
                 href: '/upcomings/insert',
-                title: 'Insert Upcoming',
+                title: 'New Upcoming Product',
+                icon: "fa-solid fa-plus"
+              },
+            ]
+          },
+          {
+            title: 'Product Brand',
+            icon: 'fa-regular fa-copyright',
+            child: [
+              {
+                href: '/brands',
+                title: 'Brands',
+                icon: "fa-solid fa-list-ul"
+              },
+              {
+                href: '/brands/insert',
+                title: 'New Brand',
                 icon: "fa-solid fa-plus"
               },
             ]

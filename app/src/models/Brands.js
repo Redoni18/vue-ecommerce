@@ -2,16 +2,8 @@ const mongoose = require('../database/db');
 const Schema = mongoose.Schema;
 
 
-const upcomingSchema = new Schema({
-    productName: {
-        type: String,
-        required: true
-    },
-    productBrand: {
-        type: String,
-        required: true
-    },
-    imageUrl: {
+const brandsSchema = new Schema({
+    brandName: {
         type: String,
         required: true
     },
@@ -23,8 +15,7 @@ const upcomingSchema = new Schema({
         type: String,
         required: true
     }
-
 });
 
 
-module.exports = mongoose.model('upcomings', upcomingSchema);
+module.exports = mongoose.model('brands', brandsSchema);

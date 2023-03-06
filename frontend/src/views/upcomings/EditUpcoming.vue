@@ -2,6 +2,10 @@
     <b-modal @ok="onSubmit" size="lg">
           <template v-slot:header>
               <h4>Edit Upcoming</h4>
+              <div class="d-flex flex-column">
+                    <small>Created by: {{upcoming.insertedBy}}</small>
+                    <small>Date created: {{upcoming.insertDate}}</small>
+                </div>
           </template>
           <div v-if="showModal" class="insert-form">
               <b-form>

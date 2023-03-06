@@ -1,8 +1,8 @@
-const Categories = require('../models/Categories');
+const Brands = require('../models/Brands.js');
 var ObjectID = require('mongoose').Types.ObjectId
 
-exports.get_categories = function (req, res) {
-    Categories.find((err, docs) => {
+exports.get_brands = function (req, res) {
+    Brands.find((err, docs) => {
         if(!err){
             res.send(docs)
         }else{
@@ -11,48 +11,48 @@ exports.get_categories = function (req, res) {
     })
 };
 
-exports.upload_category = function (req, res) {
+exports.upload_brand = function (req, res) {
 
     console.log(req.body)
 
-    let newCategory = new Categories({
-        categoryName: req.body.categoryName,
-        categoryBrand: req.body.categoryBrand
+    let newBrand = new Brands({
+        brandName: req.body.brandName,
+        insertedBy: req.body.insertedBy,
+        insertDate: req.body.insertDate
     });
 
-    newCategory.save();
+    newBrand.save();
     
     res.json({
-        data: newCategory
+        data: newBrand
     });
 }
 
-exports.edit_category = function (req, res) {
+exports.edit_brand = function (req, res) {
 
     if(!ObjectID.isValid(req.body._id)){
         return res.status(400).send(`No record with given id:   ${req.body._id}`)
     }
 
-    let updatedCategory = {
-        categoryName: req.body.categoryName,
-        categoryBrand: req.body.categoryBrand
+    let updatedBrand = {
+        brandName: req.body.brandName
     }
 
-    Categories.findByIdAndUpdate(req.body._id, {$set: updatedCategory}, {new: true}, (err, doc) => {
+    Brands.findByIdAndUpdate(req.body._id, {$set: updatedBrand}, {new: true}, (err, doc) => {
         if(!err){
             res.send(doc)
         }else{
-            console.log('Error while updating category')
+            console.log('Error while updating Brand')
         }
     })
 }
 
-exports.delete_category = function (req, res) {
+exports.delete_brand = function (req, res) {
     if(!ObjectID.isValid(req.params.id)){
         return res.status(400).send(`No record with given id: ${req.params.id}`)
     }
 
-    Categories.findByIdAndRemove(req.params.id, (err, docs) => {
+    Brands.findByIdAndRemove(req.params.id, (err, docs) => {
         if(!err){
             res.send(docs)
         }else{
@@ -61,13 +61,13 @@ exports.delete_category = function (req, res) {
     })
 }
 
-exports.get_category = function (req, res) {
+exports.get_brand = function (req, res) {
     let id = req.params.id;
 
     try {
-        Categories.findById({ _id: id }).exec(function (err, category) {
-            if (category) {
-                res.send(category);
+        Brands.findById({ _id: id }).exec(function (err, brand) {
+            if (brand) {
+                res.send(brand);
             } 
         });
       } catch (error) {

@@ -35,10 +35,10 @@ const productSchema = new Schema({
         type: String,
         required: true
     },
-    productCategory: [{ 
+    productCategory: { 
         type: mongoose.Schema.Types.Mixed, 
         ref: 'categories' 
-    }]
+    }
 });
 
 
