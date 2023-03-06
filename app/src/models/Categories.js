@@ -7,6 +7,14 @@ const categorySchema = new Schema({
         type: String,
         required: true
     },
+    insertedBy: {
+        type: String,
+        required: true
+    },
+    insertDate: {
+        type: String,
+        required: true
+    },
     categoryBrand: [{ 
         type: mongoose.Schema.Types.Mixed, 
         ref: 'brands' 

@@ -38,6 +38,8 @@ export default {
         return {
             category: {
                 categoryName: '',
+                insertedBy: this.$store.state.authenticate.user.data.user.displayName,
+                insertDate: null,
                 categoryBrand: []
             },
             brands: []
@@ -55,6 +57,8 @@ export default {
     },
     methods: {
         async onSubmit() {
+            const today = new Date()
+            this.category.insertDate = today.toLocaleString();
             await insertCategory(this.category)
             this.resetForm()
         },

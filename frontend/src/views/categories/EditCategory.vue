@@ -1,7 +1,13 @@
 <template>
     <b-modal @ok="onSubmit" size="lg">
         <template v-slot:header>
-            <h4>Edit Category</h4>
+            <div class="d-flex justify-content-between w-100 text-secondary">
+                <h4>Edit Category</h4>
+                <div class="d-flex flex-column">
+                    <small>Created by: {{category.insertedBy}}</small>
+                    <small>Date created: {{category.insertDate}}</small>
+                </div>
+            </div>
         </template>
         <div v-if="showModal" class="insert-form">
             <b-form>
