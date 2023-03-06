@@ -100,17 +100,6 @@ import { getUser } from '@/eCommerce-sdk/user.js'
             ]
           },
           {
-            href: '/about',
-            title: 'About Us',
-            icon: 'fa fa-info'
-            // child: [
-            //   {
-            //     href: '/register',
-            //     title: 'Sub Link'
-            //   }
-            // ]
-          },
-          {
             href: '/login',
             title: 'Logout',
             icon: 'fa-solid fa-right-from-bracket'
