@@ -22,6 +22,10 @@ const orderSchema = new Schema({
     userAddress: {
         type: String,
         required: true
+    },
+    userPaymethod: {
+        type: mongoose.Schema.Types.Mixed,
+        ref: 'paymethod'
     }
 });
 

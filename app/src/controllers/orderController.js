@@ -20,7 +20,8 @@ exports.upload_order = function(req, res) {
         userSurname: req.body.userSurname,
         userEmail: req.body.userEmail,
         phoneNumber: req.body.phoneNumber,
-        userAddress: req.body.userAddress
+        userAddress: req.body.userAddress,
+        userPaymethod: req.body.userPaymethod
     });
 
     newOrder.save();
@@ -42,6 +43,7 @@ exports.edit_order = function(req, res) {
         userEmail: req.body.userEmail,
         phoneNumber: req.body.phoneNumber,
         userAddress: req.body.userAddress,
+        userPaymethod: req.body.userPaymethod
     }
 
     Orders.findByIdAndUpdate(req.body._id, { $set: updatedOrder }, { new: true }, (err, doc) => {
