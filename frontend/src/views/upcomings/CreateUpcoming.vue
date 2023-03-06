@@ -48,6 +48,8 @@ export default {
                 productName: '',
                 productBrand: '',
                 imageUrl: '',
+                insertedBy: this.$store.state.authenticate.user.data.user.displayName,
+                insertDate: null,
             },
         
         }
@@ -55,8 +57,8 @@ export default {
     
     methods: {
         async onSubmit() {
-            // const today = new Date()
-            // this.upcoming.insertDate = today.toLocaleString();
+            const today = new Date()
+            this.upcoming.insertDate = today.toLocaleString();
             await insertUpcoming(this.upcoming)
             this.resetForm()
         },

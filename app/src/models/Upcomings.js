@@ -14,6 +14,14 @@ const upcomingSchema = new Schema({
     imageUrl: {
         type: String,
         required: true
+    },
+    insertedBy: {
+        type: String,
+        required: true
+    },
+    insertDate: {
+        type: String,
+        required: true
     }
 
 });

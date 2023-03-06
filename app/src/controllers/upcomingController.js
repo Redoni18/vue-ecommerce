@@ -18,7 +18,9 @@ exports.upload_upcoming = function(req, res) {
     let newUpcoming = new Upcomings({
         productName: req.body.productName,
         productBrand: req.body.productBrand,
-        imageUrl: req.body.imageUrl
+        imageUrl: req.body.imageUrl,
+        insertedBy: req.body.insertedBy,
+        insertDate: req.body.insertDate
     });
 
     newUpcoming.save();
