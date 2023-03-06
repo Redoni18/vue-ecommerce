@@ -3,7 +3,7 @@
         <vue-good-table
             styleClass="vgt-table condensed"
             :columns="columns"
-            :rows="brands"
+            :rows="payments"
             theme="polar-bear"
             :sort-options="{
                 enabled: false, 
@@ -47,15 +47,15 @@
             </template>
         </vue-good-table>
         
-        <EditModal v-model="showModal" :showModal="showModal" :brand="brand" />
-        <DeleteModal v-model="showDeleteModal" :itemName="brand.brandName" :itemId="brand._id" @deleteItem="deleteBrand"/>
+        <EditModal v-model="showModal" :showModal="showModal" :paymentMethod="payment" />
+        <DeleteModal v-model="showDeleteModal" :itemName="payment.name" :itemId="payment._id" @deleteItem="deletePayment"/>
     </div>
   
 </template>
 
 <script>
-import EditModal from './EditBrand.vue'
-import { removeBrand, getBrands } from '@/eCommerce-sdk/brands.js'
+import EditModal from './EditPayMethod.vue'
+import { getPaymethods, removePaymethod} from '@/eCommerce-sdk/payMethod.js'
 import DeleteModal from '../../components/DeleteModal.vue'
 export default {
     components: {
@@ -66,12 +66,12 @@ export default {
         return {
             showModal: false,
             showDeleteModal: false,
-            brand: {},
-            brandsList: [],
+            payment: {},
+            paymentsList: [],
             columns: [
                 {
                     label: 'Name',
-                    field: 'brandName',
+                    field: 'name',
                 },
                 {
                     label: '',
@@ -82,35 +82,35 @@ export default {
         }
     },
     async mounted() {
-        const response = await getBrands()
-        this.brandsList = response.data
+        const response = await getPaymethods()
+        this.paymentsList = response.data
     },
     computed: {
-        brands() {
-            return this.brandsList
+        payments() {
+            return this.paymentsList
         }
     },
     methods: {
         editProduct(data) {
             this.showModal = true;
-            this.brand = data
+            this.payment = data
         },
 
         toggleDeleteModal(data) {
             console.log(data)
             this.showDeleteModal = true;
-            this.brand = data;
+            this.payment = data;
         },
 
-        async deleteBrand(brandId) {
-            console.log(brandId)
+        async deletePayment(paymentId) {
+            console.log(paymentId)
             try{
-                await removeBrand(brandId)
+                await removePaymethod(paymentId)
             } catch (err) {
                 console.log(err)
             } finally {
-                const response = await getBrands()
-                this.brandsList = response.data
+                const response = await getPaymethods()
+                this.paymentsList = response.data
             }
         }
 

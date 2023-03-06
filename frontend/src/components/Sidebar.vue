@@ -84,6 +84,22 @@ import { getUser } from '@/eCommerce-sdk/user.js'
             ]
           },
           {
+            title: 'Payment Methods',
+            icon: 'fa-regular fa-credit-card',
+            child: [
+              {
+                href: '/payments',
+                title: 'Payment Methods',
+                icon: "fa-solid fa-list-ul"
+              },
+              {
+                href: '/payments/insert',
+                title: 'New Payment Method',
+                icon: "fa-solid fa-plus"
+              },
+            ]
+          },
+          {
             href: '/about',
             title: 'About Us',
             icon: 'fa fa-info'
