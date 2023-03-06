@@ -11,7 +11,15 @@
                         placeholder="Category name"
                         required
                     ></b-form-input>
-                </b-form-group>    
+                </b-form-group>   
+
+                <b-form-group
+                    label="Category Brand"
+                >
+                    <v-select :close-on-select="false" searchable multiple label="brandName" :options="allBrands" v-model="category.categoryBrand" placeholder="Category Brand"></v-select>
+                </b-form-group>
+
+
                 <div class="d-flex gap-2 justify-content-center">
                     <b-button type="submit" variant="primary">Upload</b-button>
 
@@ -24,12 +32,25 @@
 
 <script>
 import { insertCategory } from '@/eCommerce-sdk/categories.js'
+import { getBrands } from '@/eCommerce-sdk/brands.js'
 export default {
     data() {
         return {
             category: {
-                categoryName: ''
-            }
+                categoryName: '',
+                categoryBrand: []
+            },
+            brands: []
+        }
+    },
+    async mounted() {
+        const response = await getBrands()
+        this.brands = response.data
+        console.log(this.brands)
+    },
+    computed: {
+        allBrands() {
+            return this.brands
         }
     },
     methods: {
@@ -40,6 +61,7 @@ export default {
 
         resetForm() {
             this.category.categoryName = ""
+            this.category.categoryBrand = []
         }
     }
 }

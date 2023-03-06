@@ -16,7 +16,8 @@ exports.upload_category = function (req, res) {
     console.log(req.body)
 
     let newCategory = new Categories({
-        categoryName: req.body.categoryName
+        categoryName: req.body.categoryName,
+        categoryBrand: req.body.categoryBrand
     });
 
     newCategory.save();
@@ -33,7 +34,8 @@ exports.edit_category = function (req, res) {
     }
 
     let updatedCategory = {
-        categoryName: req.body.categoryName
+        categoryName: req.body.categoryName,
+        categoryBrand: req.body.categoryBrand
     }
 
     Categories.findByIdAndUpdate(req.body._id, {$set: updatedCategory}, {new: true}, (err, doc) => {

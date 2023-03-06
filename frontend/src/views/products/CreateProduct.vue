@@ -54,7 +54,7 @@
                 <b-form-group
                     label="Product Category"
                 >
-                    <v-select multiple label="categoryName" :options="allCategories" v-model="product.productCategory" placeholder="Product Category"></v-select>
+                    <v-select :close-on-select="false" searchable multiple label="categoryName" :options="allCategories" v-model="product.productCategory" placeholder="Product Category"></v-select>
                 </b-form-group>
                 
                 <div class="d-flex gap-2 justify-content-center">

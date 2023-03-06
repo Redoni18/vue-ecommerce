@@ -6,7 +6,11 @@ const categorySchema = new Schema({
     categoryName: {
         type: String,
         required: true
-    }
+    },
+    categoryBrand: [{ 
+        type: mongoose.Schema.Types.Mixed, 
+        ref: 'brands' 
+    }]
 });
 
 
