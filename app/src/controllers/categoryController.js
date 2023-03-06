@@ -17,6 +17,8 @@ exports.upload_category = function (req, res) {
 
     let newCategory = new Categories({
         categoryName: req.body.categoryName,
+        insertedBy: req.body.insertedBy,
+        insertDate: req.body.insertDate,
         categoryBrand: req.body.categoryBrand
     });
 
@@ -35,6 +37,8 @@ exports.edit_category = function (req, res) {
 
     let updatedCategory = {
         categoryName: req.body.categoryName,
+        insertedBy: req.body.insertedBy,
+        insertDate: req.body.insertDate,
         categoryBrand: req.body.categoryBrand
     }
 
