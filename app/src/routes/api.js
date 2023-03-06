@@ -47,7 +47,7 @@ router.delete('/api/brands/delete/:id', brandsController.delete_brand);
 
 
 router.post('/api/insertUser', userController.insert_user);
-router.get('/api/user/:id', userController.get_user);
+router.get('/api/user/:uid', userController.get_user);
 
 
 module.exports = router;

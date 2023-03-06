@@ -25,3 +25,7 @@ export function insertUser(user) {
     console.log(user)
     return axios.post(`${API_URL}/api/insertUser`, user)
 }
+
+export function getUser(uid) {
+    return axios.get(`${API_URL}/api/user/${uid}`)
+}

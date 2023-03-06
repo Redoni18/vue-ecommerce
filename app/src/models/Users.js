@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 
 const userSchema = new Schema({
+    uid:{
+        type: String,
+        required: true
+    },
     fullName: {
         type: String,
         required: true
@@ -15,6 +19,10 @@ const userSchema = new Schema({
         type: Boolean,
         required: true
     },
+    isDelivery: {
+        type: Boolean,
+        required: true
+    }
 });
 
 module.exports = mongoose.model('user', userSchema);

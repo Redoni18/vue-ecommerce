@@ -7,9 +7,11 @@ exports.insert_user = function (req, res) {
     console.log(req.body)
 
     let newUser = new User({
+        uid: req.body.uid,
         fullName: req.body.fullname,
         email: req.body.email,
         isAdmin: req.body.email.includes('@eCommerce') ? true : false,
+        isDelivery: req.body.email.includes('@delivery') ? true : false,
     });
 
     newUser.save();
@@ -21,10 +23,10 @@ exports.insert_user = function (req, res) {
 
 
 exports.get_user = function (req, res) {
-    let id = req.params.id;
+    let id = req.params.uid;
 
     try {
-        User.findById({ _id: id }).exec(function (err, user) {
+        User.findOne({ uid: id }).exec(function (err, user) {
             if (user) {
                 res.send(user);
             } 

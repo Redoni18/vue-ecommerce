@@ -66,6 +66,7 @@ import { insertUser } from '@/eCommerce-sdk/user.js'
 export default {
   data() {
     return {
+      uid: null,
       fullname: null,
       email: null,
       password: null,
@@ -81,7 +82,7 @@ export default {
       } catch(err) {
         console.log(err)
       } finally {
-        this.registerUserWithRole({fullname: this.fullname, email: this.email})
+        this.registerUserWithRole({uid: auth.currentUser.uid, fullname: this.fullname, email: this.email})
       }
     },
     async registerUserWithRole(user) {
