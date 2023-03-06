@@ -10,6 +10,7 @@ const userController = require('../controllers/userController');
 const categoryController = require('../controllers/categoryController');
 const upcomingController = require('../controllers/upcomingController');
 const brandsController = require('../controllers/brandsController');
+const orderController = require('../controllers/orderController');
 
 /**
  * Routes
@@ -44,6 +45,12 @@ router.post('/api/uploadBrand', brandsController.upload_brand);
 router.put('/api/editBrand/:id', brandsController.edit_brand);
 router.delete('/api/brands/delete/:id', brandsController.delete_brand);
 
+//Order
+router.get('/api/orders', orderController.get_orders);
+router.get('/api/order/:id', orderController.get_order);
+router.post('/api/uploadOrder', orderController.upload_order);
+router.put('/api/editOrder/:id', orderController.edit_order);
+router.delete('/api/orders/delete/:id', orderController.delete_order);
 
 
 router.post('/api/insertUser', userController.insert_user);
