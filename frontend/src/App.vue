@@ -1,20 +1,37 @@
 <template>
-  <Sidebar v-if="user.authenticated"/>
-  <router-view class="root"/>
+    <Sidebar v-if="user.authenticated && currentUser && (currentUser.isAdmin || currentUser.isDelivery)" />
+    <Navbar v-else-if="user.authenticated" />
+    <router-view class="root"/>
 </template>
 
 <script>
 import Sidebar from './components/Sidebar.vue'
+import Navbar from './components/Navbar.vue'
 import { mapGetters } from 'vuex'
+import { getUser } from './eCommerce-sdk/user'
 export default {
   components: {
-    Sidebar
+    Sidebar,
+    Navbar
   },
   computed: {
     ...mapGetters({
         user: 'getUser'
     }),
   },
+  data() {
+    return {
+      currentUser: null
+    }
+  },
+  watch: {
+    '$store.state.authenticate.user.data.user.uid': async function() {
+      if(this.user.data.user.uid) {
+        const response = await getUser(this.user.data.user.uid)
+        this.currentUser = response.data
+      }
+    }
+  }
 }
 </script>
 
