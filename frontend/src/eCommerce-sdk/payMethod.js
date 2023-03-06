@@ -7,7 +7,7 @@ export function getPaymethods(){
     return axios.get(`${API_URL}/api/paymethods`)
 }
 
-export function insertPaymethod(paymethod) {
+export function insertPayMethod(paymethod) {
     console.log(paymethod)
     return axios.post(`${API_URL}/api/uploadPayMethod`, paymethod)
 }

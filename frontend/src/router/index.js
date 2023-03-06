@@ -104,6 +104,30 @@ const routes = [{
         }
     },
     {
+        path: '/payments',
+        name: 'payments',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/paymethods/Listing.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
+    {
+        path: '/payments/insert',
+        name: 'paymentsInsert',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/paymethods/CreatePayMethod.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
+    {
         path: '/about',
         name: 'about',
         // route level code-splitting

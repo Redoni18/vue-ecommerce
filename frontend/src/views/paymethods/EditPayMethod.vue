@@ -1,18 +1,22 @@
 <template>
     <b-modal @ok="onSubmit" size="lg">
         <template v-slot:header>
-            <div class="d-flex justify-content-between w-100 text-secondary">
-                <h4>Edit PayMethod</h4>
+            <div class="d-flex justify-content-between w-100">
+                <h4>Edit Payment Method</h4>
+                <div class="d-flex flex-column text-secondary">
+                    <small>Created by: {{paymentMethod.insertedBy}}</small>
+                    <small>Date created: {{paymentMethod.insertDate}}</small>
+                </div>
             </div>
         </template>
         <div v-if="showModal" class="insert-form">
             <b-form>
                 <b-form-group
-                    label="PayMethod Name"
+                    label="Payment Method Name"
                 >
                     <b-form-input
-                        v-model="PayMethod.paymethodname"
-                        placeholder="PayMethod name"
+                        v-model="paymentMethod.name"
+                        placeholder="Payment Method name"
                         required
                     ></b-form-input>
                 </b-form-group>
@@ -22,21 +26,21 @@
 </template>
   
 <script>
-    import { editPayMethod } from '@/eCommerce-sdk/categories.js'
+    import { editPayMethod } from '@/eCommerce-sdk/payMethod.js'
     export default {
         props: {
             showModal: {
                 type: Boolean,
                 default: false,
             },
-            name: {
+            paymentMethod: {
                 type: Object,
                 default: null,
             }
         },
         methods: {
             async onSubmit() {
-                await editPayMethod(this.paymethod)
+                await editPayMethod(this.paymentMethod)
             }
         }
     }

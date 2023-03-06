@@ -3,7 +3,7 @@
         <vue-good-table
             styleClass="vgt-table condensed"
             :columns="columns"
-            :rows="categories"
+            :rows="payments"
             theme="polar-bear"
             :sort-options="{
                 enabled: false, 
@@ -27,27 +27,35 @@
             :line-numbers="true"
         >
             <template v-slot:table-row="props">
+                <span v-if="props.column.field == 'imageUrl'" class="image-cell">
+                    <img :src="props.row.imageUrl" alt="product-image" class="product-image">
+                </span>
+
+                <!-- <span v-if="props.column.field == 'productPrice'">
+                    <span>{{props.row.productPrice.toFixed(2)}} &euro;</span>
+                </span> -->
+
                 <span v-if="props.column.field == 'moreOptions'" class="more-options__btn text-right">
                     <b-dropdown right no-caret variant="default">
                         <template #button-content>
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                         </template>
-                        <b-dropdown-item @click="editPayMethod(props.row)">Edit</b-dropdown-item>
+                        <b-dropdown-item @click="editProduct(props.row)">Edit</b-dropdown-item>
                         <b-dropdown-item @click="toggleDeleteModal(props.row)">Delete</b-dropdown-item>
                     </b-dropdown>
                 </span>
             </template>
         </vue-good-table>
         
-        <EditModal v-model="showModal" :showModal="showModal" :paymethod="paymethod" />
-        <DeleteModal v-model="showDeleteModal" :itemName="paymethod.paymethodname" :itemId="paymethod._id" @deleteItem="deletePayMethod"/>
+        <EditModal v-model="showModal" :showModal="showModal" :paymentMethod="payment" />
+        <DeleteModal v-model="showDeleteModal" :itemName="payment.name" :itemId="payment._id" @deleteItem="deletePayment"/>
     </div>
   
 </template>
 
 <script>
 import EditModal from './EditPayMethod.vue'
-import { removePayMethod } from '@/eCommerce-sdk/payMethod.js'
+import { getPaymethods, removePaymethod} from '@/eCommerce-sdk/payMethod.js'
 import DeleteModal from '../../components/DeleteModal.vue'
 export default {
     components: {
@@ -58,10 +66,12 @@ export default {
         return {
             showModal: false,
             showDeleteModal: false,
+            payment: {},
+            paymentsList: [],
             columns: [
                 {
                     label: 'Name',
-                    field: 'paymethodName',
+                    field: 'name',
                 },
                 {
                     label: '',
@@ -72,33 +82,35 @@ export default {
         }
     },
     async mounted() {
-        await this.$store.dispatch('fetchpaymethods')
-        
+        const response = await getPaymethods()
+        this.paymentsList = response.data
     },
     computed: {
-        paymethods() {
-            return this.$store.state.paymethods.paymethods
+        payments() {
+            return this.paymentsList
         }
     },
     methods: {
-        editPaymethod(data) {
+        editProduct(data) {
             this.showModal = true;
-            this.paymethods = data
+            this.payment = data
         },
 
         toggleDeleteModal(data) {
             console.log(data)
             this.showDeleteModal = true;
-            this.paymethods = data;
+            this.payment = data;
         },
 
-        async deletePaymethod(paymethodId) {
+        async deletePayment(paymentId) {
+            console.log(paymentId)
             try{
-                await removeCategory(paymethodId)
+                await removePaymethod(paymentId)
             } catch (err) {
                 console.log(err)
             } finally {
-                await this.$store.dispatch('fetchpaymethods')
+                const response = await getPaymethods()
+                this.paymentsList = response.data
             }
         }
 
@@ -119,6 +131,9 @@ export default {
         margin: auto;
     }
 
+    .product-image{
+        width: 100%;
+    }
 
     .more-options__btn{
         .btn-group, .btn{

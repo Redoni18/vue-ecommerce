@@ -15,7 +15,7 @@ exports.insert_paymethods = function(req, res) {
 
     console.log(req.body)
 
-    let newPayMethods = new PayMethod({
+    let newPayMethods = new PayMethods({
         name: req.body.name,
         insertedBy: req.body.insertedBy,
         insertDate: req.body.insertDate

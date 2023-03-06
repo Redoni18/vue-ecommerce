@@ -102,10 +102,10 @@ export default {
             this.brand = data;
         },
 
-        async deleteBrand(productId) {
-            console.log(productId)
+        async deleteBrand(brandId) {
+            console.log(brandId)
             try{
-                await removeBrand(productId)
+                await removeBrand(brandId)
             } catch (err) {
                 console.log(err)
             } finally {

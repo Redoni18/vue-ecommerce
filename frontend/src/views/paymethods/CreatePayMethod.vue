@@ -1,14 +1,14 @@
 <template>
     <div class="form-container">
-        <h2>Upload PayMethod</h2>
+        <h2>New Payment Method</h2>
         <div class="insert-form">
             <b-form @submit="onSubmit">
                 <b-form-group
-                    label="PayMethod Name"
+                    label="Payment Method Name"
                 >
                     <b-form-input
-                        v-model="PayMethod.paymethodname"
-                        placeholder="PayMethod name"
+                        v-model="paymentMethod.name"
+                        placeholder="Payment Method Name"
                         required
                     ></b-form-input>
                 </b-form-group>
@@ -24,11 +24,11 @@
 </template>
 
 <script>
-import { insertPayMethod } from '@/eCommerce-sdk/products.js'
+import { insertPayMethod } from '@/eCommerce-sdk/payMethod.js'
 export default {
     data() {
         return {
-            payMethod: {
+            paymentMethod: {
                 name: '',
                 insertedBy: this.$store.state.authenticate.user.data.user.displayName,
                 insertDate: null,
@@ -38,13 +38,13 @@ export default {
     methods: {
         async onSubmit() {
             const today = new Date()
-            this.payMethod.insertDate = today.toLocaleString();
-            await insertPayMethod(this.product)
+            this.paymentMethod.insertDate = today.toLocaleString();
+            await insertPayMethod(this.paymentMethod)
             this.resetForm()
         },
 
         resetForm() {
-            this.payMethod.paymethodname = ""
+            this.paymentMethod.name = ""
         }
     }
 }

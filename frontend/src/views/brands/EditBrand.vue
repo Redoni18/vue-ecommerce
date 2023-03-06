@@ -1,9 +1,9 @@
 <template>
   <b-modal @ok="onSubmit" size="lg">
         <template v-slot:header>
-            <div class="d-flex justify-content-between w-100 text-secondary">
+            <div class="d-flex justify-content-between w-100">
                 <h4>Edit Brand</h4>
-                <div class="d-flex flex-column">
+                <div class="d-flex flex-column text-secondary">
                     <small>Created by: {{brand.insertedBy}}</small>
                     <small>Date created: {{brand.insertDate}}</small>
                 </div>
