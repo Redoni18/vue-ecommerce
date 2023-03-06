@@ -11,6 +11,7 @@ const categoryController = require('../controllers/categoryController');
 const upcomingController = require('../controllers/upcomingController');
 const brandsController = require('../controllers/brandsController');
 const orderController = require('../controllers/orderController');
+const payMethodController = require('../controllers/payMethodController');
 
 /**
  * Routes
@@ -55,6 +56,14 @@ router.delete('/api/orders/delete/:id', orderController.delete_order);
 
 router.post('/api/insertUser', userController.insert_user);
 router.get('/api/user/:uid', userController.get_user);
+
+
+//PayMethods
+router.get('/api/paymethods', payMethodController.get_paymethods);
+router.get('/api/paymethod/:id', payMethodController.get_paymethod);
+router.post('/api/uploadPayMethod', payMethodController.insert_paymethods);
+router.put('/api/editPayMethod/:id', payMethodController.edit_paymethods);
+router.delete('/api/paymethods/delete/:id', payMethodController.delete_paymethods);
 
 
 module.exports = router;
