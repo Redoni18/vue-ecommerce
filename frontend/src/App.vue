@@ -1,7 +1,7 @@
 <template>
     <Sidebar v-if="user.authenticated && currentUser && (currentUser.isAdmin || currentUser.isDelivery)" />
-    <Navbar class="navbar" v-else-if="user.authenticated" />
-    <router-view class="root"/>
+    <Navbar class="position-absolute top-0 left-0 w-100" v-else-if="user.authenticated" />
+    <router-view class="root" :class="{'root2': currentUser && !(currentUser.isAdmin || currentUser.isDelivery) }"/>
 </template>
 
 <script>
@@ -53,6 +53,11 @@ export default {
 }
 .root{
   height: 100vh;
-  width: calc(100vw + 290px);
+  width: 100vw;
+}
+
+.root2{
+  margin-top: 120px;
+  height: calc(100% - 120px);
 }
 </style>

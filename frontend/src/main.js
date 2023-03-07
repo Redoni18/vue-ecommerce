@@ -22,6 +22,11 @@ import 'vue-good-table-next/dist/vue-good-table-next.css'
 
 import 'vue-select/dist/vue-select.css';
 import vSelect from 'vue-select'
+import { CAlert } from '@coreui/vue';
+import '@coreui/coreui/dist/css/coreui.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'jquery/src/jquery.js'
+import 'bootstrap/dist/js/bootstrap.min.js'
 
 var firebaseConfig = {
     apiKey: "AIzaSyDjhzE9aaeDQw46_iWSLHLOek6TzP6QlsI",
@@ -37,4 +42,4 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
 export { app, auth }
 
-createApp(App).use(store).use(router).use(BootstrapVueNext).use(Vue3Toasity).use(VueGoodTablePlugin).use(VueSidebarMenu).component('v-select', vSelect).mount('#app')
+createApp(App).use(store).use(router).use(BootstrapVueNext).use(Vue3Toasity).use(VueGoodTablePlugin).use(VueSidebarMenu).component('v-select', vSelect).use(CAlert).mount('#app')
