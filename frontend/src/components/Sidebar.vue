@@ -1,5 +1,5 @@
 <template>
-  <sidebar-menu v-if="currentUser" :menu="currentUser.isAdmin ? menu : deliveryMenu" :relative="relative" @item-click="onItemClick" />
+  <sidebar-menu :collapsed="getSize < 1000 ? true : false" v-if="currentUser" :menu="currentUser.isAdmin ? menu : deliveryMenu" :relative="relative" @item-click="onItemClick" />
 </template>
 
 <script>
@@ -8,6 +8,7 @@ import { getUser } from '@/eCommerce-sdk/user.js'
   export default {
     data() {
       return {
+        width: null,
         currentUser: null,
         menu: [
           {
@@ -152,13 +153,24 @@ import { getUser } from '@/eCommerce-sdk/user.js'
       ...mapGetters({
           user: 'getUser'
       }),
+      getSize(){
+        return this.width
+      },
     },
     async mounted(){
         const response = await getUser(this.user.data.user.uid)
         console.log(response)
         this.currentUser = response.data
-
+        
+        this.$nextTick(() => {
+          window.addEventListener('resize', this.onResize);
+        })
     },
+
+    beforeDestroy() { 
+      window.removeEventListener('resize', this.onResize); 
+    },
+
     methods: {
       onItemClick(e,item) {
         if(item.title === "Logout") {
@@ -166,7 +178,9 @@ import { getUser } from '@/eCommerce-sdk/user.js'
         }
 
       },
-
+      onResize() {
+        this.width = window.innerWidth
+      },  
       async signOut(){
         try {
           await this.$store.dispatch('logout')
