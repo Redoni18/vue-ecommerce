@@ -41,6 +41,7 @@ export default {
         }
     },
     mounted(){
+        this.onResize()
         this.$nextTick(() => {
           window.addEventListener('resize', this.onResize);
         })
