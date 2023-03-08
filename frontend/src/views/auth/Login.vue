@@ -76,7 +76,13 @@ export default {
           password: this.password,
         })
 
-        this.$router.push({ name: 'home'})
+        if(!(this.email.includes("@eCommerce") || this.email.includes('@delivery'))) {
+          this.$router.push({ name: 'home'})
+        } else if(this.email.includes('@eCommerce')){
+          this.$router.push({ name: 'products'})
+        } else {
+          this.$router.push({ name: 'orders'})
+        }
       } catch (error) {
         this.errorMessage = error.message
       }
