@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import UserProfile from '../views/UserProfile.vue'
 // import * as auth from '../helper/auth'
 // import store from '../store'
 
@@ -162,7 +163,15 @@ const routes = [{
         beforeEnter: (to, from, next) => {
             beforeEnter.isAuthenticated(to, from, next)
         }
-    }
+    },
+    {
+        path: '/profile',
+        name: 'profile',
+        component: UserProfile,
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
 ]
 
 
