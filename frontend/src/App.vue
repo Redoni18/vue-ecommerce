@@ -48,7 +48,7 @@ export default {
   color: #2c3e50;
   margin: 0;
   background: #fafafa;
-  height: 100vh;
+  height: 100%;
   display: flex;
 }
 .root{
@@ -58,6 +58,6 @@ export default {
 
 .root2{
   margin-top: 120px;
-  height: calc(100% - 120px);
+  height: 100%;
 }
 </style>

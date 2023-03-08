@@ -12,6 +12,7 @@ const upcomingController = require('../controllers/upcomingController');
 const brandsController = require('../controllers/brandsController');
 const orderController = require('../controllers/orderController');
 const payMethodController = require('../controllers/payMethodController');
+const reviewsController = require('../controllers/reviewsContoller');
 
 /**
  * Routes
@@ -66,5 +67,13 @@ router.put('/api/editPayMethod/:id', payMethodController.edit_paymethods);
 router.delete('/api/paymethods/delete/:id', payMethodController.delete_paymethods);
 
 router.get('/api/product/:name', productController.findProductByName);
+
+//Reviews
+router.get('/api/reviews', reviewsController.get_reviews);
+router.get('/api/review/:id', reviewsController.get_review);
+router.post('/api/uploadReview', reviewsController.upload_review);
+router.put('/api/editReview/:id', reviewsController.edit_review);
+router.delete('/api/reviews/delete/:id', reviewsController.delete_review);
+
 
 module.exports = router;

@@ -8,7 +8,8 @@ import * as beforeEnter from './beforeEnter'
 const routes = [{
         path: '/',
         name: 'home',
-        component: HomeView,
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/productCards/ProductCards.vue'),
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }

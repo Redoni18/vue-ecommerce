@@ -93,7 +93,7 @@ export default {
                 {
                     label: '',
                     field: 'moreOptions',
-                     width: '20px',
+                    width: '20px',
                 },
             ],
         }

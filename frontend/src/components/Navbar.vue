@@ -1,29 +1,24 @@
 <template>
- <div id="nav">
-    <nav class="container navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="#"><img src="../assets/logo.png" class="logo-img" alt=""></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<div id="nav">
+    <nav class="navbar navbar-expand-lg navbar-light px-5">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="../assets/logo.png" class="logo-img" alt=""></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" :class="{'d-flex justify-content-between': width > 995}" id="navbarSupportedContent">
-                <div class="navbar-nav ml-2">
-                    <router-link to="/" class="nav-item nav-link">Home</router-link>
-                    <router-link to="/About" class="nav-item nav-link">About</router-link>
-                    <router-link to="/Careers" class="nav-link">Careers</router-link>
-                    <router-link to="/Contact" class="nav-link">Contact</router-link>
+            </button>
+            <div class="collapse navbar-collapse" :class="{'d-flex justify-content-between': width > 995}" id="navbarTogglerDemo02">
+                    <div class="navbar-nav ml-4">
+                        <router-link to="/" class="nav-item nav-link w-50 m-auto">Home</router-link>
+                        <router-link to="/About" class="nav-item nav-link w-50 m-auto">About</router-link>
+                        <router-link to="/Careers" class="nav-link w-50 m-auto">Careers</router-link>
+                        <router-link to="/Contact" class="nav-link w-50 m-auto">Contact</router-link>
+                    </div>
+                    <div class="navbar-nav">
+                        <router-link to="/Careers" class="nav-link w-50 m-auto">Profile</router-link>
+                        <router-link to="/Contact" @click="signOut" class="nav-link w-50 m-auto">Logout</router-link>
+                    </div>
                 </div>
-                <div class="navbar-nav">
-                    <router-link to="/Careers" class="nav-link">Profile</router-link>
-                    <router-link to="/Contact" class="nav-link">Logout</router-link>
-                </div>
-                <!-- <div class="d-flex justify-content-between w-100 items-center">
-                    <form class="w-75 d-flex justify-content-start">
-                        <input class="form-control w-50 me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                </div> -->
-            </div>
+        </div>
     </nav>
 </div>
 </template>
@@ -41,6 +36,7 @@ export default {
         }
     },
     mounted(){
+        this.onResize()
         this.$nextTick(() => {
           window.addEventListener('resize', this.onResize);
         })
@@ -51,6 +47,14 @@ export default {
     methods: {
         onResize() {
             this.width = window.innerWidth
+        },
+        async signOut(){
+            try {
+                await this.$store.dispatch('logout')
+                this.$router.push({ path: "/login" })
+            } catch (err) {
+                console.log(err)
+            }
         }
     }
 

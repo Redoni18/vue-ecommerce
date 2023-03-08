@@ -161,6 +161,8 @@ import { getUser } from '@/eCommerce-sdk/user.js'
         const response = await getUser(this.user.data.user.uid)
         console.log(response)
         this.currentUser = response.data
+
+        this.onResize()
         
         this.$nextTick(() => {
           window.addEventListener('resize', this.onResize);
@@ -194,4 +196,9 @@ import { getUser } from '@/eCommerce-sdk/user.js'
 </script>
 
 <style scoped>
+
+.v-sidebar-menu.vsm_relative {
+  height: 100vh;
+  overflow-y: scroll;
+}
 </style>
