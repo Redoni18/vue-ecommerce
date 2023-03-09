@@ -92,19 +92,13 @@ exports.get_product = function(req, res) {
     }
 };
 
-exports.findProductByName = (req, res) => {
-    const { productName } = req.params;
-
-    Products.find({ productName: productName })
-        .then(product => {
-            if (!product) {
-                return res.status(404).json({ error: 'Product not found' });
-            }
-
-            res.json(product);
-        })
-        .catch(error => {
-            console.error(error);
-            res.status(500).json({ error: 'Server error' });
-        });
+exports.findProductByName = async (req, res) => {
+    const searchTerm = req.query.searchTerm;
+    try {
+        const regex = new RegExp(searchTerm, 'i');
+        const products = await Products.find({ productName: { $regex: regex } });
+        res.send(products)
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };

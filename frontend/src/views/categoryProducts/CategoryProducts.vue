@@ -8,25 +8,17 @@
 
     <div class="category-products__page category-products">
         <div class="products-filter">
+            <div class="search-input">
+                <input v-model="searchTerm" class="form-control form-control-lg form-control-borderless px-2" type="search" placeholder="Search...">
+            </div>
             <FilterProducts />
         </div>
         <div class="products-grid">
-            <div v-for="product in productsByCategory" :key="product._id">
+            <div v-for="product in categoryProducts" :key="product._id">
                 <ProductCard :product="product"/>
             </div>
         </div>
     </div>
-
-    <!-- <div class="shop-items">
-      <div class="container-fluid">    
-        <FilterProducts />
-        <div class="row">
-          <div v-for="product in productsByCategory" :key="product._id" class="col-md-4 col-sm-6">
-            <ProductCard :product="product"/>
-          </div>
-        </div>
-      </div>
-    </div> -->
 </div>
 </template>
 
@@ -41,38 +33,46 @@ export default {
     data() {
         return {
             categoryProducts: null,
-            categoryId: null
+            categoryId: null,
+            searchTerm: null,
+            timeoutId: null,
         }
     },
     watch: {
         '$route.params.id' : function(){
             this.fetchData()
+        },
+        'searchTerm': async function() {
+            if(this.timeoutId){
+                clearTimeout(this.timeoutId)
+            }
+            this.timeoutId = setTimeout(() => {
+                this.searchProducts()
+                this.timeoutId = null
+            }, 500)
         }
     },
     async mounted() {
-        await this.$store.dispatch('fetchProducts') 
-		await this.$store.dispatch('fetchCategories')
         this.categoryId = this.$route.params.id
+        this.fetchData()
+
     },
     computed: {
-        products() {
-            return this.$store.state.products.products
-        },
-
 		categories() {
             return this.$store.state.categories.categories
         },
-
-        productsByCategory() {
-            this.categoryProducts = this.products.filter(product => product.productCategory[0]._id === this.categoryId)
-            return this.categoryProducts
-        }
     },
     methods: {
         async fetchData() {
+            this.categoryId = this.$route.params.id
             await this.$store.dispatch('fetchProducts') 
             await this.$store.dispatch('fetchCategories')
-            this.categoryId = this.$route.params.id
+            this.categoryProducts = this.$store.state.products.products.filter(product => product.productCategory[0]._id === this.categoryId)
+        },
+        async searchProducts() {
+            this.categoryProducts = this.$store.state.products.products.filter(product => product.productCategory[0]._id === this.categoryId)
+            this.categoryProducts = this.categoryProducts.filter(product => product.productName.includes(this.searchTerm))
+            console.log(this.categoryProducts)
         }
     }
 }
@@ -131,5 +131,10 @@ export default {
 
 .category-link a.router-link-exact-active {
   color: crimson;
+}
+
+.search-input {
+	width: 90%;
+    margin-top: 5%;
 }
 </style>
