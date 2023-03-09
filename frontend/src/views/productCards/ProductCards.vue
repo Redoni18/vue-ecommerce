@@ -1,14 +1,21 @@
 <template>
+<div class="home-view">
+	<ul class="nav justify-content-center category-tab">
+		<li v-for="category in categories" :key="category._id" class="nav-item py-2">
+			<router-link :to="{name: 'categoryProducts', params: {id: category._id}}" class="nav-link text-dark category-link">{{category.categoryName}}</router-link>
+		</li>
+	</ul>
     <div class="shop-items">
       <div class="container-fluid">    
-        <FilterProducts />
+        <!-- <FilterProducts /> -->
         <div class="row">
-          <div v-for="product in products" :key="product._id" class="col-md-4 col-sm-6">
+          <div v-for="product in products" :key="product._id" class="col-md-3 col-sm-6">
             <ProductCard :product="product"/>
           </div>
         </div>
       </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -21,10 +28,15 @@ export default {
     },
     async mounted() {
         await this.$store.dispatch('fetchProducts') 
+		await this.$store.dispatch('fetchCategories')
     },
     computed: {
         products() {
             return this.$store.state.products.products
+        },
+
+		categories() {
+            return this.$store.state.categories.categories
         }
     },
 
@@ -33,11 +45,14 @@ export default {
 
 <style lang="scss" scoped>
 
+.home-view {
+	height: 100%;
+}
+
 .shop-items{
 	max-width: 90%;
-	margin: 120px auto;
+	margin: 20px auto;
 	padding:0px 20px;
-	height: 100%;
 }
 
 .container-fluid {
@@ -111,5 +126,20 @@ export default {
 .shop-items .item  .ecom  a.btn:hover{
 	background:#fff;
 	color:#777;
-}       
+}    
+
+.category-tab {
+	background: #eee;
+	display: flex;
+	align-items: center;
+}
+
+.category-link:hover {
+	color: crimson !important;
+	transition: 0.2s;
+}
+
+.category-link a.router-link-exact-active {
+  color: crimson;
+}
 </style>

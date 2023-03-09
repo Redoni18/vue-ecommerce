@@ -129,6 +129,15 @@ const routes = [{
         }
     },
     {
+        path: '/category/:id',
+        name: 'categoryProducts',
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/categoryProducts/CategoryProducts.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
+    {
         path: '/about',
         name: 'about',
         // route level code-splitting
