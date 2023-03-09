@@ -46,7 +46,7 @@ export default {
     },
     watch: {
         '$route.params.id' : function(){
-                this.fetchData()
+            this.fetchData()
         }
     },
     async mounted() {

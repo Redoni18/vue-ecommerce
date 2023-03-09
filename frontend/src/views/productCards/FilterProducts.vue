@@ -17,27 +17,39 @@
     <div class="filters-sidebar filters-sidebar__list">
         <h4 class="filter-title">Filter Products</h4>
 
-        <div class="checkbox">
-            <label><input type="checkbox" class="icheck"> Application</label>
-        </div>
-        <div class="checkbox">
-            <label><input type="checkbox" class="icheck"> Design</label>
-        </div>
-        <div class="checkbox">
-            <label><input type="checkbox" class="icheck"> Desktop</label>zz
-        </div>
-        <div class="checkbox">
-            <label><input type="checkbox" class="icheck"> Management</label>
-        </div>
-        <div class="checkbox">
-            <label><input type="checkbox" class="icheck"> Mobile</label>
+        <div v-for="brand in brands" :key="brand._id" class="checkbox">
+            <label><input type="checkbox" class="icheck"> {{brand.brandName}}</label>
         </div>
     </div>
 </div>
 </template>
 
 <script>
+import {getCategory} from '@/eCommerce-sdk/categories.js'
 export default {
+    data() {
+        return {
+            brands: null
+        }
+    },
+    watch: {
+        '$route.params.id' : function(){
+            this.fetchData()
+        }
+    },
+    mounted() {
+        this.fetchData()
+    },
+    computed: {
+
+    },
+    methods: {
+        async fetchData() {
+            this.categoryId = this.$route.params.id
+            const response = await getCategory(this.categoryId)
+            this.brands = response.data.categoryBrand
+        }
+    }
 
 }
 </script>
