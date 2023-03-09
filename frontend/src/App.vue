@@ -61,6 +61,6 @@ export default {
 
 .root2{
   margin-top: 100px;
-  height: vh;
+  height: 100vh;
 }
 </style>

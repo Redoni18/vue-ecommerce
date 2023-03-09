@@ -37,6 +37,7 @@ export default {
 	max-width: 90%;
 	margin: 120px auto;
 	padding:0px 20px;
+	height: 100%;
 }
 
 .container-fluid {
