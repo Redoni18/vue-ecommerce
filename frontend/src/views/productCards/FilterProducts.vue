@@ -5,12 +5,9 @@
             <div class="col-12 col-md-11 col-lg-11">
                 <form class="card card-sm">
                     <div class="card-body row no-gutters align-items-center" style="height:50px">
-                        <div class="col-auto" margin-top="-10px">
-                            <i class="fas fa-search h4 text-body"></i>
-                        </div>
                         
-                        <div class="col">
-                            <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search Products" style="margin-top: -15px;">
+                        <div class="col p-0">
+                            <input class="form-control form-control-lg form-control-borderless px-2" type="search" placeholder="Search Products" style="margin-top: -15px;">
                         </div>
                 </div>
                 </form> 
@@ -98,6 +95,9 @@ export default {
     border: none;
     outline: none;
     box-shadow: none;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
 }
 
 </style>
