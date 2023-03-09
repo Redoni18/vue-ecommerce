@@ -2,17 +2,20 @@
     <Sidebar v-if="user.authenticated && currentUser && (currentUser.isAdmin || currentUser.isDelivery)" />
     <Navbar class="position-absolute top-0 left-0 w-100" v-else />
     <router-view class="root" :class="{'root2': currentUser && !(currentUser.isAdmin || currentUser.isDelivery) }"/>
+    <Footer v-if="currentUser && !(currentUser.isAdmin || currentUser.isDelivery)" />
 </template>
 
 <script>
 import Sidebar from './components/Sidebar.vue'
 import Navbar from './components/Navbar.vue'
+import Footer from './components/Footer.vue'
 import { mapGetters } from 'vuex'
 import { getUser } from './eCommerce-sdk/user'
 export default {
   components: {
     Sidebar,
-    Navbar
+    Navbar,
+    Footer
   },
   computed: {
     ...mapGetters({
