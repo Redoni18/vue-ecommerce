@@ -1,28 +1,23 @@
 <template>
-    <div class="container justify-content-left" style="max-width: 350px;">
+    <div class="container justify-content-left filters-sidebar">
     <br/>
-	<div class="searchbar row justify-content-left">
-                        <div class="col-12 col-md-11 col-lg-11">
-                             <form class="card card-sm">
-                                <div class="card-body row no-gutters align-items-center" style="height:50px">
-                                    <div class="col-auto" margin-top="-10px">
-                                        <i class="fas fa-search h4 text-body"></i>
-                                    </div>
-                                    
-                                    <div class="col">
-                                        <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search Products" style="margin-top: -15px;">
-                                    </div>
-                                    
-                                    
-                                   
-                                </div>
-                            </form> 
+        <div class="searchbar row justify-content-left">
+            <div class="col-12 col-md-11 col-lg-11">
+                <form class="card card-sm">
+                    <div class="card-body row no-gutters align-items-center" style="height:50px">
+                        <div class="col-auto" margin-top="-10px">
+                            <i class="fas fa-search h4 text-body"></i>
                         </div>
-                        <!--end of col-->
-                    </div>
+                        
+                        <div class="col">
+                            <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search Products" style="margin-top: -15px;">
+                        </div>
+                </div>
+                </form> 
+            </div>
+        </div>
 
-    <br>
-    <div class="filters-sidebar">
+    <div class="filters-sidebar filters-sidebar__list">
         <h4 class="filter-title">Filter Products</h4>
 
         <div class="checkbox">
@@ -58,8 +53,14 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 25px 0px;
-    gap: 2%;
+
+    .filters-sidebar__list {
+        padding: 25px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
 
     .filter-title{
         text-align: left;
@@ -76,18 +77,21 @@ export default {
         width: 100%;
         margin: auto;
     }
-}
 
-@media only screen and (max-width:900px) {
     .searchbar {
         width: 100%;
         margin: auto;
     }
 }
 
+.searchbar {
+    width: 100%;
+}
+
 
 .form-control-borderless {
     border: none;
+    outline: none;
 }
 
 .form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
