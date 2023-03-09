@@ -7,7 +7,7 @@
                     <div class="card-body row no-gutters align-items-center" style="height:50px">
                         
                         <div class="col p-0">
-                            <input class="form-control form-control-lg form-control-borderless px-2" type="search" placeholder="Search Products" style="margin-top: -15px;">
+                            <input class="form-control form-control-lg form-control-borderless px-2 search-input" type="search" placeholder="Search Products" style="margin-top: -15px;">
                         </div>
                 </div>
                 </form> 
@@ -63,7 +63,7 @@ export default {
         text-align: left;
         border-bottom: 1px solid #d4d0d0;
         padding-bottom: 10px;
-        width: 100%;
+        width: 250px;
     }
 }
 
@@ -77,12 +77,11 @@ export default {
 
     .searchbar {
         width: 100%;
-        margin: auto;
     }
 }
 
 .searchbar {
-    width: 100%;
+    width: 300px;
 }
 
 
@@ -95,6 +94,9 @@ export default {
     border: none;
     outline: none;
     box-shadow: none;
+}
+
+.search-input{
     font-size: 18px;
     display: flex;
     align-items: center;

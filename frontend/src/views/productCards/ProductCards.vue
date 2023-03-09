@@ -48,6 +48,7 @@ export default {
 @media only screen and (max-width: 900px) {
     .container-fluid {
         display: flex;
+		align-items: center;
         flex-direction: column;
         gap: 2%;
     }

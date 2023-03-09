@@ -72,6 +72,7 @@ export default {
 
 #nav{
 background: whitesmoke;
+z-index: 1;
 }
 #nav {
   padding: 20px;
