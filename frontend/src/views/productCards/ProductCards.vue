@@ -50,7 +50,7 @@ export default {
 }
 
 .shop-items{
-	max-width: 90%;
+	max-width: 75%;
 	margin: 20px auto;
 	padding:0px 20px;
 }
