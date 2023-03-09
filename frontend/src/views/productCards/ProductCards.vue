@@ -3,7 +3,7 @@
       <div class="container-fluid">    
         <FilterProducts />
         <div class="row">
-          <div v-for="product in products" :key="product._id" class="col-md-3 col-sm-6">
+          <div v-for="product in products" :key="product._id" class="col-md-4 col-sm-6">
             <ProductCard :product="product"/>
           </div>
         </div>
@@ -34,7 +34,7 @@ export default {
 <style lang="scss" scoped>
 
 .shop-items{
-	max-width: 1150px;
+	max-width: 90%;
 	margin: 120px auto;
 	padding:0px 20px;
 }
@@ -54,7 +54,7 @@ export default {
 
 .shop-items .item {
 	position: relative;
-	max-width: 360px;
+	max-width: 230px;
 	margin: 15px auto;
 	padding: 5px;
 	text-align: center;
