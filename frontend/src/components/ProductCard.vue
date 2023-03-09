@@ -1,19 +1,25 @@
 <template>
   <div class="item">
 
-        <img class="img-responsive" src="https://www.bootdey.com/image/200x200/5F9EA0/000000" alt="">
+        <img class="img-responsive" :src="!product.imageUrl.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : product.imageUrl" alt="">
 
         <div class="item-dtls">
 
-        <h5><a class="item-name" href="#">Lorem product</a></h5>
+        <h5><a class="item-name" href="#">sfksjdfjsdlkfjslkjdflkjsfkdj</a></h5>
 
-        <span class="price lblue">$23.00</span>
+        <span class="price lblue">{{product.productPrice}}&euro;</span>
         </div>
     </div>
 </template>
 
 <script>
 export default {
+    props: {
+        product: {
+            type: Object,
+            required: true
+        }
+    }
 
 }
 </script>
@@ -51,6 +57,7 @@ export default {
 	margin: 0 auto;
 	border: 1px solid #eee;
 	border-radius: 3px;
+    height: 200px;
 }
 
 .item  .item-dtls h5 {
@@ -68,10 +75,13 @@ export default {
     text-decoration: none;
     color: #666666;
     margin-top: 10px;
+
+    max-width: 300px;
+    overflow: hidden;
+    white-space: nowrap; /* Don't forget this one */
+    text-overflow: ellipsis;
 }
-.item:hover { 
-	margin-top: -50px; 
-}
+
 .item {
 	-webkit-transition: all 0.15s ease-in;
 	-moz-transition: all 0.15s ease-in;

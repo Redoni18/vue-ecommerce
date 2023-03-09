@@ -1,21 +1,10 @@
 <template>
     <div class="shop-items">
-      <div class="container-fluid">
+      <div class="container-fluid">    
+        <FilterProducts />
         <div class="row">
-          <div class="col-md-3 col-sm-6">
-            <ProductCard />
-          </div>
-          <div class="col-md-3 col-sm-6">
-            <ProductCard />
-          </div>
-          <div class="col-md-3 col-sm-6">
-            <ProductCard />
-          </div>
-          <div class="col-md-3 col-sm-6">
-            <ProductCard />
-          </div>
-          <div class="col-md-3 col-sm-6">
-            <ProductCard />
+          <div v-for="product in products" :key="product._id" class="col-md-3 col-sm-6">
+            <ProductCard :product="product"/>
           </div>
         </div>
       </div>
@@ -23,11 +12,21 @@
 </template>
 
 <script>
+import FilterProducts from './FilterProducts.vue'
 import ProductCard from '@/components/ProductCard.vue'
 export default {
     components: {
-        ProductCard
-    }
+        ProductCard,
+        FilterProducts
+    },
+    async mounted() {
+        await this.$store.dispatch('fetchProducts') 
+    },
+    computed: {
+        products() {
+            return this.$store.state.products.products
+        }
+    },
 
 }
 </script>
@@ -35,10 +34,24 @@ export default {
 <style lang="scss" scoped>
 
 .shop-items{
-	max-width:1150px;
+	max-width: 1150px;
 	margin: 120px auto;
 	padding:0px 20px;
 }
+
+.container-fluid {
+    display: flex;
+    gap: 4%;
+}
+
+@media only screen and (max-width: 900px) {
+    .container-fluid {
+        display: flex;
+        flex-direction: column;
+        gap: 2%;
+    }
+}
+
 .shop-items .item {
 	position: relative;
 	max-width: 360px;
@@ -82,9 +95,7 @@ export default {
 	-o-transition: all 0.35s ease-in;
 	transition: all 0.35s ease-in;
 }
-.shop-items .item:hover  .ecom { 
-	margin-top: -50px; 
-}
+
 .shop-items .item  .ecom  a.btn{
 	border:1px solid #fff;
 	color:#fff;
