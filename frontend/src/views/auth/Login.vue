@@ -1,8 +1,7 @@
 <template>
-  <div id="main-wrapper" class="container">
-    <div class="row justify-content-center">
-        <div class="col-xl-10">
-            <div class="card border-0">
+<div class="row justify-content-center align-items-center mt-4">
+  <div class="col-8">
+        <div class="card card-container border-0">
                 <div class="card-body p-0">
                     <div class="row no-gutters">
                         <div class="col-lg-6">
@@ -34,9 +33,8 @@
                         </div>
                     </div>
                 </div>
-                <p class="text-muted text-center mt-3 mb-0">Don't have an account? <span class="text-primary ml-1" @click="goToSignUp">Sign Up!</span></p>
             </div>
-        </div>
+          <p class="text-muted text-center mt-3 mb-0">Don't have an account? <span class="text-primary ml-1 sign-up__link" @click="goToSignUp">Sign Up!</span></p>
     </div>
 </div>
 </template>
@@ -83,43 +81,23 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.justify-content-center{
-  margin-top: 185px;;
+
+.card-container {
+  padding: 2%;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 8px;
+  background: #fcfcfc;
 }
 
-body {
-    margin-top: 20px;
-    background: #f6f9fc;
-}
 .account-block {
-    padding: 0;
-    background-image: url(https://www.bootdey.com/image/500x500/FFB6C1/000000);
+    background-image: url(../../assets/sign-in.svg);
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     height: 100%;
     position: relative;
+    object-fit: contain;
 }
-.account-block .overlay {
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: crimson;
-}
-.account-block .account-testimonial {
-    text-align: center;
-    color: #fff;
-    position: absolute;
-    margin: 0 auto;
-    padding: 0 1.75rem;
-    bottom: 3rem;
-    left: 0;
-    right: 0;
-}
+
 .text-theme {
     color: crimson !important;
 }
@@ -127,6 +105,10 @@ body {
     background-color: crimson;
     border-color: crimson;
     color: #fff;
+}
+
+.sign-up__link:hover{
+  cursor: pointer;
 }
 
 </style>

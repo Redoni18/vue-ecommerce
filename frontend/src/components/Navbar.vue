@@ -1,7 +1,7 @@
 <template>
 <div id="nav">
     <nav class="navbar navbar-expand-lg navbar-light px-5">
-        <div class="container-fluid">
+        <div class="container-fluid z-3">
             <a class="navbar-brand" href="#"><img src="../assets/logo.png" class="logo-img" alt=""></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -9,13 +9,16 @@
             <div class="collapse navbar-collapse" :class="{'d-flex justify-content-between': width > 995}" id="navbarTogglerDemo02">
                     <div class="navbar-nav ml-4">
                         <router-link to="/" class="nav-item nav-link w-50 m-auto">Home</router-link>
-                        <router-link to="/About" class="nav-item nav-link w-50 m-auto">About</router-link>
-                        <router-link to="/Careers" class="nav-link w-50 m-auto">Careers</router-link>
-                        <router-link to="/Contact" class="nav-link w-50 m-auto">Contact</router-link>
+                        <router-link to="/about" class="nav-item nav-link w-50 m-auto">About</router-link>
+                        <!-- <router-link to="/Contact" class="nav-link w-50 m-auto">Contact</router-link> -->
                     </div>
-                    <div class="navbar-nav">
+                    <div v-if="user.authenticated" class="navbar-nav">
                         <router-link to="/Careers" class="nav-link w-50 m-auto">Profile</router-link>
                         <router-link to="/Contact" @click="signOut" class="nav-link w-50 m-auto">Logout</router-link>
+                    </div>
+                    <div v-else class="navbar-nav">
+                        <router-link to="/register" class="nav-link w-100 m-auto">Register</router-link>
+                        <router-link to="/login" @click="signOut" class="nav-link w-100 m-auto">Sign In</router-link>
                     </div>
                 </div>
         </div>
@@ -24,6 +27,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
     data() {
         return {
@@ -33,7 +37,10 @@ export default {
     computed: {
         getSize(){
             return this.width
-        }
+        },
+        ...mapGetters({
+            user: 'getUser'
+        }),
     },
     mounted(){
         this.onResize()

@@ -24,9 +24,12 @@ export default {
       currentUser: null
     }
   },
+  mounted() {
+    console.log(this.currentUser)
+  },
   watch: {
     '$store.state.authenticate.user.data.user.uid': async function() {
-      if(this.user.data.user.uid) {
+      if(this.user.data?.user?.uid) {
         const response = await getUser(this.user.data.user.uid)
         this.currentUser = response.data
       }
@@ -58,6 +61,6 @@ export default {
 
 .root2{
   margin-top: 100px;
-  height: fit-content;
+  height: vh;
 }
 </style>
