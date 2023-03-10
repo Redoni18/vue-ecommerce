@@ -17,6 +17,7 @@
                         <!-- <span class="fa fa-2x"><h5>(109) Votes</h5></span>
                         <a href="javascript:void(0);">109 customer reviews</a> -->
                     </h2>
+                    <p>Product by {{ product.productBrand.brandName }}</p>
                     <hr />
                     <h3 class="price-container">
                         {{ product.productPrice}}&euro;
@@ -24,21 +25,24 @@
                     <div class="certified">
                         <ul>
                             <li>
-                                <a href="javascript:void(0);">Delivery time<span>7 Working Days</span></a>
+                                <a>Delivery time<span>7 Working Days</span></a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);">Certified<span>Quality Assured</span></a>
+                                <a>Certified<span>Quality Assured</span></a>
+                            </li>
+                            <li>
+                                <a>{{ product.stock }}<span>In Stock</span></a>
                             </li>
                         </ul>
                     </div>
                     <hr />
                     <div class="description">
                             <div class="description-title" style="display: flex;">
-                                <h2>Description</h2>
+                                <h6>Description</h6>
                             </div>
                                 <br />
                                 
-                                <p style="display: flex;">
+                                <p style="text-align: left;">
                                     {{ product.productDescription }}
                                 </p>
                     </div>
@@ -290,6 +294,8 @@ export default {
 }
 
 .product-deatil .certified ul {
+    display: flex;
+    justify-content: center;
     padding-left: 0
 }
 
