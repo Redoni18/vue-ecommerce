@@ -17,7 +17,7 @@
                         <!-- <span class="fa fa-2x"><h5>(109) Votes</h5></span>
                         <a href="javascript:void(0);">109 customer reviews</a> -->
                     </h2>
-                    <p>Product by {{ product.productBrand.brandName }}</p>
+                    <p>{{ product.productBrand?.brandName ?  "Product by " + product.productBrand.brandName : "" }}</p>
                     <hr />
                     <h3 class="price-container">
                         {{ product.productPrice}}&euro;
