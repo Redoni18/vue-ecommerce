@@ -2,30 +2,34 @@
     <Sidebar v-if="user.authenticated && currentUser && (currentUser.isAdmin || currentUser.isDelivery)" />
     <Navbar class="position-absolute top-0 left-0 w-100" v-else />
     <router-view class="root" :class="{'root2': currentUser && !(currentUser.isAdmin || currentUser.isDelivery) }"/>
+    <Footer />
 </template>
 
 <script>
 import Sidebar from './components/Sidebar.vue'
 import Navbar from './components/Navbar.vue'
+import Footer from './components/Footer.vue'
 import { mapGetters } from 'vuex'
 import { getUser } from './eCommerce-sdk/user'
 export default {
   components: {
     Sidebar,
-    Navbar
+    Navbar,
+    Footer
+  },
+  data() {
+    return {
+      currentUser: null,
+      displayProperty: '',
+    }
+  },
+  async mounted() {
+    document.documentElement.style.setProperty('--display-property', this.displayProperty);
   },
   computed: {
     ...mapGetters({
         user: 'getUser'
     }),
-  },
-  data() {
-    return {
-      currentUser: null
-    }
-  },
-  mounted() {
-    console.log(this.currentUser)
   },
   watch: {
     '$store.state.authenticate.user.data.uid': async function() {
@@ -33,7 +37,15 @@ export default {
         const response = await getUser(this.user.data.uid)
         this.currentUser = response.data
       }
-    }
+
+      if(this.user.authenticated && this.currentUser && !(this.currentUser.isAdmin || this.currentUser.isDelivery)) {
+        this.displayProperty = 'block'
+      } else {
+        this.displayProperty = 'flex'
+      }
+
+      document.documentElement.style.setProperty('--display-property', this.displayProperty);
+    },
   }
 }
 </script>
@@ -43,6 +55,7 @@ export default {
   font-family: 'Ubuntu';
   src: url('./assets/Ubuntu-Regular.ttf');
 }
+
 #app {
   font-family: Ubuntu, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -52,7 +65,7 @@ export default {
   margin: 0;
   background: #fafafa;
   height: 100%;
-  display: flex;
+  display: var(--display-property);
 }
 .root{
   height: 100vh;
