@@ -13,6 +13,7 @@ const brandsController = require('../controllers/brandsController');
 const orderController = require('../controllers/orderController');
 const payMethodController = require('../controllers/payMethodController');
 const reviewsController = require('../controllers/reviewsContoller');
+const contactController = require('../controllers/contactController');
 
 /**
  * Routes
@@ -74,6 +75,13 @@ router.get('/api/review/:id', reviewsController.get_review);
 router.post('/api/uploadReview', reviewsController.upload_review);
 router.put('/api/editReview/:id', reviewsController.edit_review);
 router.delete('/api/reviews/delete/:id', reviewsController.delete_review);
+
+//Contact us
+router.get('/api/contacts', contactController.get_contacts);
+router.get('/api/contact/:id', contactController.get_contact);
+router.post('/api/uploadContact', contactController.insert_contacts);
+router.put('/api/editContact/:id', contactController.edit_contacts);
+router.delete('/api/contacts/delete/:id', contactController.delete_contacts);
 
 
 module.exports = router;
