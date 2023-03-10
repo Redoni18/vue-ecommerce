@@ -1,62 +1,64 @@
 <template>
-<div class="container" v-if="product">
-    <!-- product -->
-    <div class="product-content product-wrap clearfix product-deatil">
-        <div class="row">
-            <div class="col-md-5 col-sm-12 col-xs-12">
-                <div class="product-image">
-                    <img :src="!product.imageUrl.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : product.imageUrl" class="image-item" alt="">
-                </div>
-            </div>
-
-            <div class="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
-                <h2 class="name" >
-                    {{ product.productName}}
-                    <!-- <small>Product by <a href="javascript:void(0);">Adeline</a></small> -->
-                    <!-- <span class="fa fa-2x"><h5>(109) Votes</h5></span>
-                    <a href="javascript:void(0);">109 customer reviews</a> -->
-                </h2>
-                <hr />
-                <h3 class="price-container">
-                    {{ product.productPrice}}&euro;
-                </h3>
-                <div class="certified">
-                    <ul>
-                        <li>
-                            <a href="javascript:void(0);">Delivery time<span>7 Working Days</span></a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);">Certified<span>Quality Assured</span></a>
-                        </li>
-                    </ul>
-                </div>
-                <hr />
-                <div class="description">
-                        <div class="description-title" style="display: flex;">
-                            <h2>Description</h2>
-                        </div>
-                            <br />
-                            
-                            <p style="display: flex;">
-                                {{ product.productDescription }}
-                            </p>
-                </div>
-                <hr />
-                <div class="row" style="justify-content: center;">
-                    <div class="col-sm-12 col-md-6 col-lg-6">
-                        <a href="javascript:void(0);" class="btn btn-success btn-lg">Buy Now ({{ product.productPrice}}&euro;)  </a>
+<div class="product-details">
+    <div class="container mt-5" v-if="product">
+        <!-- product -->
+        <div class="product-content product-wrap clearfix product-deatil">
+            <div class="row">
+                <div class="col-md-5 col-sm-12 col-xs-12">
+                    <div class="product-image">
+                        <img :src="!product.imageUrl.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : product.imageUrl" class="image-item" alt="">
                     </div>
-                    <!-- <div class="col-sm-12 col-md-6 col-lg-6">
-                        <div class="btn-group pull-right">
-                            <button class="btn btn-white btn-default"><i class="fa fa-star"></i> Add to wishlist</button>
-                            <button class="btn btn-white btn-default"><i class="fa fa-envelope"></i> Contact Seller</button>
+                </div>
+
+                <div class="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
+                    <h2 class="name mt-5">
+                        {{ product.productName}}
+                        <!-- <small>Product by <a href="javascript:void(0);">Adeline</a></small> -->
+                        <!-- <span class="fa fa-2x"><h5>(109) Votes</h5></span>
+                        <a href="javascript:void(0);">109 customer reviews</a> -->
+                    </h2>
+                    <hr />
+                    <h3 class="price-container">
+                        {{ product.productPrice}}&euro;
+                    </h3>
+                    <div class="certified">
+                        <ul>
+                            <li>
+                                <a href="javascript:void(0);">Delivery time<span>7 Working Days</span></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);">Certified<span>Quality Assured</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <hr />
+                    <div class="description">
+                            <div class="description-title" style="display: flex;">
+                                <h2>Description</h2>
+                            </div>
+                                <br />
+                                
+                                <p style="display: flex;">
+                                    {{ product.productDescription }}
+                                </p>
+                    </div>
+                    <hr />
+                    <div class="row" style="justify-content: center;">
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <a href="javascript:void(0);" class="btn btn-success btn-lg">Buy Now ({{ product.productPrice}}&euro;)  </a>
                         </div>
-                    </div> -->
+                        <!-- <div class="col-sm-12 col-md-6 col-lg-6">
+                            <div class="btn-group pull-right">
+                                <button class="btn btn-white btn-default"><i class="fa fa-star"></i> Add to wishlist</button>
+                                <button class="btn btn-white btn-default"><i class="fa fa-envelope"></i> Contact Seller</button>
+                            </div>
+                        </div> -->
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- end product -->
     </div>
-    <!-- end product -->
 </div>
 </template>
 
@@ -81,12 +83,10 @@ export default {
 </script>
 
 <style scoped>
-body{
-    margin-top:20px;
-    background:#eee;
+.product-details{
+    padding-top: 1%;
+    height: 100%;
 }
-
-
 .product-content {
     border: 1px solid #dfe5e9;
     margin-bottom: 20px;
