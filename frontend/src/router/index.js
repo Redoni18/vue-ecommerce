@@ -138,6 +138,30 @@ const routes = [{
         }
     },
     {
+        path: '/contacts',
+        name: 'contacts',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/contacts/Listing.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
+    {
+        path: '/contacts/insert',
+        name: 'contactsInsert',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/contacts/CreateContact.vue'),
+        // beforeEnter: (to, from, next) => {
+        //     beforeEnter.authenticate(to, from, next)
+        // }
+    },
+    {
         path: '/category/:id',
         name: 'categoryProducts',
         component: () =>
@@ -145,8 +169,7 @@ const routes = [{
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }
-    },
-    {
+    }, {
         path: '/about',
         name: 'about',
         // route level code-splitting
@@ -157,8 +180,7 @@ const routes = [{
         beforeEnter: (to, from, next) => {
             beforeEnter.isAuthenticated(to, from, next)
         }
-    },
-    {
+    }, {
         path: '/register',
         name: 'register',
         // route level code-splitting
@@ -169,8 +191,7 @@ const routes = [{
         beforeEnter: (to, from, next) => {
             beforeEnter.isAuthenticated(to, from, next)
         }
-    },
-    {
+    }, {
         path: '/login',
         name: 'login',
         // route level code-splitting
@@ -181,8 +202,7 @@ const routes = [{
         beforeEnter: (to, from, next) => {
             beforeEnter.isAuthenticated(to, from, next)
         }
-    },
-    {
+    }, {
         path: '/profile',
         name: 'profile',
         component: UserProfile,

@@ -52,6 +52,7 @@ import { getUser } from '@/eCommerce-sdk/user.js'
               }
             ]
           },   
+          
           {
             title: 'Coming Soon',
             icon: 'fa-regular fa-clock',
@@ -99,6 +100,12 @@ import { getUser } from '@/eCommerce-sdk/user.js'
                 icon: "fa-solid fa-plus"
               },
             ]
+          },
+          {
+            title: 'Messages',
+            href: '/contacts',
+            icon: 'fa-sharp fa-solid fa-inbox',
+            
           },
           {
             href: '/login',
