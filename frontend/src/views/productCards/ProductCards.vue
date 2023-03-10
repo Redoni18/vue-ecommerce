@@ -4,7 +4,7 @@
         <FilterProducts />
         <div class="row">
           <div v-for="product in products" :key="product._id" class="col-md-4 col-sm-6">
-            <ProductCard :product="product"/>
+            <router-link :to="{name: 'productDetails', params: {id: product._id}}"><ProductCard :product="product" /></router-link>
           </div>
         </div>
       </div>
