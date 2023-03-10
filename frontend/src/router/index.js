@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import UserProfile from '../views/UserProfile.vue'
 // import * as auth from '../helper/auth'
 // import store from '../store'

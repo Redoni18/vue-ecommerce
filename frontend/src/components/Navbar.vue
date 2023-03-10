@@ -13,12 +13,12 @@
                         <!-- <router-link to="/Contact" class="nav-link w-50 m-auto">Contact</router-link> -->
                     </div>
                     <div v-if="user.authenticated" class="navbar-nav">
-                        <router-link to="/Careers" class="nav-link w-50 m-auto">Profile</router-link>
-                        <router-link to="/Contact" @click="signOut" class="nav-link w-50 m-auto">Logout</router-link>
+                        <router-link to="/profile" class="nav-link w-50 m-auto">Profile</router-link>
+                        <router-link to="/login" @click="signOut" class="nav-link w-50 m-auto">Logout</router-link>
                     </div>
                     <div v-else class="navbar-nav">
                         <router-link to="/register" class="nav-link w-100 m-auto">Register</router-link>
-                        <router-link to="/login" @click="goToSignIn" class="nav-link w-100 m-auto">Sign In</router-link>
+                        <router-link to="/login" class="nav-link w-100 m-auto">Sign In</router-link>
                     </div>
                 </div>
         </div>
@@ -63,9 +63,6 @@ export default {
                 console.log(err)
             }
         },
-        goToSignIn() {
-            this.$router.push({ path: "/login" })
-        }
     }
 
 }

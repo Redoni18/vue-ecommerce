@@ -1,6 +1,6 @@
 <template>
     <div class="container" v-if="currentUser">
-    <div class="main-body">
+    <div class="main-body mt-5">
     
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
