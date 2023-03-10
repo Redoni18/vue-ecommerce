@@ -12,8 +12,8 @@
 
     <div class="category-products__page category-products m-auto">
         <div class="products-grid">
-            <div v-for="product in allProducts" :key="product._id">
-                <ProductCard :product="product"/>
+            <div v-for="product in products" :key="product._id">
+              <router-link :to="{name: 'productDetails', params: {id: product._id}}"><ProductCard :product="product" /></router-link>
             </div>
         </div>
     </div>
