@@ -29,27 +29,6 @@ exports.insert_contacts = function(req, res) {
     });
 }
 
-exports.edit_contacts = function(req, res) {
-
-    if (!ObjectID.isValid(req.body._id)) {
-        return res.status(400).send(`No record with given id:   ${req.body._id}`)
-    }
-
-    let updatedContacts = {
-        contactName: req.body.contactName,
-        contactEmail: req.body.contactEmail,
-        contactNumber: req.body.contactNumber,
-        contactDescription: req.body.contactDescription
-    }
-
-    Contacts.findByIdAndUpdate(req.body._id, { $set: updatedContacts }, { new: true }, (err, doc) => {
-        if (!err) {
-            res.send(doc)
-        } else {
-            console.log('Error while updating PayMethod')
-        }
-    })
-}
 
 exports.delete_contacts = function(req, res) {
     if (!ObjectID.isValid(req.params.id)) {

@@ -80,7 +80,6 @@ router.delete('/api/reviews/delete/:id', reviewsController.delete_review);
 router.get('/api/contacts', contactController.get_contacts);
 router.get('/api/contact/:id', contactController.get_contact);
 router.post('/api/uploadContact', contactController.insert_contacts);
-router.put('/api/editContact/:id', contactController.edit_contacts);
 router.delete('/api/contacts/delete/:id', contactController.delete_contacts);
 
 
