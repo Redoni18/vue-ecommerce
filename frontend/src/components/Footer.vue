@@ -1,5 +1,5 @@
 <template>
-<footer v-if="user.authenticated && currentUser && !(currentUser?.isAdmin || currentUser?.isDelivery)" class="footer_area section_padding_130_0">
+<footer class="footer_area section_padding_130_0">
       <div class="container">
         <div class="row">
           <div class="col-12 col-sm-6 col-lg-4">
@@ -73,7 +73,7 @@ export default {
   },
   watch: {
     'user.data.user.uid': async function() {
-      if(this.user.data?.user.uid) {
+      if(this.user.data?.user?.uid) {
         const response = await getUser(this.user.data.user.uid)
         this.currentUser = response.data
       }

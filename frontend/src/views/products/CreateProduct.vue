@@ -1,4 +1,5 @@
 <template>
+<div class="insert-products">
     <div class="form-container">
         <h2>Upload product</h2>
         <div class="insert-form">
@@ -55,13 +56,13 @@
                 <b-form-group
                     label="Product Category"
                 >
-                    <v-select :close-on-select="false" searchable multiple label="categoryName" :options="allCategories" v-model="product.productCategory" placeholder="Product Category"></v-select>
+                    <v-select searchable label="categoryName" :options="allCategories" v-model="product.productCategory" placeholder="Product Category"></v-select>
                 </b-form-group>
 
                 <b-form-group
                     label="Product Brand"
                 >
-                    <v-select :close-on-select="false" searchable label="brandName" :options="allBrands" v-model="product.productBrand" placeholder="Product Brand"></v-select>
+                    <v-select searchable label="brandName" :options="allBrands" v-model="product.productBrand" placeholder="Product Brand"></v-select>
                 </b-form-group>
                 
                 <div class="d-flex gap-2 justify-content-center">
@@ -72,6 +73,7 @@
             </b-form>
         </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -137,8 +139,9 @@ export default {
 
 .form-container {
     width: 600px;
-    padding: 3% 0;
+    padding: 2% 0;
     margin: 0 auto;
 }
+
 
 </style>

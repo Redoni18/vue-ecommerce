@@ -1,5 +1,5 @@
 <template>
-    <b-modal @ok="onSubmit" size="lg">
+    <b-modal @ok="onSubmit" size="lg" ok-title="Save Changes">
         <template v-slot:header>
             <div class="d-flex justify-content-between w-100">
                 <h4>Edit Payment Method</h4>

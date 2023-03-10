@@ -2,7 +2,7 @@
     <Sidebar v-if="user.authenticated && currentUser && (currentUser.isAdmin || currentUser.isDelivery)" />
     <Navbar class="position-absolute top-0 left-0 w-100" v-else />
     <router-view class="root" :class="{'root2': currentUser && !(currentUser.isAdmin || currentUser.isDelivery) }"/>
-    <Footer />
+    <Footer v-if="user.authenticated && currentUser && !(currentUser.isAdmin || currentUser.isDelivery)"/>
 </template>
 
 <script>
@@ -33,7 +33,7 @@ export default {
   },
   watch: {
     '$store.state.authenticate.user.data.uid': async function() {
-      if(this.user.data.uid) {
+      if(this.user?.data?.uid) {
         const response = await getUser(this.user.data.uid)
         this.currentUser = response.data
       }
