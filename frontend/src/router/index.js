@@ -148,9 +148,9 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/contacts/CreateContact.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        // beforeEnter: (to, from, next) => {
+        //     beforeEnter.authenticate(to, from, next)
+        // }
     },
     {
         path: '/category/:id',
@@ -160,8 +160,7 @@ const routes = [{
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }
-    },
-    {
+    }, {
         path: '/about',
         name: 'about',
         // route level code-splitting
@@ -172,8 +171,7 @@ const routes = [{
         beforeEnter: (to, from, next) => {
             beforeEnter.isAuthenticated(to, from, next)
         }
-    },
-    {
+    }, {
         path: '/register',
         name: 'register',
         // route level code-splitting
@@ -184,8 +182,7 @@ const routes = [{
         beforeEnter: (to, from, next) => {
             beforeEnter.isAuthenticated(to, from, next)
         }
-    },
-    {
+    }, {
         path: '/login',
         name: 'login',
         // route level code-splitting
@@ -196,8 +193,7 @@ const routes = [{
         beforeEnter: (to, from, next) => {
             beforeEnter.isAuthenticated(to, from, next)
         }
-    },
-    {
+    }, {
         path: '/profile',
         name: 'profile',
         component: UserProfile,
