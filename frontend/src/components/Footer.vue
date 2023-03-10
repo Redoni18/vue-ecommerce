@@ -1,5 +1,5 @@
 <template>
-<footer class="footer_area section_padding_130_0">
+<footer v-if="user.authenticated && !(currentUser?.isAdmin || currentUser?.isDelivery)" class="footer_area section_padding_130_0">
       <div class="container">
         <div class="row">
           <div class="col-12 col-sm-6 col-lg-4">
@@ -57,8 +57,32 @@
     </footer>
 </template>
 
-<style>
-  body{margin-top: 20px;}
+<script>
+import { mapGetters } from 'vuex'
+import { getUser } from '@/eCommerce-sdk/user.js'
+export default {
+  data() {
+    return {
+      currentUser: null
+    }
+  },
+  computed: {
+    ...mapGetters({
+        user: 'getUser'
+    }),
+  },
+  watch: {
+    'user.data.user.uid': async function() {
+      if(this.user.data?.user.uid) {
+        const response = await getUser(this.user.data.user.uid)
+        this.currentUser = response.data
+      }
+    }
+  },
+}
+</script>
+
+<style scoped>
 .footer_area {
     position: relative;
     z-index: 1;
