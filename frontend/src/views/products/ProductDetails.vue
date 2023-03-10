@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-5 col-sm-12 col-xs-12">
                 <div class="product-image">
-                    
+                    <img :src="!product.imageUrl.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : product.imageUrl" class="image-item" alt="">
                 </div>
             </div>
 
@@ -18,7 +18,7 @@
                 </h2>
                 <hr />
                 <h3 class="price-container">
-                    $129.54
+                    {{ product.productPrice}}&euro;
                 </h3>
                 <div class="certified">
                     <ul>
@@ -31,21 +31,18 @@
                     </ul>
                 </div>
                 <hr />
-                <!-- <div class="description description-tabs"> -->
-                    
-                        <div class="tab-pane fade active in" id="more-information">
-                            <br />
-                            <strong>Description Title</strong>
-                            <p>
-                                Integer egestas, orci id condimentum eleifend, nibh nisi pulvinar eros, vitae ornare massa neque ut orci. Nam aliquet lectus sed odio eleifend, at iaculis dolor egestas. Nunc elementum pellentesque augue
-                                sodales porta. Etiam aliquet rutrum turpis, feugiat sodales ipsum consectetur nec.
-                            </p>
+                <div class="description">
+                        <div class="description-title" style="display: flex;">
+                            <h2>Description</h2>
                         </div>
-                        
-                    
-                <!-- </div> -->
+                            <br />
+                            
+                            <p style="display: flex;">
+                                {{ product.productDescription }}
+                            </p>
+                </div>
                 <hr />
-                <div class="row">
+                <div class="row" style="justify-content: center;">
                     <div class="col-sm-12 col-md-6 col-lg-6">
                         <a href="javascript:void(0);" class="btn btn-success btn-lg">Buy Now ({{ product.productPrice}}&euro;)  </a>
                     </div>
@@ -108,6 +105,10 @@ body{
     overflow: hidden;
     position: relative
 }
+.image-item {
+    max-height: 350px;
+    max-width: 300px;
+}
 
 .product-content .product-deatil {
     border-bottom: 1px solid #dfe5e9;
@@ -162,7 +163,9 @@ body{
     font-size: 12.5px;
     line-height: 20px;
     padding: 10px 14px 16px 19px;
-    background: #fff
+    background: #fff;
+    display: flex;
+    flex-direction: column;
 }
 
 .product-content .product-info {
@@ -180,42 +183,6 @@ body{
     margin-left: 16px
 }
 
-.product-info.smart-form .btn {
-    padding: 6px 12px;
-    margin-left: 12px;
-    margin-top: -10px
-}
-
-.product-entry .product-deatil {
-    border-bottom: 1px solid #dfe5e9;
-    padding-bottom: 17px;
-    padding-left: 16px;
-    padding-top: 16px;
-    position: relative
-}
-
-.product-entry .product-deatil h5 a {
-    color: #2f383d;
-    font-size: 15px;
-    line-height: 19px;
-    text-decoration: none
-}
-
-.product-entry .product-deatil h5 a span {
-    color: #9aa7af;
-    display: block;
-    font-size: 13px
-}
-
-.load-more-btn {
-    background-color: #21c2f8;
-    border-bottom: 2px solid #037ca5;
-    border-radius: 2px;
-    border-top: 2px solid #0cf;
-    margin-top: 20px;
-    padding: 9px 0;
-    width: 100%
-}
 
 .product-block .product-deatil p.price-container span,
 .product-content .product-deatil p.price-container span,
@@ -228,9 +195,7 @@ body{
     line-height: 20px
 }
 
-.product-info.smart-form .rating label {
-    margin-top: 0
-}
+
 
 .product-wrap .product-image span.tag2 {
     position: absolute;
@@ -253,24 +218,6 @@ body{
     background-color: #a90329
 }
 
-.shop-btn {
-    position: relative
-}
-
-.shop-btn>span {
-    background: #a90329;
-    display: inline-block;
-    font-size: 10px;
-    box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1), inset 0 -1px 0 rgba(0, 0, 0, .07);
-    font-weight: 700;
-    border-radius: 50%;
-    padding: 2px 4px 3px!important;
-    text-align: center;
-    line-height: normal;
-    width: 19px;
-    top: -7px;
-    left: -7px
-}
 
 .description-tabs {
     padding: 30px 0 5px!important
@@ -338,10 +285,6 @@ body{
     font-size: 13px
 }
 
-.profile-message ul {
-  list-style: none ;  
-}
-
 .product-deatil .certified {
     margin-top: 10px
 }
@@ -406,8 +349,4 @@ body{
     }
 }
 
-.message img.online {
-    width:40px;
-    height:40px;
-}
 </style>
