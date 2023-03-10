@@ -1,7 +1,7 @@
 <template>
   <div class="item">
 
-        <img class="img-responsive" :src="!product.imageUrl.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : product.imageUrl" alt="">
+        <img class="product-image" :src="!product.imageUrl.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : product.imageUrl" alt="">
 
         <div class="item-dtls">
 
@@ -87,6 +87,16 @@ export default {
 .item a.btn:hover{
 	background:#fff;
 	color:#777;
-}                         
+}     
+
+.img-responsive{
+	object-fit: contain;
+	width: fit-content;
+}
+
+.product-image {
+	width: 210px !important;
+	height: 90px;
+}
 
 </style>

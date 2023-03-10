@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import UserProfile from '../views/UserProfile.vue'
 // import * as auth from '../helper/auth'
 // import store from '../store'
 
@@ -138,6 +138,15 @@ const routes = [{
         }
     },
     {
+        path: '/category/:id',
+        name: 'categoryProducts',
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/categoryProducts/CategoryProducts.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
+    {
         path: '/about',
         name: 'about',
         // route level code-splitting
@@ -172,7 +181,15 @@ const routes = [{
         beforeEnter: (to, from, next) => {
             beforeEnter.isAuthenticated(to, from, next)
         }
-    }
+    },
+    {
+        path: '/profile',
+        name: 'profile',
+        component: UserProfile,
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
 ]
 
 

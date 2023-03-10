@@ -28,9 +28,9 @@ export default {
     console.log(this.currentUser)
   },
   watch: {
-    '$store.state.authenticate.user.data.user.uid': async function() {
-      if(this.user.data?.user?.uid) {
-        const response = await getUser(this.user.data.user.uid)
+    '$store.state.authenticate.user.data.uid': async function() {
+      if(this.user.data.uid) {
+        const response = await getUser(this.user.data.uid)
         this.currentUser = response.data
       }
     }

@@ -14,6 +14,12 @@ export const removeUser = (state) => {
     auth.removeUser()
 }
 
+export const updateUser = (state, userData) => {
+    state.user.data = userData;
+    auth.removeUser()
+    auth.storeUser(JSON.stringify(userData));
+}
+
 // export const storeId = (state, id) => {
 //     state.user.user_id = id    
 // }
