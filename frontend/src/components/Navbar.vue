@@ -18,7 +18,7 @@
                     </div>
                     <div v-else class="navbar-nav">
                         <router-link to="/register" class="nav-link w-100 m-auto">Register</router-link>
-                        <router-link to="/login" @click="signOut" class="nav-link w-100 m-auto">Sign In</router-link>
+                        <router-link to="/login" @click="goToSignIn" class="nav-link w-100 m-auto">Sign In</router-link>
                     </div>
                 </div>
         </div>
@@ -62,6 +62,9 @@ export default {
             } catch (err) {
                 console.log(err)
             }
+        },
+        goToSignIn() {
+            this.$router.push({ path: "/login" })
         }
     }
 
