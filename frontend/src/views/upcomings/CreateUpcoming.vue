@@ -48,7 +48,7 @@ export default {
                 productName: '',
                 productBrand: '',
                 imageUrl: '',
-                insertedBy: this.$store.state.authenticate.user.data.user.displayName,
+                insertedBy: this.$store.state.authenticate.user.data.displayName,
                 insertDate: null,
             },
         

@@ -1,7 +1,6 @@
 <template>
     <div class="form-container">
         <h2>Upload product</h2>
-        {{user}}
         <div class="insert-form">
             <b-form @submit="onSubmit">
                 <b-form-group
