@@ -1,60 +1,44 @@
 <template>
-  <div class="registration">
-      <b-alert 
-        variant="danger" 
-        class="alert-error" 
-        v-if="errorMessage" 
-        v-model="autoDismissingAlert"
-        :interval="autoDismissingAlertInterval"
-        @close-countdown="autoDismissingAlertCountdown = $event" 
-        fade
-      >
-        {{errorMessage}} <b>&rArr;</b>
-      </b-alert>
-      <div class="mt-4 register-card">
-        <h2>Login</h2>
-        <b-form @submit="signin" class="mt-4">
-            <b-form-group
-              id="input-group-1"
-              label="Email:"
-              label-cols-sm="4"
-              label-cols-lg="2"
-              content-cols="10"
-              label-align="start"
-            >
-              <b-form-input
-                v-model="email"
-                type="email"
-                placeholder="Enter your email"
-                required
-              ></b-form-input>
-            </b-form-group>
-
-            <b-form-group
-              id="input-group-1"
-              label="Password:"
-              label-cols-sm="4"
-              label-cols-lg="2"
-              content-cols-sm
-              content-cols-lg="10"
-              label-align="start"
-            >
-              <b-form-input
-                v-model="password"
-                type="password"
-                placeholder="Enter your password"
-                required
-              ></b-form-input>
-            </b-form-group>
-            <p class="redirect-link">Don't have an account? <span @click="goToSignUp">Sign Up!</span></p>
-
-
-            <b-button type="submit" variant="light" class="mt-2">Login</b-button>
-          </b-form>
-      </div>
-      <!-- <small class="text-center w-50 mt-2 text-danger" v-if="errorMessage">{{errorMessage}}</small> -->
+<div class="row justify-content-center align-items-center mt-4">
+  <div class="col-8">
+        <div class="card card-container border-0">
+                <div class="card-body p-0">
+                    <div class="row no-gutters">
+                        <div class="col-lg-6">
+                          <div class="p-5">
+                                <h4 class="h3 mb-30" style="color:crimson">Login</h4>
+                                <br>
+                                <form @submit="signin">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Email Address</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" v-model="email" required/>
+                                    </div>
+                                    <br>
+                                    <div class="form-group mb-5">
+                                        <label for="exampleInputPassword1">Password</label>
+                                        <input type="password" class="form-control" id="exampleInputPassword1" v-model="password" required/>
+                                    </div>
+                                    <div class="d-grid gap-2">
+                                      <button type="submit" class="btn btn-theme">Login</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 d-none d-lg-inline-block">
+                            <div class="account-block rounded-right">
+                                <div class="overlay rounded-right"></div>
+                                <div class="account-testimonial">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          <p class="text-muted text-center mt-3 mb-0">Don't have an account? <span class="text-primary ml-1 sign-up__link" @click="goToSignUp">Sign Up!</span></p>
     </div>
+</div>
 </template>
+
 
 <script>
 export default {
@@ -76,7 +60,13 @@ export default {
           password: this.password,
         })
 
-        this.$router.push({ name: 'home'})
+        if(!(this.email.includes("@eCommerce") || this.email.includes('@delivery'))) {
+          this.$router.push({ name: 'home'})
+        } else if(this.email.includes('@eCommerce')){
+          this.$router.push({ name: 'products'})
+        } else {
+          this.$router.push({ name: 'orders'})
+        }
       } catch (error) {
         this.errorMessage = error.message
       }
@@ -91,42 +81,34 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.registration {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: #A7BFE8;  /* fallback for old browsers */
-  
-  .register-card {
-    padding: 3%;
-    width: 50%;
-    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background: #bbd1f7;
-  }
 
-  .redirect-link{
-    text-align: center;
-    font-size: 12px;
-    color: #575656;
-
-    span {
-      color: #030303;
-      cursor: pointer;
-    }
-  }
-
-  .alert-error {
-    width: 30%;
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    font-size: 14px;
-  }
+.card-container {
+  padding: 2%;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 8px;
+  background: #fcfcfc;
 }
+
+.account-block {
+    background-image: url(../../assets/sign-in.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 100%;
+    position: relative;
+    object-fit: contain;
+}
+
+.text-theme {
+    color: crimson !important;
+}
+.btn-theme {
+    background-color: crimson;
+    border-color: crimson;
+    color: #fff;
+}
+
+.sign-up__link:hover{
+  cursor: pointer;
+}
+
 </style>

@@ -24,3 +24,7 @@ export function removeProduct(productId) {
 export function getProduct(productId) {
     return axios.get(`${API_URL}/api/product/${productId}`)
 }
+
+export function filterProducts(searchTerm) {
+    return axios.get(`${API_URL}/api/filterProduct?searchTerm=${searchTerm}`)
+}

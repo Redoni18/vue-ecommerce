@@ -9,7 +9,8 @@ import * as beforeEnter from './beforeEnter'
 const routes = [{
         path: '/',
         name: 'home',
-        component: HomeView,
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/productCards/ProductCards.vue'),
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }
@@ -124,6 +125,15 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/paymethods/CreatePayMethod.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
+    {
+        path: '/category/:id',
+        name: 'categoryProducts',
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/categoryProducts/CategoryProducts.vue'),
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }

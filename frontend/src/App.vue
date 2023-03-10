@@ -1,6 +1,6 @@
 <template>
     <Sidebar v-if="user.authenticated && currentUser && (currentUser.isAdmin || currentUser.isDelivery)" />
-    <Navbar class="position-absolute top-0 left-0 w-100" v-else-if="user.authenticated" />
+    <Navbar class="position-absolute top-0 left-0 w-100" v-else />
     <router-view class="root" :class="{'root2': currentUser && !(currentUser.isAdmin || currentUser.isDelivery) }"/>
 </template>
 
@@ -23,6 +23,9 @@ export default {
     return {
       currentUser: null
     }
+  },
+  mounted() {
+    console.log(this.currentUser)
   },
   watch: {
     '$store.state.authenticate.user.data.uid': async function() {
@@ -48,7 +51,7 @@ export default {
   color: #2c3e50;
   margin: 0;
   background: #fafafa;
-  height: 100vh;
+  height: 100%;
   display: flex;
 }
 .root{
@@ -57,7 +60,7 @@ export default {
 }
 
 .root2{
-  margin-top: 120px;
-  height: calc(100% - 120px);
+  margin-top: 100px;
+  height: 100vh;
 }
 </style>
