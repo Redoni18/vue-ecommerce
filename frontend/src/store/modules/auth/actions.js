@@ -1,4 +1,5 @@
 import {signin, userSignOut} from '../../../eCommerce-sdk/user'
+import { getAuth } from "firebase/auth";
 
 export const loginUser = ({commit}, userData) => {
     return new Promise((resolve, reject) => {
@@ -6,7 +7,10 @@ export const loginUser = ({commit}, userData) => {
         signin(userData)
         .then((response) =>{
             console.log(response)
-            commit('storeUser', response)
+
+            const auth = getAuth()
+            console.log(auth)
+            commit('storeUser', auth.currentUser)
             resolve(response)
         })
         .catch(error => { reject(error) })
@@ -23,6 +27,12 @@ export const logout = ({commit}) => {
         })
         .catch(error => { reject(error) })
     })
+};
+
+export const updateUser = ({commit}) => {
+    const auth = getAuth()
+    console.log(auth)
+    commit('updateUser', auth.currentUser)
 };
 
 // export const getPersonalInfo = ({ commit }) => {    

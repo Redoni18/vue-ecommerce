@@ -1,11 +1,11 @@
 <template>
   <div class="item">
 
-        <img class="img-responsive" :src="!product.imageUrl.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : product.imageUrl" alt="">
+        <img class="product-image" :src="!product.imageUrl.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : product.imageUrl" alt="">
 
         <div class="item-dtls">
 
-        <h5><a class="item-name" href="#">sfksjdfjsdlkfjslkjdflkjsfkdj</a></h5>
+        <h6><a class="item-name" href="#">{{product.productName}}</a></h6>
 
         <span class="price lblue">{{product.productPrice}}&euro;</span>
         </div>
@@ -54,7 +54,7 @@ export default {
 .item img {
 	width: 100%;
 	max-width: 360px;
-	margin: 0 auto;
+	margin: 0 auto 15px auto;
 	border: 1px solid #eee;
 	border-radius: 3px;
     height: 200px;
@@ -74,12 +74,7 @@ export default {
 .item-name {
     text-decoration: none;
     color: #666666;
-    margin-top: 10px;
-
-    max-width: 300px;
-    overflow: hidden;
-    white-space: nowrap; /* Don't forget this one */
-    text-overflow: ellipsis;
+    padding-top: 10px;
 }
 
 .item {
@@ -92,6 +87,16 @@ export default {
 .item a.btn:hover{
 	background:#fff;
 	color:#777;
-}                         
+}     
+
+.img-responsive{
+	object-fit: contain;
+	width: fit-content;
+}
+
+.product-image {
+	width: 210px !important;
+	height: 90px;
+}
 
 </style>

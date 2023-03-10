@@ -158,7 +158,7 @@ import { getUser } from '@/eCommerce-sdk/user.js'
       },
     },
     async mounted(){
-        const response = await getUser(this.user.data.user.uid)
+        const response = await getUser(this.user.data.uid)
         console.log(response)
         this.currentUser = response.data
 

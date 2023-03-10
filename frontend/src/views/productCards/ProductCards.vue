@@ -1,41 +1,99 @@
 <template>
-    <div class="shop-items">
-      <div class="container-fluid">    
-        <FilterProducts />
-        <div class="row">
-          <div v-for="product in products" :key="product._id" class="col-md-3 col-sm-6">
-            <ProductCard :product="product"/>
-          </div>
+<div class="home-view">
+	<ul class="nav justify-content-center category-tab">
+		<li v-for="category in categories" :key="category._id" class="nav-item py-2">
+			<router-link :to="{name: 'categoryProducts', params: {id: category._id}}" class="nav-link text-dark category-link">{{category.categoryName}}</router-link>
+		</li>
+	</ul>
+
+	<div class="search-input">
+		<input v-model="searchTerm" class="form-control form-control-lg form-control-borderless px-2" type="search" placeholder="Search...">
+	</div>
+
+    <div class="category-products__page category-products m-auto">
+        <div class="products-grid">
+            <div v-for="product in products" :key="product._id">
+              <router-link :to="{name: 'productDetails', params: {id: product._id}}"><ProductCard :product="product" /></router-link>
+            </div>
         </div>
-      </div>
     </div>
+</div>
 </template>
 
 <script>
 import FilterProducts from './FilterProducts.vue'
 import ProductCard from '@/components/ProductCard.vue'
+import { filterProducts } from '@/eCommerce-sdk/products.js'
+
 export default {
     components: {
         ProductCard,
         FilterProducts
     },
+	data() {
+		return {
+			searchTerm: null,
+			allProducts: null,
+			timeoutId: null
+		}
+	},	
     async mounted() {
         await this.$store.dispatch('fetchProducts') 
+		await this.$store.dispatch('fetchCategories')
+		this.allProducts = this.$store.state.products.products
     },
     computed: {
-        products() {
-            return this.$store.state.products.products
+
+		categories() {
+            return this.$store.state.categories.categories
         }
     },
+	watch: {
+        'searchTerm': async function() {
+            if(this.timeoutId){
+                clearTimeout(this.timeoutId)
+            }
+            this.timeoutId = setTimeout(() => {
+                this.searchProducts()
+                this.timeoutId = null
+            }, 500)
+        }
+    },
+	methods: {
+		async searchProducts() {
+            const response = await filterProducts(this.searchTerm)
+            this.allProducts = response.data
+        }
+	}
 
 }
 </script>
 
 <style lang="scss" scoped>
 
+.home-view {
+	height: 100%;
+}
+
+.category-products{
+	max-width: 90%;
+    display: flex;
+    justify-content: center;
+}
+
+.products-grid{
+    padding: 0 1%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1%;
+	margin-left: 5%;
+	margin-bottom: 5%;
+}
+
+
 .shop-items{
-	max-width: 1150px;
-	margin: 120px auto;
+	max-width: 75%;
+	margin: 20px auto;
 	padding:0px 20px;
 }
 
@@ -44,17 +102,9 @@ export default {
     gap: 4%;
 }
 
-@media only screen and (max-width: 900px) {
-    .container-fluid {
-        display: flex;
-        flex-direction: column;
-        gap: 2%;
-    }
-}
-
 .shop-items .item {
 	position: relative;
-	max-width: 360px;
+	max-width: 230px;
 	margin: 15px auto;
 	padding: 5px;
 	text-align: center;
@@ -109,5 +159,39 @@ export default {
 .shop-items .item  .ecom  a.btn:hover{
 	background:#fff;
 	color:#777;
-}       
+}    
+
+.category-tab {
+	background: #eee;
+	display: flex;
+	align-items: center;
+}
+
+.category-link:hover {
+	color: crimson !important;
+	transition: 0.2s;
+}
+
+.category-link a.router-link-exact-active {
+  color: crimson;
+}
+
+.search-input {
+	width: 50%;
+	margin: 3% auto 2% auto;
+}
+
+@media only screen and (max-width: 900px) {
+    .container-fluid {
+        display: flex;
+		align-items: center;
+        flex-direction: column;
+        gap: 2%;
+    }
+
+	.search-input {
+		width: 70%;
+		margin: 5% auto 2% auto;
+	}
+}
 </style>
