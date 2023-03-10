@@ -38,7 +38,7 @@ export default {
         return {
             category: {
                 categoryName: '',
-                insertedBy: this.$store.state.authenticate.user.data.user.displayName,
+                insertedBy: this.$store.state.authenticate.user.data.displayName,
                 insertDate: null,
                 categoryBrand: []
             },

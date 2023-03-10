@@ -30,7 +30,7 @@ export default {
         return {
             paymentMethod: {
                 name: '',
-                insertedBy: this.$store.state.authenticate.user.data.user.displayName,
+                insertedBy: this.$store.state.authenticate.user.data.displayName,
                 insertDate: null,
             },
         }
