@@ -1,5 +1,5 @@
 <template>
-<footer v-if="user.authenticated && !(currentUser?.isAdmin || currentUser?.isDelivery)" class="footer_area section_padding_130_0">
+<footer v-if="user.authenticated && currentUser && !(currentUser?.isAdmin || currentUser?.isDelivery)" class="footer_area section_padding_130_0">
       <div class="container">
         <div class="row">
           <div class="col-12 col-sm-6 col-lg-4">
