@@ -1,11 +1,13 @@
 <template>
     <div class="form-container">
         <h2>Upload product</h2>
+        {{user}}
         <div class="insert-form">
             <b-form @submit="onSubmit">
                 <b-form-group
                     label="Product Name"
                 >
+
                     <b-form-input
                         v-model="product.productName"
                         placeholder="Product name"
@@ -56,6 +58,12 @@
                 >
                     <v-select :close-on-select="false" searchable multiple label="categoryName" :options="allCategories" v-model="product.productCategory" placeholder="Product Category"></v-select>
                 </b-form-group>
+
+                <b-form-group
+                    label="Product Brand"
+                >
+                    <v-select :close-on-select="false" searchable label="brandName" :options="allBrands" v-model="product.productBrand" placeholder="Product Brand"></v-select>
+                </b-form-group>
                 
                 <div class="d-flex gap-2 justify-content-center">
                     <b-button type="submit" variant="primary">Upload</b-button>
@@ -69,6 +77,7 @@
 
 <script>
 import { insertProduct } from '@/eCommerce-sdk/products.js'
+import { getBrands } from '@/eCommerce-sdk/brands.js'
 export default {
     data() {
         return {
@@ -78,21 +87,30 @@ export default {
                 stock: null,
                 imageUrl: '',
                 productPrice: null,
-                insertedBy: this.$store.state.authenticate.user.data.user.displayName,
+                insertedBy: this.$store.state.authenticate.user.data.displayName,
                 insertDate: null,
                 productCategory: [],
+                productBrand: []
             },
-            categories: []
+            categories: [],
+            brands: []
         }
     },
     async mounted() {
         const response = await this.$store.dispatch('fetchCategories')
         this.categories = response.data
         console.log(this.categories)
+
+        const response2 = await getBrands()
+        this.brands = response2.data
+        console.log(this.brands)
     },
     computed: {
         allCategories() {
             return this.categories
+        },
+        allBrands() {
+            return this.brands
         }
     },
     methods: {
@@ -109,7 +127,8 @@ export default {
             this.product.imageUrl = ""
             this.product.stock = ""
             this.product.productPrice = ""
-            this.product.productCategory = []
+            this.product.productCategory = [],
+            this.product.productBrand = []
         }
     }
 }

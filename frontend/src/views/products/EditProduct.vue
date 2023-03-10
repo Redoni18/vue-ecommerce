@@ -64,6 +64,13 @@
                 >
                     <v-select :close-on-select="false" searchable multiple label="categoryName" :options="allCategories" v-model="product.productCategory" placeholder="Product Category"></v-select>
                 </b-form-group>
+                
+                <b-form-group
+                    label="Product Brand"
+                >
+                    <v-select :close-on-select="false" searchable  label="brandName" :options="allBrands" v-model="product.productBrand" placeholder="Product Brand"></v-select>
+                </b-form-group>
+
             </b-form>
         </div>
     </b-modal>
@@ -71,6 +78,7 @@
 
 <script>
 import { editProduct } from '@/eCommerce-sdk/products.js'
+import { getBrands } from '@/eCommerce-sdk/brands.js'
 export default {
     props: {
         showModal: {
@@ -84,7 +92,8 @@ export default {
     },
     data() {
         return {
-            categories: []
+            categories: [],
+            brands: []
         }
     },
     watch: {
@@ -92,12 +101,18 @@ export default {
             if(this.showModal) {
                 const response = await this.$store.dispatch('fetchCategories')
                 this.categories = response.data
+
+                const response2 = await getBrands()
+                this.brands = response2.data
             }
         }
     },
     computed: {
         allCategories() {
             return this.categories
+        },
+        allBrands() {
+            return this.brands
         }
     },
     methods: {

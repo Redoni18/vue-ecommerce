@@ -38,6 +38,10 @@ const productSchema = new Schema({
     productCategory: { 
         type: mongoose.Schema.Types.Mixed, 
         ref: 'categories' 
+    },
+    productBrand: {
+        type: mongoose.Schema.Types.Mixed, 
+        ref: 'brands'
     }
 });
 
