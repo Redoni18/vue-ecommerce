@@ -11,12 +11,15 @@
                         <router-link to="/" class="nav-item nav-link w-50 m-auto">Home</router-link>
                         <router-link to="/about" class="nav-item nav-link w-50 m-auto">About</router-link>
                         <router-link to="/contacts/insert" class="nav-item nav-link w-100 m-auto">Contact Us!</router-link>
+                        <router-link to="/wishlists" class="nav-link w-100 m-auto">Wishlist</router-link>
+                        <router-link to="/wishlists/insert" class="nav-link w-100 m-auto">CreateWish</router-link>
                     </div>
                     <div v-if="user.authenticated" class="navbar-nav">
                         <router-link to="/profile" class="nav-link w-50 m-auto">Profile</router-link>
                         <router-link to="/login" @click="signOut" class="nav-link w-50 m-auto">Logout</router-link>
                     </div>
                     <div v-else class="navbar-nav">
+                       
                         <router-link to="/register" class="nav-link w-100 m-auto">Register</router-link>
                         <router-link to="/login" class="nav-link w-100 m-auto">Sign In</router-link>
                     </div>
