@@ -51,12 +51,11 @@
                         <div class="col-sm-12 col-md-6 col-lg-6">
                             <a href="javascript:void(0);" class="btn btn-success btn-lg">Buy Now ({{ product.productPrice}}&euro;)  </a>
                         </div>
-                        <!-- <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="col-sm-12 col-md-6 col-lg-6">
                             <div class="btn-group pull-right">
-                                <button class="btn btn-white btn-default"><i class="fa fa-star"></i> Add to wishlist</button>
-                                <button class="btn btn-white btn-default"><i class="fa fa-envelope"></i> Contact Seller</button>
+                                <button v-if="!product.stock" @click="addToWishlist" class="btn btn-white btn-default"><i class="fa fa-star"></i> Add to wishlist</button>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -68,6 +67,7 @@
 
 <script>
 import {getProduct} from '@/eCommerce-sdk/products'
+import {insertWishlist} from '@/eCommerce-sdk/wishlists'
 export default {
     name: 'ProductDetails',
     data() {
@@ -83,6 +83,19 @@ export default {
         console.log(this.product)
         
     },
+
+    methods: {
+         async addToWishlist() {
+            const product = {
+                productName: this.product.productName,
+                productBrand: this.product.productBrand.brandName,
+                productDescription: this.product.productDescription
+            }
+            await insertWishlist(product);
+           console.log(product);
+        }
+    },
+
 }
 </script>
 

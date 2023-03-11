@@ -150,18 +150,6 @@ const routes = [{
         }
     },
     {
-        path: '/wishlists/insert',
-        name: 'wishlistsInsert',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/wishlists/CreateWishlist.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
-    },
-    {
         path: '/contacts',
         name: 'contacts',
         // route level code-splitting

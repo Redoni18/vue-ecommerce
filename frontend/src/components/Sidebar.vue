@@ -108,6 +108,12 @@ import { getUser } from '@/eCommerce-sdk/user.js'
             
           },
           {
+            title: 'Wishlist',
+            href: '/wishlists',
+            icon: 'fa-sharp fa-solid fa-inbox',
+            
+          },
+          {
             href: '/login',
             title: 'Logout',
             icon: 'fa-solid fa-right-from-bracket'
