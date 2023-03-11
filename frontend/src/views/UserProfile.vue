@@ -71,6 +71,20 @@
                         </div>
                     </div>
                     </div>
+                    <div>
+                    <div >
+                      <a class="btn btn-info" @click="click1">choose a photo</a>
+                      <input type="file" ref="input1"
+                        style="display: none"
+                        @change="previewImage" accept="image/*" >                
+                    </div>
+            
+                  <div v-if="imageData!=null">                     
+                      <img class="preview" height="268" width="356" :src="img1">
+                  <br>
+                  </div>   
+                  
+                  </div>
                 </div>
             </b-form>
               
@@ -85,6 +99,8 @@
 
 import { mapGetters } from 'vuex'
 import { getAuth, updateProfile } from "firebase/auth";
+import firebase from 'firebase/app'
+import {getStorage} from "firebase/storage";
 export default {
     name: 'UserProfile',
     components: {
@@ -93,12 +109,16 @@ export default {
     return {
         currentUser : null,
         edit : true,
+        img1: '',
+        imageData: null
         }
     },
     computed: {
     ...mapGetters({
         user: 'getUser'
     }),
+    
+    
   },
   mounted(){
     this.currentUser = this.user.data.providerData[0]
@@ -120,7 +140,31 @@ export default {
         
         console.log('eeeej '+ updatedProfile)
         this.$router.push({ path: "/profile" })
-    }
+    },
+    click1() {
+      const response = this.$refs.input1.click() 
+      console.log(response)  
+    },
+    previewImage(event) {
+      this.uploadValue=0;
+      this.img1=null;
+      this.imageData = event.target.files[0];
+      this.onUpload()
+    },
+    onUpload(){
+      this.img1=null;
+      const storageRef=getStorage().ref(`${this.imageData.name}`).put(this.imageData);
+      storageRef.on(`state_changed`,snapshot=>{
+      this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+        }, error=>{console.log(error.message)},
+      ()=>{this.uploadValue=100;
+          storageRef.snapshot.ref.getDownloadURL().then((url)=>{
+              this.img1 =url;
+              console.log(this.img1)
+            });
+          }      
+        );
+    },
   }
   }
 
