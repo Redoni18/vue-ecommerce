@@ -1,5 +1,6 @@
 const Products = require('../models/Products');
 var ObjectID = require('mongoose').Types.ObjectId
+const mongoose = require('mongoose');
 
 exports.get_products = function(req, res) {
     Products.find((err, docs) => {
@@ -104,3 +105,19 @@ exports.findProductByName = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+exports.filterProductsByBrand =  async (req, res, next) => {
+    try {
+        const selectedBrandIds = req.query.brands.split(',');
+        const category = req.params.category
+        const products = await Products.find({ 'productCategory._id': category, 'productBrand._id': { $in: selectedBrandIds } }).populate('productBrand');
+        
+        if (products.length === 0) {
+            return res.status(404).json({ message: 'No products found with selected brands' });
+        }
+        res.json(products);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+  };

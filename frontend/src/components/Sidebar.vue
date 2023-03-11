@@ -15,11 +15,11 @@ import { getUser } from '@/eCommerce-sdk/user.js'
             header: 'eCommerce',
             hiddenOnCollapse: true
           },
-          {
-            href: '/',
-            title: 'Home',
-            icon: 'fa fa-home'
-          },
+          // {
+          //   href: '/',
+          //   title: 'Home',
+          //   icon: 'fa fa-home'
+          // },
           {
             title: 'Products',
             icon: 'fa-regular fa-folder',

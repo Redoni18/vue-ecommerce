@@ -28,3 +28,7 @@ export function getProduct(productId) {
 export function filterProducts(searchTerm) {
     return axios.get(`${API_URL}/api/filterProduct?searchTerm=${searchTerm}`)
 }
+
+export function filterProductsWithBrand(category, brands) {
+    return axios.get(`${API_URL}/api/filterProductsByBrand/${category}?brands=${brands}`)
+}

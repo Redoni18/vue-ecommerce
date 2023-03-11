@@ -68,6 +68,7 @@ router.put('/api/editPayMethod/:id', payMethodController.edit_paymethods);
 router.delete('/api/paymethods/delete/:id', payMethodController.delete_paymethods);
 
 router.get('/api/filterProduct', productController.findProductByName);
+router.get('/api/filterProductsByBrand/:category', productController.filterProductsByBrand)
 
 //Reviews
 router.get('/api/reviews', reviewsController.get_reviews);
