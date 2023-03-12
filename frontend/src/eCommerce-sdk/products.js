@@ -32,3 +32,7 @@ export function filterProducts(searchTerm) {
 export function filterProductsWithBrand(category, brands) {
     return axios.get(`${API_URL}/api/filterProductsByBrand/${category}?brands=${brands}`)
 }
+
+export function stripeCheckoutSession(productId) {
+    return axios.post(`${API_URL}/api/create-checkout-session/${productId}`)
+}

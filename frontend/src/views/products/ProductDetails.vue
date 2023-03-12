@@ -49,7 +49,7 @@
                     <hr />
                     <div class="row" style="justify-content: center;">
                         <div class="col-sm-12 col-md-6 col-lg-6">
-                            <a href="javascript:void(0);" class="btn btn-success btn-lg">Buy Now ({{ product.productPrice}}&euro;)  </a>
+                            <a @click="redirectToStripe" class="btn btn-success btn-lg">Buy Now ({{ product.productPrice}}&euro;)  </a>
                         </div>
                         <!-- <div class="col-sm-12 col-md-6 col-lg-6">
                             <div class="btn-group pull-right">
@@ -67,22 +67,38 @@
 </template>
 
 <script>
-import {getProduct} from '@/eCommerce-sdk/products'
+import {getProduct, editProduct, stripeCheckoutSession} from '@/eCommerce-sdk/products'
 export default {
     name: 'ProductDetails',
     data() {
         return{
             product : null,
             productId : null,
+            stripe: null,
         }
     },
     async mounted() {
         this.productId = this.$route.params.id
         const response = await getProduct(this.productId)
         this.product = response.data
-        console.log(this.product)
-        
+        this.stripe = Stripe(process.env.VUE_APP_STRIPE_KEY);
     },
+    methods: {
+        async redirectToStripe() {
+            const response = await stripeCheckoutSession(this.product._id)
+            const session = response.data.sessionId
+
+            const { error } = await this.stripe.redirectToCheckout({ sessionId: session });
+
+            if (error) {
+                console.error(error);
+            }
+        },
+        async updateProductQuantity() {
+            this.product.stock -= 1
+            await editProduct(this.product)
+        }
+    }
 }
 </script>
 
