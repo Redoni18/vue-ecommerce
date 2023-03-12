@@ -13,9 +13,6 @@
                 <div class="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
                     <h2 class="name mt-5">
                         {{ product.productName}}
-                        <!-- <small>Product by <a href="javascript:void(0);">Adeline</a></small> -->
-                        <!-- <span class="fa fa-2x"><h5>(109) Votes</h5></span>
-                        <a href="javascript:void(0);">109 customer reviews</a> -->
                     </h2>
                     <p>{{ product.productBrand?.brandName ?  "Product by " + product.productBrand.brandName : "" }}</p>
                     <hr />
@@ -49,7 +46,7 @@
                     <hr />
                     <div class="row" style="justify-content: center;">
                         <div class="col-sm-12 col-md-6 col-lg-6">
-                            <a @click="redirectToStripe" class="btn btn-success btn-lg">Buy Now ({{ product.productPrice}}&euro;)  </a>
+                            <a @click="createOrder" class="btn btn-success btn-lg">Buy Now ({{ product.productPrice}}&euro;)  </a>
                         </div>
                         <!-- <div class="col-sm-12 col-md-6 col-lg-6">
                             <div class="btn-group pull-right">
@@ -62,26 +59,30 @@
             </div>
         </div>
         <!-- end product -->
+        <OrderProduct v-model="showModal" :showModal="showModal" :productId="product._id" :productName="product.productName" :productPrice="product.productPrice" />
     </div>
 </div>
 </template>
 
 <script>
 import {getProduct, editProduct, stripeCheckoutSession} from '@/eCommerce-sdk/products'
+import OrderProduct from './OrderProduct.vue'
 export default {
     name: 'ProductDetails',
+    components: {
+        OrderProduct
+    },
     data() {
         return{
             product : null,
             productId : null,
-            stripe: null,
+            showModal: false,
         }
     },
     async mounted() {
         this.productId = this.$route.params.id
         const response = await getProduct(this.productId)
         this.product = response.data
-        this.stripe = Stripe(process.env.VUE_APP_STRIPE_KEY);
     },
     methods: {
         async redirectToStripe() {
@@ -97,6 +98,9 @@ export default {
         async updateProductQuantity() {
             this.product.stock -= 1
             await editProduct(this.product)
+        },
+        createOrder() {
+            this.showModal = true
         }
     }
 }

@@ -86,5 +86,7 @@ router.delete('/api/contacts/delete/:id', contactController.delete_contacts);
 
 //Stripe checkout session
 router.post('/api/create-checkout-session/:id', productController.stripeCheckoutSession);
+//Stripe webhook
+router.post('/stripe/webhook', productController.stripeWebhook);
 
 module.exports = router;

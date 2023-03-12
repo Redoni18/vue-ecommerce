@@ -3,29 +3,49 @@ const Schema = mongoose.Schema;
 
 
 const orderSchema = new Schema({
-    userName: {
+    firstName: {
         type: String,
         required: true
     },
-    userSurname: {
+    lastName: {
         type: String,
         required: true
     },
-    userEmail: {
+    email: {
         type: String,
         required: true
     },
     phoneNumber: {
-        type: Number,
-        required: true
-    },
-    userAddress: {
         type: String,
         required: true
     },
-    userPaymethod: {
-        type: mongoose.Schema.Types.Mixed,
-        ref: 'paymethod'
+    address1: {
+        type: String,
+        required: true
+    },
+    address2: {
+        type: String,
+        required: true
+    },
+    productId: {
+        type: String,
+        required: true
+    },
+    productName: {
+        type: String,
+        required: true
+    },
+    orderPrice: {
+        type: Number,
+        required: true
+    },
+    paymentMethod: {
+        type: String,
+        required: true
+    },
+    isCompleted: {
+        type: Boolean,
+        default: false,
     }
 });
 

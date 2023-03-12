@@ -136,6 +136,30 @@ exports.filterProductsByBrand =  async (req, res, next) => {
     }
 };
 
+exports.stripeWebhook = (req, res) => {
+    const sig = req.headers['stripe-signature'];
+    let event;
+  
+    try {
+      event = stripe.webhooks.constructEvent(req.body, sig, process.env.END_POINT_SECRET);
+    } catch (err) {
+      return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+  
+    // Handle the event
+    switch (event.type) {
+      case 'checkout.session.completed':
+        const session = event.data.object;
+        // Update your database or fulfill the order here
+        console.log('session', session);
+        break;
+      default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
+  
+    res.status(200).json({ received: true });
+};
+
 exports.stripeCheckoutSession = async (req, res, next) => {
     let id = req.params.id;
     const product = await Products.findById(id);
@@ -158,7 +182,7 @@ exports.stripeCheckoutSession = async (req, res, next) => {
                 quantity: 1,
             }],
             mode: 'payment',
-            success_url: `http://localhost:8080/#/products/details/${product._id}`,
+            success_url: 'http://localhost:8080/#/success',
             cancel_url: `http://localhost:8080/#/products/details/${product._id}`,
         });
 

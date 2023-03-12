@@ -9,7 +9,7 @@ const routes = [{
         path: '/',
         name: 'home',
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/productCards/ProductCards.vue'),
+            import ( /* webpackChunkName: "home" */ '../views/productCards/ProductCards.vue'),
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }
@@ -21,7 +21,7 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/products/Listing.vue'),
+            import ( /* webpackChunkName: "products" */ '../views/products/Listing.vue'),
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }
@@ -33,7 +33,7 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/products/CreateProduct.vue'),
+            import ( /* webpackChunkName: "productsInsert" */ '../views/products/CreateProduct.vue'),
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }
@@ -42,7 +42,7 @@ const routes = [{
         path: '/products/details/:id',
         name: 'productDetails',
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/products/ProductDetails.vue'),
+            import ( /* webpackChunkName: "productDetails" */ '../views/products/ProductDetails.vue'),
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }
@@ -51,7 +51,7 @@ const routes = [{
         path: '/categories',
         name: 'categories',
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/categories/Listing.vue'),
+            import ( /* webpackChunkName: "categories" */ '../views/categories/Listing.vue'),
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }
@@ -60,7 +60,7 @@ const routes = [{
         path: '/categories/insert',
         name: 'categoryInsert',
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/categories/CreateCategory.vue'),
+            import ( /* webpackChunkName: "upcomings" */ '../views/categories/CreateCategory.vue'),
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }
@@ -72,7 +72,7 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/upcomings/Listing.vue'),
+            import ( /* webpackChunkName: "upcomings" */ '../views/upcomings/Listing.vue'),
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }
@@ -84,7 +84,7 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/upcomings/CreateUpcoming.vue'),
+            import ( /* webpackChunkName: "upcomingsInsert" */ '../views/upcomings/CreateUpcoming.vue'),
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }
@@ -96,7 +96,7 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/brands/Listing.vue'),
+            import ( /* webpackChunkName: "brands" */ '../views/brands/Listing.vue'),
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }
@@ -108,7 +108,7 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/brands/CreateBrand.vue'),
+            import ( /* webpackChunkName: "brandsInsert" */ '../views/brands/CreateBrand.vue'),
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }
@@ -132,7 +132,7 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/paymethods/CreatePayMethod.vue'),
+            import ( /* webpackChunkName: "paymentsInsert" */ '../views/paymethods/CreatePayMethod.vue'),
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }
@@ -144,7 +144,7 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/contacts/Listing.vue'),
+            import ( /* webpackChunkName: "contacts" */ '../views/contacts/Listing.vue'),
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }
@@ -156,7 +156,7 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/contacts/CreateContact.vue'),
+            import ( /* webpackChunkName: "contactsInsert" */ '../views/contacts/CreateContact.vue'),
         // beforeEnter: (to, from, next) => {
         //     beforeEnter.authenticate(to, from, next)
         // }
@@ -165,11 +165,24 @@ const routes = [{
         path: '/category/:id',
         name: 'categoryProducts',
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/categoryProducts/CategoryProducts.vue'),
+            import ( /* webpackChunkName: "categoryProducts" */ '../views/categoryProducts/CategoryProducts.vue'),
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }
-    }, {
+    },
+    {
+        path: '/orders',
+        name: 'orders',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "orders" */ '../views/orders/Listing.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
+    {
         path: '/about',
         name: 'about',
         // route level code-splitting
@@ -180,7 +193,20 @@ const routes = [{
         beforeEnter: (to, from, next) => {
             beforeEnter.isAuthenticated(to, from, next)
         }
-    }, {
+    },
+    {
+        path: '/success',
+        name: 'success',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "success" */ '../views/Success.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    }, 
+    {
         path: '/register',
         name: 'register',
         // route level code-splitting
@@ -191,7 +217,8 @@ const routes = [{
         beforeEnter: (to, from, next) => {
             beforeEnter.isAuthenticated(to, from, next)
         }
-    }, {
+    }, 
+    {
         path: '/login',
         name: 'login',
         // route level code-splitting
@@ -202,7 +229,8 @@ const routes = [{
         beforeEnter: (to, from, next) => {
             beforeEnter.isAuthenticated(to, from, next)
         }
-    }, {
+    }, 
+    {
         path: '/profile',
         name: 'profile',
         component: UserProfile,
