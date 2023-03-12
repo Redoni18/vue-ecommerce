@@ -7,7 +7,7 @@
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                    <img :src=img1 alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
                       <h4>{{currentUser.displayName}}</h4>
                     </div>
@@ -48,19 +48,18 @@
                             ></b-form-input>
                         </div>
                     </div>
-                    <hr>
-                    <div class="row">
+                    <hr v-if="edit !== true">
+                    <div class="row" v-if="edit !== true">
                         <div class="col-sm-3">
-                        <h6 class="mb-0">Phone</h6>
+                        <h6 class="mb-0">Profile Picture:</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
-                            <b-form-input
-                                v-model="currentUser.phoneNumber"
-                                type="text"
-                                placeholder="Not provided "
-                                required
-                                disabled
-                            ></b-form-input>
+                          <div>
+                            <a class="btn btn-info" @click="click1">choose a photo</a>
+                            <input type="file" ref="input1"
+                              style="display: none"
+                              @change="previewImage" accept="image/*" >                
+                          </div>  
                         </div>
                     </div>
                     <hr>
@@ -72,17 +71,7 @@
                     </div>
                     </div>
                     <div>
-                    <div >
-                      <a class="btn btn-info" @click="click1">choose a photo</a>
-                      <input type="file" ref="input1"
-                        style="display: none"
-                        @change="previewImage" accept="image/*" >                
-                    </div>
-            
-                  <div v-if="imageData!=null">                     
-                      <img class="preview" height="268" width="356" :src="img1">
-                  <br>
-                  </div>   
+                    
                   
                   </div>
                 </div>
@@ -99,8 +88,8 @@
 
 import { mapGetters } from 'vuex'
 import { getAuth, updateProfile } from "firebase/auth";
-import firebase from 'firebase/app'
-import {getStorage} from "firebase/storage";
+import 'firebase/storage'
+import { getStorage, ref, uploadBytes, getMetadata, getDownloadURL  } from "firebase/storage";
 export default {
     name: 'UserProfile',
     components: {
@@ -110,7 +99,8 @@ export default {
         currentUser : null,
         edit : true,
         img1: '',
-        imageData: null
+        imageData: null,
+        progilePicture : null,
         }
     },
     computed: {
@@ -122,6 +112,7 @@ export default {
   },
   mounted(){
     this.currentUser = this.user.data.providerData[0]
+    this.img1 = this.currentUser.photoURL
   },
   methods: {
     editForm(){
@@ -132,13 +123,17 @@ export default {
         this.edit = !this.edit
         const auth = getAuth();
 
-        const updatedProfile = await updateProfile(auth.currentUser, {displayName: this.currentUser.displayName})
+        const storage = getStorage();
+        const storageRef = ref(storage, auth.currentUser.uid + `${this.imageData.name}`);
+
+        this.img1 = await getDownloadURL(storageRef)
+
+        const updatedProfile = await updateProfile(auth.currentUser, {displayName: this.currentUser.displayName, photoURL: this.img1})
         .then((response) => console.log(response))
         .catch((err) => console.log(err))
 
         this.$store.dispatch('updateUser')
         
-        console.log('eeeej '+ updatedProfile)
         this.$router.push({ path: "/profile" })
     },
     click1() {
@@ -149,21 +144,30 @@ export default {
       this.uploadValue=0;
       this.img1=null;
       this.imageData = event.target.files[0];
+      console.log("imageData name" + this.imageData.name)
       this.onUpload()
     },
-    onUpload(){
+    async onUpload(){
       this.img1=null;
-      const storageRef=getStorage().ref(`${this.imageData.name}`).put(this.imageData);
-      storageRef.on(`state_changed`,snapshot=>{
-      this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
-        }, error=>{console.log(error.message)},
-      ()=>{this.uploadValue=100;
-          storageRef.snapshot.ref.getDownloadURL().then((url)=>{
-              this.img1 =url;
-              console.log(this.img1)
-            });
-          }      
-        );
+
+    
+      const auth = getAuth();
+      
+      const storage = getStorage();
+      const storageRef = ref(storage, auth.currentUser.uid + `${this.imageData.name}`);
+
+      // 'file' comes from the Blob or File API
+      uploadBytes(storageRef, this.imageData).then((snapshot) => {
+        const fileReader = new FileReader()
+        console.log(fileReader)
+        fileReader.addEventListener('load', () => {
+          this.img1 = fileReader.result
+          console.log("url: " + this.img1)
+        })
+        fileReader.readAsDataURL(this.imageData)
+        console.log('Uploaded a blob or file!');
+      });
+  
     },
   }
   }
