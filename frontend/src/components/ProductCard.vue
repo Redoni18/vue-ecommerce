@@ -1,7 +1,7 @@
 <template>
   <div class="item">
 
-        <img class="product-image" :src="!product.imageUrl.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : product.imageUrl" alt="">
+        <img class="product-image" :src="!product.imageUrl?.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : product.imageUrl" alt="">
 
         <div class="item-dtls">
 

@@ -18,7 +18,8 @@ exports.insert_wishlists = function(req, res) {
     let newWishlists = new Wishlists({
         productName: req.body.productName,
         productBrand: req.body.productBrand,
-        productDescription: req.body.productDescription
+        productDescription: req.body.productDescription,
+        imageUrl: req.body.imageUrl
     });
 
     newWishlists.save();
@@ -37,7 +38,8 @@ exports.edit_wishlists = function(req, res) {
     let updatedWishlists = {
         productName: req.body.productName,
         productBrand: req.body.productBrand,
-        productDescription: req.body.productDescription
+        productDescription: req.body.productDescription,
+        imageUrl: req.body.imageUrl
     }
 
     Wishlists.findByIdAndUpdate(req.body._id, { $set: updatedWishlists }, { new: true }, (err, doc) => {
