@@ -7,7 +7,7 @@
 
         <h6><a class="item-name" href="#">{{product.productName}}</a></h6>
 
-        <span class="price lblue">{{product.productPrice}}&euro;</span>
+        <span v-if="product.productPrice" class="price lblue">{{product.productPrice}}&euro;</span>
         </div>
     </div>
 </template>

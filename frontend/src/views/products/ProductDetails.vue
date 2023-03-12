@@ -89,7 +89,8 @@ export default {
             const product = {
                 productName: this.product.productName,
                 productBrand: this.product.productBrand.brandName,
-                productDescription: this.product.productDescription
+                productDescription: this.product.productDescription,
+                imageUrl: this.product.imageUrl
             }
             await insertWishlist(product);
            console.log(product);
