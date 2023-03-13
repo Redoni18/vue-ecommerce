@@ -1,5 +1,5 @@
 <template>
-  <sidebar-menu :collapsed="getSize < 1000 ? true : false" v-if="currentUser" :menu="currentUser.isAdmin ? menu : deliveryMenu" :relative="relative" @item-click="onItemClick" />
+  <sidebar-menu :collapsed="getSize < 1000 ? true : false" v-if="currentUser" :menu="currentUser.isAdmin ? menu : deliveryMenu" :relative="true" @item-click="onItemClick" />
 </template>
 
 <script>
@@ -110,7 +110,7 @@ import { getUser } from '@/eCommerce-sdk/user.js'
           {
             title: 'Wishlist',
             href: '/wishlists',
-            icon: 'fa-sharp fa-solid fa-inbox',
+            icon: 'fa-regular fa-face-smile-beam',
           },
           {
             href: '/orders',
@@ -160,10 +160,6 @@ import { getUser } from '@/eCommerce-sdk/user.js'
             icon: 'fa-solid fa-right-from-bracket'
           },
         ],
-        relative: {
-          type: Boolean,
-          default: true
-        },
       }
     },
     computed: {
