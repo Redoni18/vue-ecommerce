@@ -64,7 +64,7 @@
             <div class="row">
                 <div class="review-container">
                     <div class="review-form__container">
-                        <h4 class="h3 mb-30" style="color:crimson; margin-bottom: 50px;">Leave a review about this product!</h4>
+                        <h3 style="color:crimson; text-align: left;">Leave a review!</h3>
                             <form  @submit="onSubmit">
                                 
                                 <div class="row">
@@ -88,18 +88,18 @@
 
                                 </div>
                             </form>
-                        </div>
+                    </div>
                         
-                        <div class="category-products__page category-products m-auto">
-                            <h2>Reviews</h2>
-                            <div class="products-grid" >
-                                <div v-for="review in allReviews.slice(0,3)"  :key="review._id" >
-                                    <ReviewCard  :review="review" />
-                                </div>
-                                <br>
-                                <a style="float: right"><router-link :to="{name: 'reviews', params: {id: product._id}}" class="text-decoration-none">... show more</router-link></a>
+                    <div class="category-products__page category-products m-auto">
+                        <h2>Reviews</h2>
+                        <div class="products-grid" >
+                            <div v-for="review in allReviews.slice(0,3)"  :key="review._id" >
+                                <ReviewCard  :review="review" />
                             </div>
+                            <br>
+                            <a style="float: right"><router-link :to="{name: 'reviews', params: {id: product._id}}" class="text-decoration-none">... show more</router-link></a>
                         </div>
+                    </div>
                     
                 </div>
             </div>    
@@ -138,8 +138,7 @@ export default {
         this.product = response.data
         this.stripe = Stripe(process.env.VUE_APP_STRIPE_KEY);
 
-		const reviewsResponse = await getReviewsByProductId(this.productId)
-        this.allReviews = reviewsResponse.data
+		await this.getReviews()
 
     },
     methods: {
@@ -161,13 +160,23 @@ export default {
             this.review.productId = this.productId
             const today = new Date()
             this.review.insertDate = today.toLocaleString();
-            await insertReview(this.review)
-            this.resetForm()
+            try {
+                await insertReview(this.review)
+                this.resetForm()
+            } catch (err) {
+                console.log(err)
+            } finally {
+                await this.getReviews()
+            }
+        },
+
+        async getReviews(){
+            const reviewsResponse = await getReviewsByProductId(this.productId)
+            this.allReviews = reviewsResponse.data
         },
 
         resetForm() {
             this.review.review = ""
-            this.review.insertedBy = ""
         }
     }
 }
@@ -447,7 +456,7 @@ export default {
     margin: auto;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 }
 
 
@@ -455,7 +464,7 @@ export default {
     width: 55%;
 }
 
-.products-grid {
+.products-grid {    
     width: 400px;
     text-align: -webkit-left;
     /* display: flex;

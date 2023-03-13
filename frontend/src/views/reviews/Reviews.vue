@@ -48,7 +48,8 @@ export default {
 <style scoped>
 
 .reviews {
-    padding-top: 50px;
+    padding: 50px 0;
+    height: 100%;
 }
 .products-grid {
     margin: auto;
