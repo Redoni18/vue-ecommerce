@@ -1,18 +1,14 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import UserProfile from '../views/UserProfile.vue'
-// import * as auth from '../helper/auth'
-// import store from '../store'
-
-import * as beforeEnter from './beforeEnter'
+import * as auth from '../helper/auth'
+import store from '../store'
 
 const routes = [{
         path: '/',
         name: 'home',
         component: () =>
             import ( /* webpackChunkName: "home" */ '../views/productCards/ProductCards.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: false }
     },
     {
         path: '/products',
@@ -22,9 +18,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "products" */ '../views/products/Listing.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: true }
     },
     {
         path: '/wishlist/card',
@@ -34,9 +28,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/wishlistCards/WishlistCards.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: true }
     },
     {
         path: '/products/insert',
@@ -46,36 +38,28 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "productsInsert" */ '../views/products/CreateProduct.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: true }
     },
     {
         path: '/products/details/:id',
         name: 'productDetails',
         component: () =>
             import ( /* webpackChunkName: "productDetails" */ '../views/products/ProductDetails.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: true }
     },
     {
         path: '/categories',
         name: 'categories',
         component: () =>
             import ( /* webpackChunkName: "categories" */ '../views/categories/Listing.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: true }
     },
     {
         path: '/categories/insert',
         name: 'categoryInsert',
         component: () =>
             import ( /* webpackChunkName: "upcomings" */ '../views/categories/CreateCategory.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: true }
     },
     {
         path: '/upcomings',
@@ -85,9 +69,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "upcomings" */ '../views/upcomings/Listing.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: true }
     },
     {
         path: '/upcomings/insert',
@@ -97,9 +79,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "upcomingsInsert" */ '../views/upcomings/CreateUpcoming.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: true }
     },
     {
         path: '/brands',
@@ -109,9 +89,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "brands" */ '../views/brands/Listing.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: true }
     },
     {
         path: '/brands/insert',
@@ -121,9 +99,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "brandsInsert" */ '../views/brands/CreateBrand.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: true }
     },
     {
         path: '/payments',
@@ -133,9 +109,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/paymethods/Listing.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: true }
     },
     {
         path: '/payments/insert',
@@ -145,9 +119,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "paymentsInsert" */ '../views/paymethods/CreatePayMethod.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: true }
     },
     {
         path: '/wishlists',
@@ -157,9 +129,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/wishlists/Listing.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: true }
     },
     {
         path: '/contacts',
@@ -169,9 +139,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "contacts" */ '../views/contacts/Listing.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: true }
     },
     {
         path: '/contacts/insert',
@@ -181,19 +149,14 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "contactsInsert" */ '../views/contacts/CreateContact.vue'),
-        // beforeEnter: (to, from, next) => {
-        //     beforeEnter.authenticate(to, from, next)
-        // }
+        meta: { requiresAuth: false }
     },
     {
         path: '/category/:id',
         name: 'categoryProducts',
         component: () =>
             import ( /* webpackChunkName: "categoryProducts" */ '../views/categoryProducts/CategoryProducts.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
-
+        meta: { requiresAuth: true }
     },  
     {
         path: '/orders',
@@ -203,9 +166,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "orders" */ '../views/orders/Listing.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: true }
     },
     {
         path: '/about',
@@ -215,9 +176,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/AboutView.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.isAuthenticated(to, from, next)
-        }
+        meta: { requiresAuth: false }
     },
     {
         path: '/success',
@@ -227,9 +186,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "success" */ '../views/Success.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: true }
     }, 
     {
         path: '/register',
@@ -239,9 +196,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "register" */ '../views/auth/Register.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.isAuthenticated(to, from, next)
-        }
+        meta: { requiresAuth: false }
     }, 
     {
         path: '/login',
@@ -251,17 +206,13 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "login" */ '../views/auth/Login.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.isAuthenticated(to, from, next)
-        }
+        meta: { requiresAuth: false }
     }, 
     {
         path: '/profile',
         name: 'profile',
         component: UserProfile,
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: true }
     },
     {
         path: '/about',
@@ -271,9 +222,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/AboutView.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: false }
     },
 ]
 
@@ -283,14 +232,25 @@ const router = createRouter({
     routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   if (auth.userExists()) {
-//     store.commit('storeUser', auth.getUser());
-//     next()
-//   } else {
-//     next('login')
-//   }
-// })
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(route => route.meta.requiresAuth)) {
+      
+      const isAuthenticated = checkAuthentication();
+  
+      if (isAuthenticated) {
+        store.commit('storeUser', auth.getUser());
+        next();
+      } else {
+        next('/login');
+      }
+    } else {
+      next();
+    }
+});
 
+function checkAuthentication() {
+    if(auth.userExists()) return true
+    return false;
+}
 
-export default router
+export default router;
