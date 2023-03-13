@@ -36,3 +36,7 @@ export function filterProductsWithBrand(category, brands) {
 export function stripeCheckoutSession(productId) {
     return axios.post(`${API_URL}/api/create-checkout-session/${productId}`)
 }
+
+// export function getLastPayment() {
+//     return axios.get(`${API_URL}/api/stripe/last-payment`)
+// }

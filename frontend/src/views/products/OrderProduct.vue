@@ -82,6 +82,7 @@
 import {getPaymethods} from '@/eCommerce-sdk/payMethod.js'
 import {stripeCheckoutSession} from '@/eCommerce-sdk/products'
 import {insertOrder} from '@/eCommerce-sdk/orders.js'
+import {insertPendingOrder} from '@/eCommerce-sdk/pendingOrders.js'
 export default {
     props: {
         showModal: {
@@ -150,10 +151,17 @@ export default {
                 e.preventDefault()
                 this.errorMessage = "Please provide all the required information"
                 return;
-            } 
+            }
 
             const response = await stripeCheckoutSession(this.productId)
             const session = response.data.sessionId
+
+            this.order.productId = this.productId
+            this.order.productName = this.productName
+            this.order.orderPrice = this.productPrice
+            this.order.paymentMethod = this.paymentMethod
+
+            await insertPendingOrder(this.order)
 
             const { error } = await this.stripe.redirectToCheckout({ sessionId: session });
 

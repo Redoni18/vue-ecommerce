@@ -17,7 +17,36 @@
 </template>
 
 <script>
+import {getPendingOrders, removePendingOrder} from '@/eCommerce-sdk/pendingOrders.js'
+import {insertOrder} from '@/eCommerce-sdk/orders.js'
 export default {
+    data() {
+        return {
+            lastPendingOrder: null
+        }
+    },
+    async mounted() {
+        const response = await getPendingOrders()
+        if(response.data.length > 1) {
+            this.lastPendingOrder = response.data[response.data.length - 1]
+            console.log(this.lastPendingOrder)
+        } else {
+            this.lastPendingOrder = response.data[0]
+        }
+        
+        this.saveOrder()
+    },
+    methods: {
+        async saveOrder() {
+            await insertOrder(this.lastPendingOrder)
+
+            this.deletePendingOrder()
+        },
+        async deletePendingOrder() {
+            console.log(this.lastPendingOrder._id)
+            await removePendingOrder(this.lastPendingOrder._id)
+        }
+    }
 
 }
 </script>
