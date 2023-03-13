@@ -67,6 +67,9 @@ export default {
         const response = await createUserWithEmailAndPassword(auth, this.email, this.password)
         await updateProfile(auth.currentUser, {displayName: this.fullname})
         this.$router.push({ path: "/login" })
+         toast("Registration Successful", {
+          autoClose: 1000,
+        });
       } catch(err) {
         console.log(err)
          toast("Registration Failed", {
@@ -75,9 +78,6 @@ export default {
       } finally {
         this.registerUserWithRole({uid: auth.currentUser.uid, fullname: this.fullname, email: this.email})
         this.errorMessage = error.message
-         toast("Registration Successful", {
-          autoClose: 1000,
-        });
       }
     },
     async registerUserWithRole(user) {
