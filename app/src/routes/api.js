@@ -76,6 +76,7 @@ router.get('/api/review/:id', reviewsController.get_review);
 router.post('/api/uploadReview', reviewsController.upload_review);
 router.put('/api/editReview/:id', reviewsController.edit_review);
 router.delete('/api/reviews/delete/:id', reviewsController.delete_review);
+router.get('/api/getReviewsByProductId/:productId', reviewsController.getReviewsByProductId)
 
 //Contact us
 router.get('/api/contacts', contactController.get_contacts);

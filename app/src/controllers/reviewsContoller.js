@@ -15,7 +15,7 @@ exports.upload_review = function (req, res) {
 
     console.log(req.body)
 
-    let newReview = new Review({
+    let newReview = new Reviews({
         productId: req.body.productId,
         review: req.body.review,
         insertedBy: req.body.insertedBy,
@@ -40,7 +40,7 @@ exports.edit_review = function (req, res) {
         review: req.body.review,
     }
 
-    Review.findByIdAndUpdate(req.body._id, {$set: updatedReview}, {new: true}, (err, doc) => {
+    Reviews.findByIdAndUpdate(req.body._id, {$set: updatedReview}, {new: true}, (err, doc) => {
         if(!err){
             res.send(doc)
         }else{
@@ -67,7 +67,7 @@ exports.get_review = function (req, res) {
     let id = req.params.id;
 
     try {
-        Review.findById({ _id: id }).exec(function (err, review) {
+        Reviews.findById({ _id: id }).exec(function (err, review) {
             if (review) {
                 res.send(review);
             } 
@@ -81,3 +81,24 @@ exports.get_review = function (req, res) {
         return res.status(500).send(error.message);
       }
 };
+
+exports.getReviewsByProductId = function(req, res) {
+    const pId = req.params.productId;
+    // let pId = req.params.productId;
+    console.log(pId)
+    const product = {productId : pId}
+    console.log(product)
+    try {
+        Reviews.find (product).exec(function (err, reviews) {
+            if (reviews) {
+                res.send(reviews);
+            } ;
+        }
+        );
+        // res.send(reviews)
+        // res.json(reviews)
+        // console.log(res.json(reviews))
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }    
+}
