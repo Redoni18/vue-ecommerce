@@ -209,9 +209,9 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/AboutView.vue'),
-        //beforeEnter: (to, from, next) => {
-            //beforeEnter.isAuthenticated(to, from, next)
-        //}
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
     },
 ]
 

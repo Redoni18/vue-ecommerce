@@ -1,63 +1,40 @@
 <template>
-  <div class="row justify-content-center align-items-center mt-4">
-    <div class="col-8">
-        <div class="row no-gutters">
-            <div class="col-lg-6 align-items-center justify-content-left d-flex mb-5 mb-lg-0">
-                <div class="blockabout">
-                    <div class="blockabout-inner text-center text-sm-start">
-                        <div class="title-big pb-3 mb-3">
-                            <h3>ABOUT US</h3>
-                        </div>
-                            <p class="description-p text-muted pe-0 pe-lg-0">
-                                This application is an E-Commerce platform designed in such a way to change shopping forever.
-                            </p>
-                            <p class="description-p text-muted pe-0 pe-lg-0">We are glad to offer such services to our costumers, they can buy, rate and communicate with us in any time all by staying comfortable on their house.</p>
-                              <div class="sosmed-horizontal pt-3 pb-3">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                                <a href="#"><i class="fa fa-pinterest"></i></a>
-                              </div>
-                            <a href="#" class="btn rey-btn mt-3">See More</a>
-                        </div>
-                        <div class="col-lg-6 d-none d-lg-inline-block">
-                            <div class="account-block rounded-right">
-                                <div class="overlay rounded-right"></div>
-                                <div class="account-testimonial">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="about-view">
+        <div class="blockabout">
+            <div class="blockabout-inner text-center text-sm-start">
+                <div class="title-big pb-3 mb-3">
+                    <h3>ABOUT ME</h3>
                 </div>
+                <p class="description-p text-muted pe-0 pe-lg-0">
+                    This application is an E-Commerce platform designed in such a way to change shopping forever.
+                </p>
+                <p class="description-p text-muted pe-0 pe-lg-0">We are glad to offer such services to our costumers, they can buy, rate and communicate with us in any time all by staying comfortable on their house.</p>
+                <div class="sosmed-horizontal pt-3 pb-3">
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-instagram"></i></a>
+                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                </div>
+                <a href="#" class="btn rey-btn mt-3">See More</a>
             </div>
         </div>
     </div>
-  </template>
+</template>
   
   
-  <style scoped lang="scss">
-  
-  #about-section {
-    background: rgba(32, 33, 36, 0.1);
-    position: relative;
-}
+<style lang="scss" scoped>
 
-.blockabout {
-    padding: 20px;
-    background: white;
+.about-view{
+    width: 60%;
+    padding: 2%;
+    margin: auto;
+    display: flex;
+    align-items: center;
 }
 
 .blockabout-inner {
     padding: 30px;
     border: 1px solid rgba(32, 33, 36, 0.1);
-}
-
-.account-block {
-    background-image: url(../assets/About-us.svg);
-    background-repeat: no-repeat;
-    background-size: contain;
-    height: 100%;
-    position: relative;
-    object-fit: contain;
+    border-radius: 6px;
 }
 
 .sosmed-horizontal a i {
@@ -84,5 +61,4 @@
     border-radius: 50px;
     transition: all 0.3s;
 }
-  
-  </style>
+</style>
