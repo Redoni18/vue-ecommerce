@@ -78,6 +78,8 @@
 
 <script>
 import { insertProduct } from '@/eCommerce-sdk/products.js'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';  
 export default {
     data() {
         return {
@@ -126,8 +128,17 @@ export default {
         async onSubmit() {
             const today = new Date()
             this.product.insertDate = today.toLocaleString();
-            await insertProduct(this.product)
-            this.resetForm()
+            try {
+                await insertProduct(this.product)
+                this.resetForm()
+                toast("Product uploaded successfuly", {
+                    autoClose: 1000,
+                });
+            } catch(err) {
+                toast("Product upload failed", {
+                    autoClose: 1000,
+                });
+            }
         },
 
         resetForm() {

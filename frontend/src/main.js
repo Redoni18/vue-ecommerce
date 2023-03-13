@@ -10,8 +10,7 @@ import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth'
 
-import Vue3Toasity from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import Vue3Toastify from 'vue3-toastify';
 
 import VueSidebarMenu from 'vue-sidebar-menu'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
@@ -38,4 +37,4 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
 export { app, auth }
 
-createApp(App).use(store).use(router).use(BootstrapVueNext).use(Vue3Toasity).use(VueGoodTablePlugin).use(VueSidebarMenu).component('v-select', vSelect).mount('#app')
+createApp(App).use(store).use(router).use(BootstrapVueNext).use(Vue3Toastify, {autoClose: 3000}).use(VueGoodTablePlugin).use(VueSidebarMenu).component('v-select', vSelect).mount('#app')

@@ -33,6 +33,8 @@
 <script>
 import { insertCategory } from '@/eCommerce-sdk/categories.js'
 import { getBrands } from '@/eCommerce-sdk/brands.js'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css'; 
 export default {
     data() {
         return {
@@ -59,8 +61,17 @@ export default {
         async onSubmit() {
             const today = new Date()
             this.category.insertDate = today.toLocaleString();
-            await insertCategory(this.category)
-            this.resetForm()
+            try {
+                await insertCategory(this.category)
+                this.resetForm()
+                toast("Category uploaded successfuly", {
+                    autoClose: 1000,
+                });
+            }catch {
+                toast("Category upload failed", {
+                    autoClose: 1000,
+                });
+            }
         },
 
         resetForm() {

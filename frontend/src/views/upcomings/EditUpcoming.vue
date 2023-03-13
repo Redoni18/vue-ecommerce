@@ -43,6 +43,8 @@
   
   <script>
   import { editUpcoming } from '@/eCommerce-sdk/upcomings.js'
+  import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css'; 
   export default {
       props: {
           showModal: {
@@ -56,7 +58,16 @@
       },
       methods: {
           async onSubmit() {
+            try {
               await editUpcoming(this.upcoming)
+                toast("Upcoming product edited successfuly", {
+                    autoClose: 1000,
+                });
+            } catch {
+                toast("Upcoming product edit failed", {
+                    autoClose: 1000,
+                });
+            }
           }
       }
   }

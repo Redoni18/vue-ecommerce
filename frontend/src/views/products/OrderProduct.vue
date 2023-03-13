@@ -83,6 +83,8 @@ import {getPaymethods} from '@/eCommerce-sdk/payMethod.js'
 import {stripeCheckoutSession} from '@/eCommerce-sdk/products'
 import {insertOrder} from '@/eCommerce-sdk/orders.js'
 import {insertPendingOrder} from '@/eCommerce-sdk/pendingOrders.js'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css'; 
 export default {
     props: {
         showModal: {
@@ -182,7 +184,16 @@ export default {
             this.order.orderPrice = this.productPrice
             this.order.paymentMethod = this.paymentMethod
             
-            await insertOrder(this.order)
+            try{
+                await insertOrder(this.order)
+                toast("Order created successfuly", {
+                    autoClose: 1000,
+                });
+            }catch {
+                toast("Order failed", {
+                    autoClose: 1000,
+                });
+            }
 
         }
     }
