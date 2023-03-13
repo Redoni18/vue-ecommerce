@@ -14,9 +14,9 @@
             </div>
 
         </div>
-		<h3 class="recommended-products__title text-align-left">Recommended For You</h3>
+		<h3 v-if="recommendedProducts.length" class="recommended-products__title text-align-left">Recommended For You</h3>
 
-		<div class="products-grid">
+		<div v-if="recommendedProducts.length" class="products-grid">
             <div v-for="product in recommendedProducts" :key="product._id">
               <router-link :to="{name: 'productDetails', params: {id: product._id}}" class="text-decoration-none"><ProductCard :product="product" /></router-link>
             </div>
@@ -50,7 +50,11 @@ export default {
         await this.$store.dispatch('fetchProducts') 
 		await this.$store.dispatch('fetchCategories')
 		const shuffledList = this.$store.state.products.products.sort(() => 0.5 - Math.random());
-		this.allProducts = shuffledList.slice(0, 5);
+		if(this.recommendedProducts.length) {
+			this.allProducts = shuffledList.slice(0, 5);
+		} else {
+			this.allProducts = shuffledList
+		}
 
 		this.fetchRecommendedProducts()
     },
@@ -69,7 +73,15 @@ export default {
                 this.searchProducts()
                 this.timeoutId = null
             }, 500)
-        }
+        },
+		'recommendedProducts.lenth': function() {
+			const shuffledList = this.$store.state.products.products.sort(() => 0.5 - Math.random());
+			if(this.recommendedProducts.length) {
+				this.allProducts = shuffledList.slice(0, 5);
+			} else {
+				this.allProducts = shuffledList
+			}
+		}
     },
 	methods: {
 		async searchProducts() {
