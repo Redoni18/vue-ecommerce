@@ -69,8 +69,8 @@ router.get('/api/user/:uid', userController.get_user);
 //PayMethods
 router.get('/api/paymethods', payMethodController.get_paymethods);
 router.get('/api/paymethod/:id', payMethodController.get_paymethod);
-router.post('/api/uploadPayMethod', payMethodController.insert_paymethods);
-router.put('/api/editPayMethod/:id', payMethodController.edit_paymethods);
+router.post('/api/uploadPayMethod', payMethodController.validate('insert_paymethods'), payMethodController.insert_paymethods);
+router.put('/api/editPayMethod/:id',  payMethodController.validate('edit_paymethods'), payMethodController.edit_paymethods);
 router.delete('/api/paymethods/delete/:id', payMethodController.delete_paymethods);
 
 router.get('/api/filterProduct', productController.findProductByName);
