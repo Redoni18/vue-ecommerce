@@ -1,8 +1,8 @@
 <template>
     <Sidebar v-if="user.authenticated && currentUser && (currentUser.isAdmin || currentUser.isDelivery)" />
     <Navbar class="position-absolute top-0 left-0 w-100" v-else/>
-    <router-view class="root" :class="{'root2': currentUser && !(currentUser.isAdmin || currentUser.isDelivery) }"/>
-    <Footer v-if="user.authenticated && currentUser && !(currentUser.isAdmin || currentUser.isDelivery)"/>
+    <router-view class="root" :class="{'root2': userLocalStorage && !(currentUser?.isAdmin || currentUser?.isDelivery) }"/>
+    <Footer v-if="userLocalStorage && !(currentUser?.isAdmin || currentUser?.isDelivery)"/>
 </template>
 
 <script>
@@ -21,6 +21,7 @@ export default {
     return {
       currentUser: null,
       displayProperty: '',
+      userLocalStorage: localStorage.getItem('user'),
     }
   },
   async mounted() {
@@ -46,6 +47,9 @@ export default {
 
       document.documentElement.style.setProperty('--display-property', this.displayProperty);
     },
+    '$store.state.authenticate.user.data': function() {
+        this.userLocalStorage = localStorage.getItem('user')
+      }
   }
 }
 </script>

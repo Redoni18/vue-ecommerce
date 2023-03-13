@@ -65,13 +65,18 @@ export default {
 
 .item {
 	position: relative;
-	max-width: 360px;
+	max-width: 350px;
 	margin: 15px auto;
 	padding: 5px;
 	text-align: center;
 	border-radius: 4px;
 	border:2px solid #eee;
 }
+
+.item:hover {
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
 .item img {
 	width: 100%;
 	max-width: 360px;

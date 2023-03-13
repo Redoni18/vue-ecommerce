@@ -37,6 +37,15 @@ export function stripeCheckoutSession(productId) {
     return axios.post(`${API_URL}/api/create-checkout-session/${productId}`)
 }
 
+export function getProductsBasedOnCookies(cookieCategories) {
+    console.log(cookieCategories)
+    return axios.get(`${API_URL}/api/products`, {
+        params: {
+          categories: cookieCategories,
+        },
+    });
+}
+
 // export function getLastPayment() {
 //     return axios.get(`${API_URL}/api/stripe/last-payment`)
 // }

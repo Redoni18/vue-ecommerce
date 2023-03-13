@@ -210,3 +210,22 @@ exports.stripeCheckoutSession = async (req, res, next) => {
 //       return res.status(500).json({message: 'Internal server error.'});
 //     }
 // };
+
+
+exports.getProductsByCategoriesCookie = async (req, res) => {
+    // Get categories from cookie
+    const categoriesCookie = req.cookies.categories;
+    console.log(categoriesCookie)
+    const categories = categoriesCookie ? categoriesCookie.split(',') : [];
+  
+    try {
+        // Fetch products by categories
+        const products = await Products.find({ 'productCategory._id': { $in: categories }});
+        
+        // Send products as response
+        res.json(products);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
