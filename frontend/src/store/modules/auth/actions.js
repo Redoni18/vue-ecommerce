@@ -1,5 +1,6 @@
 import {signin, userSignOut} from '../../../eCommerce-sdk/user'
 import { getAuth } from "firebase/auth";
+import {setCookie} from '@/helper/auth.js'
 
 export const loginUser = ({commit}, userData) => {
     return new Promise((resolve, reject) => {
@@ -7,7 +8,7 @@ export const loginUser = ({commit}, userData) => {
         signin(userData)
         .then((response) =>{
             console.log(response)
-
+            setCookie('userId', response.user.uid, 7);
             const auth = getAuth()
             console.log(auth)
             commit('storeUser', auth.currentUser)

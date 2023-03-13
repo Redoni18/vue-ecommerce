@@ -29,6 +29,10 @@ router.post('/api/uploadProduct', productController.upload_product);
 router.put('/api/editProduct/:id', productController.edit_product);
 router.delete('/api/products/delete/:id', productController.delete_product);
 
+//get products based on categories saved in cookies
+router.get('/api/product-cookies', productController.getProductsByCategoriesCookie);
+
+
 //Category
 router.get('/api/categories', categoryController.get_categories);
 router.get('/api/category/:id', categoryController.get_category);
