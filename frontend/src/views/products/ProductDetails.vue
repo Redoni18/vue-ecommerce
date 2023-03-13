@@ -46,7 +46,7 @@
                     <hr />
                     <div class="row" style="justify-content: center;">
                         <div class="col-sm-12 col-md-6 col-lg-6">
-                            <a @click="createOrder" class="btn btn-success btn-lg">Buy Now ({{ product.productPrice}}&euro;)  </a>
+                            <b-button type="button" :disabled="!product.stock" @click="createOrder" class="btn btn-success btn-lg">Buy Now ({{ product.productPrice}}&euro;) </b-button>
                         </div>
                         <!-- <div class="col-sm-12 col-md-6 col-lg-6">
                             <div class="btn-group pull-right">

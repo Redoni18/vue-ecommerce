@@ -1,5 +1,6 @@
 const Orders = require('../models/Orders');
 var ObjectID = require('mongoose').Types.ObjectId
+const Products = require('../models/Products')
 
 exports.get_orders = function(req, res) {
     Orders.find((err, docs) => {
@@ -11,7 +12,7 @@ exports.get_orders = function(req, res) {
     })
 };
 
-exports.upload_order = function(req, res) {
+exports.upload_order = async function(req, res) {
 
     console.log(req.body)
 
@@ -29,7 +30,18 @@ exports.upload_order = function(req, res) {
         isCompleted: req.body.isCompleted
     });
 
-    newOrder.save();
+    await newOrder.save();
+
+    const product = await Products.findOneAndUpdate(
+        { _id: req.body.productId, stock: { $gt: 0 } },
+        { $inc: { stock: -1 } },
+        { new: true }
+    );
+
+    if (!product) {
+        return res.status(404).json({ message: 'Product not found or out of stock' });
+    }
+
 
     res.json({
         data: newOrder
