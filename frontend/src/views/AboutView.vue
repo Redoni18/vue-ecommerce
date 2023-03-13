@@ -3,7 +3,7 @@
         <div class="blockabout">
             <div class="blockabout-inner text-center text-sm-start">
                 <div class="title-big pb-3 mb-3">
-                    <h3>ABOUT ME</h3>
+                    <h3>ABOUT US</h3>
                 </div>
                 <p class="description-p text-muted pe-0 pe-lg-0">
                     This application is an E-Commerce platform designed in such a way to change shopping forever.
@@ -60,5 +60,10 @@
     font-weight: 700;
     border-radius: 50px;
     transition: all 0.3s;
+}
+
+.rey-btn:hover{
+    color: crimson;
+    border-color: crimson;
 }
 </style>

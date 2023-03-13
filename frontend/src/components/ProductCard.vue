@@ -7,7 +7,9 @@
 			x
 		</b-badge>
 
-        <img class="product-image" :src="!product.imageUrl?.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : product.imageUrl" alt="">
+		<div class="image-container">
+        	<img class="product-image" :src="!product.imageUrl?.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : product.imageUrl" alt="">
+		</div>
 
         <div class="item-dtls">
 
@@ -110,13 +112,16 @@ export default {
 }     
 
 .img-responsive{
-	object-fit: contain;
+	object-fit: cover;
 	width: fit-content;
 }
 
+.image-container{
+	width: 210px;
+}
+
 .product-image {
-	width: 210px !important;
-	height: 90px;
+	width: 100%;
 }
 
 </style>
