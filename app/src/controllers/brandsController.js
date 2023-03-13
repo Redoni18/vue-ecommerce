@@ -1,6 +1,24 @@
 const Brands = require('../models/Brands.js');
 var ObjectID = require('mongoose').Types.ObjectId
 
+const { body, validationResult } = require('express-validator/check')
+
+//validation method
+exports.validate = (method) => {
+  switch (method) {
+    case 'upload_brand': {
+     return [ 
+            body('brandName').exists().isLength({ min: 1 }),
+       ]   
+    }
+    case 'edit_brand': {
+        return [ 
+            body('brandName').exists().isLength({ min: 1 }),
+          ]   
+       }
+  }
+}
+
 exports.get_brands = function (req, res) {
     Brands.find((err, docs) => {
         if(!err){
@@ -21,6 +39,11 @@ exports.upload_brand = function (req, res) {
         insertDate: req.body.insertDate
     });
 
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     newBrand.save();
     
     res.json({
@@ -36,6 +59,11 @@ exports.edit_brand = function (req, res) {
 
     let updatedBrand = {
         brandName: req.body.brandName
+    }
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
     }
 
     Brands.findByIdAndUpdate(req.body._id, {$set: updatedBrand}, {new: true}, (err, doc) => {

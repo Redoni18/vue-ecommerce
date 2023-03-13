@@ -50,8 +50,8 @@ router.delete('/api/upcomings/delete/:id', upcomingController.delete_upcoming);
 //Brands
 router.get('/api/brands', brandsController.get_brands);
 router.get('/api/brands/:id', brandsController.get_brand);
-router.post('/api/uploadBrand', brandsController.upload_brand);
-router.put('/api/editBrand/:id', brandsController.edit_brand);
+router.post('/api/uploadBrand', brandsController.validate('upload_brand'), brandsController.upload_brand);
+router.put('/api/editBrand/:id', brandsController.validate('edit_brand'), brandsController.edit_brand);
 router.delete('/api/brands/delete/:id', brandsController.delete_brand);
 
 //Order
