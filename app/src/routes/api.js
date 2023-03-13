@@ -57,8 +57,8 @@ router.delete('/api/brands/delete/:id', brandsController.delete_brand);
 //Order
 router.get('/api/orders', orderController.get_orders);
 router.get('/api/order/:id', orderController.get_order);
-router.post('/api/uploadOrder', orderController.upload_order);
-router.put('/api/editOrder/:id', orderController.edit_order);
+router.post('/api/uploadOrder', orderController.validate('upload_order'), orderController.upload_order);
+router.put('/api/editOrder/:id', orderController.validate('edit_order'), orderController.edit_order);
 router.delete('/api/orders/delete/:id', orderController.delete_order);
 
 
@@ -106,7 +106,7 @@ router.post('/stripe/webhook', productController.stripeWebhook);
 
 //pending stripe orders
 router.get('/api/pending-orders', pendingOrderController.get_pending_orders);
-router.post('/api/uploadPendingOrder', pendingOrderController.upload_pending_order);
+router.post('/api/uploadPendingOrder', pendingOrderController.validate('upload_pending_order'), pendingOrderController.upload_pending_order);
 router.delete('/api/pending/delete/:id', pendingOrderController.delete_pending_order);
 
 
