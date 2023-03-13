@@ -62,7 +62,7 @@
                 <b-form-group
                     label="Product Brand"
                 >
-                    <v-select searchable label="brandName" :options="allBrands" v-model="product.productBrand" placeholder="Product Brand"></v-select>
+                    <v-select searchable label="brandName" :options="allCategoryBrands" v-model="product.productBrand" placeholder="Product Brand"></v-select>
                 </b-form-group>
                 
                 <div class="d-flex gap-2 justify-content-center">
@@ -78,7 +78,6 @@
 
 <script>
 import { insertProduct } from '@/eCommerce-sdk/products.js'
-import { getBrands } from '@/eCommerce-sdk/brands.js'
 export default {
     data() {
         return {
@@ -102,16 +101,25 @@ export default {
         this.categories = response.data
         console.log(this.categories)
 
-        const response2 = await getBrands()
-        this.brands = response2.data
-        console.log(this.brands)
+        // const response2 = await getBrands()
+        // this.brands = response2.data
+        // console.log(this.brands)
     },
     computed: {
         allCategories() {
             return this.categories
         },
-        allBrands() {
+
+        allCategoryBrands() {
             return this.brands
+        }
+    },
+    watch: {
+        'product.productCategory': function(newCategory, oldCategory) {
+            this.brands = this.product.productCategory?.categoryBrand
+            if(oldCategory && (newCategory?._id !== oldCategory?._id)) {
+                this.product.productBrand = null
+            }
         }
     },
     methods: {

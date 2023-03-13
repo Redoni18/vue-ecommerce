@@ -85,8 +85,8 @@ export default {
     padding: 0 1%;
     display: flex;
     flex-wrap: wrap;
+	justify-content: center;
     gap: 1%;
-	margin-left: 5%;
 	margin-bottom: 5%;
 }
 

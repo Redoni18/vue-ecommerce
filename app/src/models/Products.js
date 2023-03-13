@@ -42,6 +42,10 @@ const productSchema = new Schema({
     productBrand: {
         type: mongoose.Schema.Types.Mixed, 
         ref: 'brands'
+    },
+    stripePriceId: {
+        type: String,
+        required: true
     }
 });
 

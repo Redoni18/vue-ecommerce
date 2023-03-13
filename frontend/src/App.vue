@@ -1,6 +1,6 @@
 <template>
     <Sidebar v-if="user.authenticated && currentUser && (currentUser.isAdmin || currentUser.isDelivery)" />
-    <Navbar class="position-absolute top-0 left-0 w-100" v-else />
+    <Navbar class="position-absolute top-0 left-0 w-100" v-else/>
     <router-view class="root" :class="{'root2': currentUser && !(currentUser.isAdmin || currentUser.isDelivery) }"/>
     <Footer v-if="user.authenticated && currentUser && !(currentUser.isAdmin || currentUser.isDelivery)"/>
 </template>

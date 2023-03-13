@@ -7,18 +7,20 @@
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" :class="{'d-flex justify-content-between': width > 995}" id="navbarTogglerDemo02">
-                    <div class="navbar-nav ml-4">
-                        <router-link to="/" class="nav-item nav-link w-50 m-auto">Home</router-link>
-                        <router-link to="/about" class="nav-item nav-link w-50 m-auto">About</router-link>
-                        <router-link to="/contacts/insert" class="nav-item nav-link w-100 m-auto">Contact Us!</router-link>
+                    <div class="navbar-nav d-flex gap-3 ml-4">
+                        <router-link to="/" class="nav-item nav-link w-auto m-auto">Home</router-link>
+                        <router-link to="/about" class="nav-item nav-link w-auto m-auto">About</router-link>
+                        <router-link to="/contacts/insert" class="nav-item nav-link w-auto m-auto">Contact Us!</router-link>
+                        <router-link to="/wishlist/card" class="nav-link w-auto m-auto">Wishlist</router-link>
                     </div>
                     <div v-if="user.authenticated" class="navbar-nav">
-                        <router-link to="/profile" class="nav-link w-50 m-auto">Profile</router-link>
-                        <router-link to="/login" @click="signOut" class="nav-link w-50 m-auto">Logout</router-link>
+                        <router-link to="/profile" class="nav-link w-auto m-auto">Profile</router-link>
+                        <router-link to="/login" @click="signOut" class="nav-link w-auto m-auto">Logout</router-link>
                     </div>
                     <div v-else class="navbar-nav">
-                        <router-link to="/register" class="nav-link w-100 m-auto">Register</router-link>
-                        <router-link to="/login" class="nav-link w-100 m-auto">Sign In</router-link>
+                       
+                        <router-link to="/register" class="nav-link w-auto m-auto">Register</router-link>
+                        <router-link to="/login" class="nav-link w-auto m-auto">Sign In</router-link>
                     </div>
                 </div>
         </div>

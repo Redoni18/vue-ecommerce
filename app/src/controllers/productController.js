@@ -1,5 +1,7 @@
 const Products = require('../models/Products');
 var ObjectID = require('mongoose').Types.ObjectId
+const mongoose = require('mongoose');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 exports.get_products = function(req, res) {
     Products.find((err, docs) => {
@@ -11,9 +13,20 @@ exports.get_products = function(req, res) {
     })
 };
 
-exports.upload_product = function(req, res) {
+exports.upload_product = async function(req, res) {
 
     console.log(req.body)
+
+    const stripeProduct = await stripe.products.create({
+        name: req.body.productName,
+        description: req.body.productDescription,
+    });
+
+    const stripeProductPrices = await stripe.prices.create({
+        unit_amount: req.body.productPrice * 100, // Stripe requires the price in cents
+        currency: "eur",
+        product: stripeProduct.id,
+    });
 
     let newProduct = new Products({
         productName: req.body.productName,
@@ -25,8 +38,11 @@ exports.upload_product = function(req, res) {
         insertedBy: req.body.insertedBy,
         insertDate: req.body.insertDate,
         productCategory: req.body.productCategory,
-        productBrand: req.body.productBrand
+        productBrand: req.body.productBrand,
+        stripePriceId: stripeProductPrices.id
     });
+
+    console.log(stripeProductPrices)
 
     newProduct.save();
 
@@ -104,3 +120,93 @@ exports.findProductByName = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+exports.filterProductsByBrand =  async (req, res, next) => {
+    try {
+        const selectedBrandIds = req.query.brands.split(',');
+        const category = req.params.category
+        const products = await Products.find({ 'productCategory._id': category, 'productBrand._id': { $in: selectedBrandIds } }).populate('productBrand');
+        
+        if (products.length === 0) {
+            return res.status(404).json({ message: 'No products found with selected brands' });
+        }
+        res.json(products);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+exports.stripeWebhook = (req, res) => {
+    const sig = req.headers['stripe-signature'];
+    let event;
+  
+    try {
+      event = stripe.webhooks.constructEvent(req.body, sig, process.env.END_POINT_SECRET);
+    } catch (err) {
+      return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+  
+    // Handle the event
+    switch (event.type) {
+      case 'checkout.session.completed':
+        const session = event.data.object;
+        // Update your database or fulfill the order here
+        console.log('session', session);
+        break;
+      default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
+  
+    res.status(200).json({ received: true });
+};
+
+exports.stripeCheckoutSession = async (req, res, next) => {
+    let id = req.params.id;
+    const product = await Products.findById(id);
+    const price = product.productPrice;
+
+    try {
+        // Create a Checkout session
+        const session = await stripe.checkout.sessions.create({
+            line_items: [{
+                price_data: {
+                    currency: 'eur',
+                    product_data: {
+                        name: product.productName,
+                        description: product.productDescription,
+                        images: [product.imageUrl],
+                    },
+                    unit_amount: price * 100,
+                },
+                quantity: 1,
+            }],
+            mode: 'payment',
+            success_url: 'http://localhost:8080/#/success',
+            cancel_url: `http://localhost:8080/#/products/details/${product._id}`,
+        });
+
+        res.json({ sessionId: session.id });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
+};
+
+// exports.getLastPayment = async (req, res) => {
+//     try {
+//       // Get the latest payment using the Stripe API
+//       const paymentList = await stripe.paymentIntents.list({limit: 1});
+  
+//       // Check if there is a payment in the list
+//       if (paymentList.data.length === 0) {
+//         return res.status(404).json({message: 'No payment found.'});
+//       }
+  
+//       // Return the payment object
+//       return res.status(200).json(paymentList.data[0]);
+//     } catch (error) {
+//       console.error(error);
+//       return res.status(500).json({message: 'Internal server error.'});
+//     }
+// };

@@ -1,15 +1,22 @@
 <template>
+<div>
+
   <div class="item">
 
-        <img class="product-image" :src="!product.imageUrl.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : product.imageUrl" alt="">
+		<b-badge v-if="isWishlist" @click="removeFromWishlist" variant="danger" class="badge" text-indicator>
+			x
+		</b-badge>
+
+        <img class="product-image" :src="!product.imageUrl?.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : product.imageUrl" alt="">
 
         <div class="item-dtls">
 
-        <h6><a class="item-name" href="#">{{product.productName}}</a></h6>
+        <h6 class="item-name">{{product.productName}}</h6>
 
-        <span class="price lblue">{{product.productPrice}}&euro;</span>
+        <span v-if="product.productPrice" class="price lblue">{{product.productPrice}}&euro;</span>
         </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -18,13 +25,26 @@ export default {
         product: {
             type: Object,
             required: true
-        }
-    }
+        },
+		isWishlist: {
+			type: Boolean,
+			default: false
+		}
+    },
+	methods:{
+		removeFromWishlist() {
+			this.$emit('removeFromWishlist', this.product._id)
+		}
+	}
 
 }
 </script>
 
 <style scoped>
+
+.badge{
+	cursor: pointer;
+}
 
 
 .bg-lblue {
@@ -48,7 +68,6 @@ export default {
 	padding: 5px;
 	text-align: center;
 	border-radius: 4px;
-	overflow: hidden;
 	border:2px solid #eee;
 }
 .item img {
@@ -75,6 +94,7 @@ export default {
     text-decoration: none;
     color: #666666;
     padding-top: 10px;
+	cursor: pointer;
 }
 
 .item {

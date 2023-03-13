@@ -62,13 +62,13 @@
                 <b-form-group
                     label="Product Category"
                 >
-                    <v-select :close-on-select="false" searchable multiple label="categoryName" :options="allCategories" v-model="product.productCategory" placeholder="Product Category"></v-select>
+                    <v-select searchable label="categoryName" :options="allCategories" v-model="product.productCategory" placeholder="Product Category"></v-select>
                 </b-form-group>
                 
                 <b-form-group
                     label="Product Brand"
                 >
-                    <v-select :close-on-select="false" searchable  label="brandName" :options="allBrands" v-model="product.productBrand" placeholder="Product Brand"></v-select>
+                    <v-select searchable  label="brandName" :options="allCategoryBrands" v-model="product.productBrand" placeholder="Product Brand"></v-select>
                 </b-form-group>
 
             </b-form>
@@ -78,7 +78,7 @@
 
 <script>
 import { editProduct } from '@/eCommerce-sdk/products.js'
-import { getBrands } from '@/eCommerce-sdk/brands.js'
+import { getCategory } from '@/eCommerce-sdk/categories.js'
 export default {
     props: {
         showModal: {
@@ -102,16 +102,23 @@ export default {
                 const response = await this.$store.dispatch('fetchCategories')
                 this.categories = response.data
 
-                const response2 = await getBrands()
-                this.brands = response2.data
+                const response2 = await getCategory(this.product.productCategory._id)
+                this.brands = response2.data.categoryBrand
             }
+        },
+        'product.productCategory': async function(newCategory, oldCategory) {
+            if(oldCategory && (newCategory?._id !== oldCategory?._id)){
+                this.product.productBrand = null
+            }
+            const response2 = await getCategory(this.product.productCategory._id)
+            this.brands = response2.data.categoryBrand
         }
     },
     computed: {
         allCategories() {
             return this.categories
         },
-        allBrands() {
+        allCategoryBrands() {
             return this.brands
         }
     },

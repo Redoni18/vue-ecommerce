@@ -14,6 +14,8 @@ const orderController = require('../controllers/orderController');
 const payMethodController = require('../controllers/payMethodController');
 const reviewsController = require('../controllers/reviewsContoller');
 const contactController = require('../controllers/contactController');
+const wishlistController = require('../controllers/wishlistController');
+const pendingOrderController = require('../controllers/pendingOrderController')
 
 /**
  * Routes
@@ -68,6 +70,7 @@ router.put('/api/editPayMethod/:id', payMethodController.edit_paymethods);
 router.delete('/api/paymethods/delete/:id', payMethodController.delete_paymethods);
 
 router.get('/api/filterProduct', productController.findProductByName);
+router.get('/api/filterProductsByBrand/:category', productController.filterProductsByBrand)
 
 //Reviews
 router.get('/api/reviews', reviewsController.get_reviews);
@@ -81,6 +84,26 @@ router.get('/api/contacts', contactController.get_contacts);
 router.get('/api/contact/:id', contactController.get_contact);
 router.post('/api/uploadContact', contactController.insert_contacts);
 router.delete('/api/contacts/delete/:id', contactController.delete_contacts);
+
+//Wishlist
+router.get('/api/wishlists', wishlistController.get_wishlists);
+router.get('/api/wishlist/:id', wishlistController.get_wishlist);
+router.post('/api/uploadWishlist', wishlistController.insert_wishlists);
+router.put('/api/editWishlist/:id', wishlistController.edit_wishlists);
+router.delete('/api/wishlists/delete/:id', wishlistController.delete_wishlists);
+
+
+//Stripe checkout session
+router.post('/api/create-checkout-session/:id', productController.stripeCheckoutSession);
+//Stripe webhook
+router.post('/stripe/webhook', productController.stripeWebhook);
+//Stripe get last payment
+// router.get('/api/stripe/last-payment', productController.getLastPayment)
+
+//pending stripe orders
+router.get('/api/pending-orders', pendingOrderController.get_pending_orders);
+router.post('/api/uploadPendingOrder', pendingOrderController.upload_pending_order);
+router.delete('/api/pending/delete/:id', pendingOrderController.delete_pending_order);
 
 
 module.exports = router;

@@ -15,11 +15,11 @@ import { getUser } from '@/eCommerce-sdk/user.js'
             header: 'eCommerce',
             hiddenOnCollapse: true
           },
-          {
-            href: '/',
-            title: 'Home',
-            icon: 'fa fa-home'
-          },
+          // {
+          //   href: '/',
+          //   title: 'Home',
+          //   icon: 'fa fa-home'
+          // },
           {
             title: 'Products',
             icon: 'fa-regular fa-folder',
@@ -106,6 +106,16 @@ import { getUser } from '@/eCommerce-sdk/user.js'
             href: '/contacts',
             icon: 'fa-sharp fa-solid fa-inbox',
             
+          },
+          {
+            title: 'Wishlist',
+            href: '/wishlists',
+            icon: 'fa-sharp fa-solid fa-inbox',
+          },
+          {
+            href: '/orders',
+            title: 'Orders',
+            icon: 'fa-solid fa-bag-shopping'
           },
           {
             href: '/login',
