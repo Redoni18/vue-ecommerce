@@ -3,7 +3,7 @@
     <div class="container mt-5" v-if="product">
         <!-- product -->
         <div class="product-content product-wrap clearfix product-deatil">
-            <div class="row">
+            <div class="row gap-3 align-items-center">
                 <div class="col-md-5 col-sm-12 col-xs-12">
                     <div class="product-image">
                         <img :src="!product.imageUrl.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : product.imageUrl" class="image-item" alt="">
@@ -13,9 +13,6 @@
                 <div class="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
                     <h2 class="name mt-5">
                         {{ product.productName}}
-                        <!-- <small>Product by <a href="javascript:void(0);">Adeline</a></small> -->
-                        <!-- <span class="fa fa-2x"><h5>(109) Votes</h5></span>
-                        <a href="javascript:void(0);">109 customer reviews</a> -->
                     </h2>
                     <p>{{ product.productBrand?.brandName ?  "Product by " + product.productBrand.brandName : "" }}</p>
                     <hr />
@@ -49,14 +46,13 @@
                     <hr />
                     <div class="row" style="justify-content: center;">
                         <div class="col-sm-12 col-md-6 col-lg-6">
-                            <a @click="redirectToStripe" class="btn btn-success btn-lg">Buy Now ({{ product.productPrice}}&euro;)  </a>
+                            <b-button type="button" :disabled="!product.stock" @click="createOrder" class="btn btn-success btn-lg">Buy Now ({{ product.productPrice}}&euro;) </b-button>
                         </div>
-                        <!-- <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="col-sm-12 col-md-6 col-lg-6">
                             <div class="btn-group pull-right">
-                                <button class="btn btn-white btn-default"><i class="fa fa-star"></i> Add to wishlist</button>
-                                <button class="btn btn-white btn-default"><i class="fa fa-envelope"></i> Contact Seller</button>
+                                <button v-if="!product.stock" @click="addToWishlist" class="btn btn-white btn-default"><i class="fa fa-star"></i> Add to wishlist</button>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -105,18 +101,22 @@
             </div>    
         </div>
         <!-- end product -->
+        <OrderProduct v-model="showModal" :showModal="showModal" :productId="product._id" :productName="product.productName" :productPrice="product.productPrice" />
     </div>
 </div>
 </template>
 
 <script>
+import {insertWishlist} from '@/eCommerce-sdk/wishlists'
 import {getProduct, editProduct, stripeCheckoutSession} from '@/eCommerce-sdk/products'
 import { insertReview, getReviewsByProductId } from '@/eCommerce-sdk/reviews.js'
 import ReviewCard from '@/components/ReviewCard.vue'
+import OrderProduct from './OrderProduct.vue'
 export default {
     name: 'ProductDetails',
     components: {
         ReviewCard,
+        OrderProduct
     },
     data() {
         return{
@@ -130,6 +130,7 @@ export default {
                 insertedBy: this.$store.state.authenticate.user.data.displayName,
                 insertDate: '',
             },
+            showModal: false,
         }
     },
     async mounted() {
@@ -138,10 +139,20 @@ export default {
         this.product = response.data
         this.stripe = Stripe(process.env.VUE_APP_STRIPE_KEY);
 
-		await this.getReviews()
-
+		    await this.getReviews()
     },
     methods: {
+      async addToWishlist() {
+            const product = {
+                productName: this.product.productName,
+                productBrand: this.product.productBrand.brandName,
+                productDescription: this.product.productDescription,
+                imageUrl: this.product.imageUrl,
+                userId: this.$store.state.authenticate.user.data.uid
+            }
+            await insertWishlist(product);
+           console.log(product);
+        },
         async redirectToStripe() {
             const response = await stripeCheckoutSession(this.product._id)
             const session = response.data.sessionId
@@ -178,6 +189,9 @@ export default {
         resetForm() {
             this.review.review = ""
         }
+        createOrder() {
+            this.showModal = true
+        }
     }
 }
 </script>
@@ -206,8 +220,7 @@ export default {
     position: relative
 }
 .image-item {
-    max-height: 350px;
-    max-width: 300px;
+    max-width: 100%;
 }
 
 .product-content .product-deatil {

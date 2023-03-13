@@ -2,7 +2,7 @@ const mongoose = require('../database/db');
 const Schema = mongoose.Schema;
 
 
-const orderSchema = new Schema({
+const pendingOrderSchema = new Schema({
     firstName: {
         type: String,
         required: true
@@ -50,4 +50,4 @@ const orderSchema = new Schema({
 });
 
 
-module.exports = mongoose.model('orders', orderSchema);
+module.exports = mongoose.model('pendingOrders', pendingOrderSchema);

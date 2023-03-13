@@ -1,10 +1,7 @@
 <template>
-<div class="home-view">
-	<ul class="nav justify-content-center category-tab">
-		<li v-for="category in categories" :key="category._id" class="nav-item py-2">
-			<router-link :to="{name: 'categoryProducts', params: {id: category._id}}" class="nav-link text-dark category-link">{{category.categoryName}}</router-link>
-		</li>
-	</ul>
+<div class="home-view" :style="getStyleObject()">
+
+	<CategoryNav :categories="categories" />
 
 	<div class="search-input">
 		<input v-model="searchTerm" class="form-control form-control-lg form-control-borderless px-2" type="search" placeholder="Search...">
@@ -15,6 +12,15 @@
             <div v-for="product in allProducts" :key="product._id">
               <router-link :to="{name: 'productDetails', params: {id: product._id}}" class="text-decoration-none"><ProductCard :product="product" /></router-link>
             </div>
+
+        </div>
+		<h3 v-if="recommendedProducts.length" class="recommended-products__title text-align-left">Recommended For You</h3>
+
+		<div v-if="recommendedProducts.length" class="products-grid">
+            <div v-for="product in recommendedProducts" :key="product._id">
+              <router-link :to="{name: 'productDetails', params: {id: product._id}}" class="text-decoration-none"><ProductCard :product="product" /></router-link>
+            </div>
+
         </div>
     </div>
 </div>
@@ -23,24 +29,34 @@
 <script>
 import FilterProducts from './FilterProducts.vue'
 import ProductCard from '@/components/ProductCard.vue'
-import { filterProducts } from '@/eCommerce-sdk/products.js'
-
+import { filterProducts, getProductsBasedOnCookies } from '@/eCommerce-sdk/products.js'
+import CategoryNav from '../../components/CategoryNav.vue'
 export default {
     components: {
         ProductCard,
-        FilterProducts
+        FilterProducts,
+		CategoryNav
     },
 	data() {
 		return {
 			searchTerm: null,
 			allProducts: null,
-			timeoutId: null
+			timeoutId: null,
+			userLocalStorage: localStorage.getItem('user'),
+			recommendedProducts: []
 		}
 	},	
     async mounted() {
         await this.$store.dispatch('fetchProducts') 
 		await this.$store.dispatch('fetchCategories')
-		this.allProducts = this.$store.state.products.products
+		const shuffledList = this.$store.state.products.products.sort(() => 0.5 - Math.random());
+		if(this.recommendedProducts.length) {
+			this.allProducts = shuffledList.slice(0, 5);
+		} else {
+			this.allProducts = shuffledList
+		}
+
+		this.fetchRecommendedProducts()
     },
     computed: {
 
@@ -57,13 +73,38 @@ export default {
                 this.searchProducts()
                 this.timeoutId = null
             }, 500)
-        }
+        },
+		'recommendedProducts.lenth': function() {
+			const shuffledList = this.$store.state.products.products.sort(() => 0.5 - Math.random());
+			if(this.recommendedProducts.length) {
+				this.allProducts = shuffledList.slice(0, 5);
+			} else {
+				this.allProducts = shuffledList
+			}
+		}
     },
 	methods: {
 		async searchProducts() {
             const response = await filterProducts(this.searchTerm)
             this.allProducts = response.data
-        }
+        },
+		getStyleObject() {
+			if (!this.userLocalStorage) {
+				return {
+					paddingTop: '106px'
+				}
+			} else {
+				return {
+					paddingTop: '0'
+				}
+			}
+		},
+		async fetchRecommendedProducts() {
+			const categoriesCookie = document.cookie.split('; ').find(row => row.startsWith('categories=')).split('=')[1];
+
+			const response = await getProductsBasedOnCookies(categoriesCookie)
+			this.recommendedProducts = response.data.sort(() => 0.5 - Math.random());
+		}
 	}
 
 }
@@ -72,20 +113,19 @@ export default {
 <style lang="scss" scoped>
 
 .home-view {
-	height: 100%;
+	height: 90%;
 }
 
 .category-products{
-	max-width: 90%;
-    display: flex;
-    justify-content: center;
+	width: 90%;
 }
 
 .products-grid{
     padding: 0 1%;
     display: flex;
     flex-wrap: wrap;
-    gap: 1%;
+	justify-content: flex-start;
+	gap: 1%;
 	margin-left: 5%;
 	margin-bottom: 5%;
 }
@@ -192,6 +232,18 @@ export default {
 	.search-input {
 		width: 70%;
 		margin: 5% auto 2% auto;
+	}
+}
+
+@media only screen and (max-width: 820px) {
+    .products-grid{
+		margin-left: 15%;
+	}
+}
+
+@media only screen and (max-width: 515px) {
+    .products-grid{
+		margin-left: 22%;
 	}
 }
 </style>

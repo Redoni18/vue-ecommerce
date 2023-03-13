@@ -1,6 +1,24 @@
 const PayMethods = require('../models/PayMethods');
 var ObjectID = require('mongoose').Types.ObjectId
 
+const { body, validationResult } = require('express-validator/check')
+
+//validation method
+exports.validate = (method) => {
+  switch (method) {
+    case 'insert_paymethods': {
+     return [ 
+            body('name').exists().isLength({ min: 2 }),
+       ]   
+    }
+    case 'edit_paymethods': {
+        return [ 
+            body('name').exists().isLength({ min: 2 }),
+          ]   
+       }
+  }
+}
+
 exports.get_paymethods = function(req, res) {
     PayMethods.find((err, docs) => {
         if (!err) {
@@ -21,6 +39,11 @@ exports.insert_paymethods = function(req, res) {
         insertDate: req.body.insertDate
     });
 
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     newPayMethods.save();
 
     res.json({
@@ -36,6 +59,11 @@ exports.edit_paymethods = function(req, res) {
 
     let updatedPayMethods = {
         name: req.body.name,
+    }
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
     }
 
     PayMethods.findByIdAndUpdate(req.body._id, { $set: updatedPayMethods }, { new: true }, (err, doc) => {

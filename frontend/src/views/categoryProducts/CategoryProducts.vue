@@ -1,10 +1,6 @@
 <template>
 <div class="category-products__page">
-	<ul class="nav justify-content-center category-tab">
-		<li v-for="category in categories" :key="category._id" class="nav-item py-2">
-			<router-link :to="{name: 'categoryProducts', params: {id: category._id}}" class="nav-link text-dark category-link">{{category.categoryName}}</router-link>
-		</li>
-	</ul>
+	<CategoryNav :categories="categories" />
 
     <div class="category-products__page category-products">
         <div class="products-filter">
@@ -26,10 +22,12 @@
 import FilterProducts from '../productCards/FilterProducts.vue'
 import ProductCard from '@/components/ProductCard.vue'
 import {filterProductsWithBrand} from '@/eCommerce-sdk/products.js'
+import CategoryNav from '../../components/CategoryNav.vue'
 export default {
     components: {
         ProductCard,
-        FilterProducts
+        FilterProducts,
+        CategoryNav
     },
     data() {
         return {
@@ -108,6 +106,7 @@ export default {
     padding: 0 1%;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 1%;
 }
 

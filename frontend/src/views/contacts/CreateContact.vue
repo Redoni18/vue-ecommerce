@@ -7,8 +7,8 @@
                 <div class="row">
                     <div class="col-sm-12 mb-3">
                         <div class="form-group">
-                            <label class="required-field" for="firstName">First Name</label>
-                            <input v-model="contact.contactName" type="text" class="form-control"  placeholder="Wendy" required>
+                            <label class="required-field" for="firstName">Full Name</label>
+                            <input v-model="contact.contactName" type="text" class="form-control"  placeholder="Wendy Endy" required>
                         </div>
                     </div>
 

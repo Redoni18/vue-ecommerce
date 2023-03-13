@@ -1,6 +1,26 @@
 const Categories = require('../models/Categories');
 var ObjectID = require('mongoose').Types.ObjectId
 
+const { body, validationResult } = require('express-validator/check')
+
+//validation method
+exports.validate = (method) => {
+  switch (method) {
+    case 'upload_category': {
+     return [ 
+            body('categoryName').exists().isLength({ min: 1 }),
+            body('categoryBrand').exists(),
+       ]   
+    }
+    case 'edit_category': {
+        return [ 
+            body('categoryName').exists().isLength({ min: 1 }),
+            body('categoryBrand').exists(),
+          ]   
+       }
+  }
+}
+
 exports.get_categories = function (req, res) {
     Categories.find((err, docs) => {
         if(!err){
@@ -22,6 +42,11 @@ exports.upload_category = function (req, res) {
         categoryBrand: req.body.categoryBrand
     });
 
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     newCategory.save();
     
     res.json({
@@ -33,6 +58,11 @@ exports.edit_category = function (req, res) {
 
     if(!ObjectID.isValid(req.body._id)){
         return res.status(400).send(`No record with given id:   ${req.body._id}`)
+    }
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
     }
 
     let updatedCategory = {

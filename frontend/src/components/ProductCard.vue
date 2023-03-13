@@ -1,15 +1,24 @@
 <template>
+<div>
+
   <div class="item">
 
-        <img class="product-image" :src="!product.imageUrl.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : product.imageUrl" alt="">
+		<b-badge v-if="isWishlist" @click="removeFromWishlist" variant="danger" class="badge" text-indicator>
+			x
+		</b-badge>
+
+		<div class="image-container">
+        	<img class="product-image" :src="!product.imageUrl?.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : product.imageUrl" alt="">
+		</div>
 
         <div class="item-dtls">
 
-        <h6><a class="item-name" href="#">{{product.productName}}</a></h6>
+        <h6 class="item-name">{{product.productName}}</h6>
 
-        <span class="price lblue">{{product.productPrice}}&euro;</span>
+        <span v-if="product.productPrice" class="price lblue">{{product.productPrice}}&euro;</span>
         </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -18,13 +27,26 @@ export default {
         product: {
             type: Object,
             required: true
-        }
-    }
+        },
+		isWishlist: {
+			type: Boolean,
+			default: false
+		}
+    },
+	methods:{
+		removeFromWishlist() {
+			this.$emit('removeFromWishlist', this.product._id)
+		}
+	}
 
 }
 </script>
 
 <style scoped>
+
+.badge{
+	cursor: pointer;
+}
 
 
 .bg-lblue {
@@ -43,14 +65,18 @@ export default {
 
 .item {
 	position: relative;
-	max-width: 360px;
+	max-width: 350px;
 	margin: 15px auto;
 	padding: 5px;
 	text-align: center;
 	border-radius: 4px;
-	overflow: hidden;
 	border:2px solid #eee;
 }
+
+.item:hover {
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
 .item img {
 	width: 100%;
 	max-width: 360px;
@@ -75,6 +101,7 @@ export default {
     text-decoration: none;
     color: #666666;
     padding-top: 10px;
+	cursor: pointer;
 }
 
 .item {
@@ -90,13 +117,16 @@ export default {
 }     
 
 .img-responsive{
-	object-fit: contain;
+	object-fit: cover;
 	width: fit-content;
 }
 
+.image-container{
+	width: 210px;
+}
+
 .product-image {
-	width: 210px !important;
-	height: 90px;
+	width: 100%;
 }
 
 </style>

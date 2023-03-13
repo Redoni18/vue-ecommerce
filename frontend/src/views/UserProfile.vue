@@ -20,9 +20,9 @@
             <b-form @submit="updateUser">
                 <div class="card mb-3">
                     <div class="card-body">
-                    <div class="row">
+                    <div class="d-flex align-items-center gap-2">
                         <div class="col-sm-3">
-                        <h6 class="mb-0">Full Name</h6>
+                          <h6 class="mb-0">Full Name</h6>
                         </div>
                         <div class="col-sm-9">
                             <b-form-input
@@ -35,9 +35,9 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="row">
+                    <div class="d-flex align-items-center gap-2">
                         <div class="col-sm-3">
-                        <h6 class="mb-0">Email</h6>
+                          <h6 class="mb-0">Email</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
                             <b-form-input
@@ -50,13 +50,13 @@
                         </div>
                     </div>
                     <hr v-if="edit !== true">
-                    <div class="row" v-if="edit !== true">
+                    <div class="d-flex align-items-center gap-2" v-if="edit !== true">
                         <div class="col-sm-3">
-                        <h6 class="mb-0">Profile Picture:</h6>
+                          <h6 class="mb-0">Profile Picture:</h6>
                         </div>
-                        <div class="col-sm-9 text-secondary">
+                        <div class="col-sm-9 d-flex justify-content-start text-secondary">
                           <div>
-                            <a class="btn btn-info" @click="click1">choose a photo</a>
+                            <a class="btn btn-outline-danger" @click="click1">Choose a photo</a>
                             <input type="file" ref="input1"
                               style="display: none"
                               @change="previewImage" accept="image/*" >                
@@ -218,6 +218,7 @@ export default {
 
 .container{
   width: 65%;
+  padding: 1% 0;
 }
 
 </style>
