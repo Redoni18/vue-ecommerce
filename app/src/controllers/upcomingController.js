@@ -1,6 +1,28 @@
 const Upcomings = require('../models/Upcomings');
 var ObjectID = require('mongoose').Types.ObjectId
 
+const { body, validationResult } = require('express-validator/check')
+
+//validation method
+exports.validate = (method) => {
+  switch (method) {
+    case 'upload_upcoming': {
+     return [ 
+            body('productName').exists().isLength({ min: 1 }),
+            body('imageUrl').exists().isURL(),
+            body('productBrand').exists(),
+       ]   
+    }
+    case 'edit_upcoming': {
+        return [ 
+            body('productName').exists().isLength({ min: 1 }),
+            body('imageUrl').exists().isURL(),
+            body('productBrand').exists(),
+          ]   
+       }
+  }
+
+
 exports.get_upcomings = function(req, res) {
     Upcomings.find((err, docs) => {
         if (!err) {
@@ -23,6 +45,11 @@ exports.upload_upcoming = function(req, res) {
         insertDate: req.body.insertDate
     });
 
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     newUpcoming.save();
 
     res.json({
@@ -40,6 +67,11 @@ exports.edit_upcoming = function(req, res) {
         productName: req.body.productName,
         productBrand: req.body.productBrand,
         imageUrl: req.body.imageUrl
+    }
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
     }
 
     Upcomings.findByIdAndUpdate(req.body._id, { $set: updatedUpcoming }, { new: true }, (err, doc) => {

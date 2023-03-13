@@ -43,8 +43,8 @@ router.delete('/api/categories/delete/:id', categoryController.delete_category);
 //Upcoming
 router.get('/api/upcomings', upcomingController.get_upcomings);
 router.get('/api/upcoming/:id', upcomingController.get_upcoming);
-router.post('/api/uploadUpcoming', upcomingController.upload_upcoming);
-router.put('/api/editUpcoming/:id', upcomingController.edit_upcoming);
+router.post('/api/uploadUpcoming', upcomingController.validate('upload_upcoming'), upcomingController.upload_upcoming);
+router.put('/api/editUpcoming/:id', upcomingController.validate('edit_upcoming'), upcomingController.edit_upcoming);
 router.delete('/api/upcomings/delete/:id', upcomingController.delete_upcoming);
 
 //Brands
