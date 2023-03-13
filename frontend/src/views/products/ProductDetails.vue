@@ -86,9 +86,9 @@
                             </form>
                     </div>
                         
-                    <div class="category-products__page category-products m-auto">
-                        <h2>Reviews</h2>
-                        <div class="products-grid" >
+                    <div class="review-cards" v-if="allReviews.length">
+                        <h2 class="reviews-title">Reviews</h2>
+                        <div class="products-grid">
                             <div v-for="review in allReviews.slice(0,3)"  :key="review._id" >
                                 <ReviewCard  :review="review" />
                             </div>
@@ -188,7 +188,7 @@ export default {
 
         resetForm() {
             this.review.review = ""
-        }
+        },
         createOrder() {
             this.showModal = true
         }
@@ -470,8 +470,27 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    flex-wrap: wrap;
 }
 
+@media only screen and (max-width: 1000px){
+    .review-container{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        gap: 5%;
+    }
+
+    .reviews-title{
+        display: none;
+    }
+
+    .review-cards{
+        margin-top: 5%;
+    }
+}
 
 .review-form__container {
     width: 55%;
@@ -483,16 +502,5 @@ export default {
     /* display: flex;
     flex-direction: column;
     align-items: flex-start; */
-}
-
-
-@media only screen and (max-width: 1000px) {
-    .review-container {
-        width: 100%;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
 }
 </style>

@@ -52,9 +52,7 @@ const routes = [{
         name: 'reviews',
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/reviews/Reviews.vue'),
-        beforeEnter: (to, from, next) => {
-            beforeEnter.authenticate(to, from, next)
-        }
+        meta: { requiresAuth: true }
     },
     {
         path: '/categories',

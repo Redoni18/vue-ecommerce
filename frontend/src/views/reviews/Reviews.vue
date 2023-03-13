@@ -5,8 +5,8 @@
             <a><router-link :to="{name: 'productDetails', params: {id: product._id}}" class="text-decoration-none">Go back to product details</router-link></a>
         </div>
        
-        <div class="products-grid" >
-            <div class="item" v-for="review in allReviews"  :key="review._id" >
+        <div class="row flex-column justify-content-center">
+            <div class="item col-md-6 col-sm-12 m-auto" v-for="review in allReviews"  :key="review._id" >
                 <ReviewCard  :review="review" />
             </div>
         </div>
@@ -50,14 +50,6 @@ export default {
 .reviews {
     padding: 50px 0;
     height: 100%;
-}
-.products-grid {
-    margin: auto;
-    width: 600px;
-    text-align: -webkit-left;
-    /* display: flex;
-    flex-direction: column;
-    align-items: flex-start; */
 }
 
 .item{
