@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-// const expressValidator = require('express-validator')
+const expressValidator = require('express-validator')
 
 require('dotenv').config();
 
@@ -10,7 +10,7 @@ const app = express();
 app.use(cookieParser());
 
 app.use(cors())
-// app.use(expressValidator())
+app.use(expressValidator())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 

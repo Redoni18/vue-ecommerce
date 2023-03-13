@@ -25,8 +25,8 @@ const pendingOrderController = require('../controllers/pendingOrderController')
 //products
 router.get('/api/products', productController.get_products);
 router.get('/api/product/:id', productController.get_product);
-router.post('/api/uploadProduct', productController.upload_product);
-router.put('/api/editProduct/:id', productController.edit_product);
+router.post('/api/uploadProduct', productController.validate('upload_product'), productController.upload_product);
+router.put('/api/editProduct/:id', productController.validate('edit_product'), productController.edit_product);
 router.delete('/api/products/delete/:id', productController.delete_product);
 
 //get products based on categories saved in cookies
