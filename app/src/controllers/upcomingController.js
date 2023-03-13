@@ -21,6 +21,7 @@ exports.validate = (method) => {
           ]   
        }
   }
+}
 
 
 exports.get_upcomings = function(req, res) {
