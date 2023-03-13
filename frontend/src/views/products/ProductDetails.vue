@@ -3,7 +3,7 @@
     <div class="container mt-5" v-if="product">
         <!-- product -->
         <div class="product-content product-wrap clearfix product-deatil">
-            <div class="row">
+            <div class="row gap-3 align-items-center">
                 <div class="col-md-5 col-sm-12 col-xs-12">
                     <div class="product-image">
                         <img :src="!product.imageUrl.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : product.imageUrl" class="image-item" alt="">
@@ -141,8 +141,7 @@ export default {
     position: relative
 }
 .image-item {
-    max-height: 350px;
-    max-width: 300px;
+    max-width: 100%;
 }
 
 .product-content .product-deatil {
