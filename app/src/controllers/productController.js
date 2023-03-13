@@ -21,6 +21,7 @@ exports.upload_product = async function(req, res) {
         name: req.body.productName,
         description: req.body.productDescription,
     });
+
     const stripeProductPrices = await stripe.prices.create({
         unit_amount: req.body.productPrice * 100, // Stripe requires the price in cents
         currency: "eur",
@@ -136,11 +137,34 @@ exports.filterProductsByBrand =  async (req, res, next) => {
     }
 };
 
+exports.stripeWebhook = (req, res) => {
+    const sig = req.headers['stripe-signature'];
+    let event;
+  
+    try {
+      event = stripe.webhooks.constructEvent(req.body, sig, process.env.END_POINT_SECRET);
+    } catch (err) {
+      return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+  
+    // Handle the event
+    switch (event.type) {
+      case 'checkout.session.completed':
+        const session = event.data.object;
+        // Update your database or fulfill the order here
+        console.log('session', session);
+        break;
+      default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
+  
+    res.status(200).json({ received: true });
+};
+
 exports.stripeCheckoutSession = async (req, res, next) => {
     let id = req.params.id;
     const product = await Products.findById(id);
     const price = product.productPrice;
-    // const quantity = req.body.quantity;
 
     try {
         // Create a Checkout session
@@ -158,7 +182,7 @@ exports.stripeCheckoutSession = async (req, res, next) => {
                 quantity: 1,
             }],
             mode: 'payment',
-            success_url: `http://localhost:8080/#/products/details/${product._id}`,
+            success_url: 'http://localhost:8080/#/success',
             cancel_url: `http://localhost:8080/#/products/details/${product._id}`,
         });
 
@@ -168,3 +192,21 @@ exports.stripeCheckoutSession = async (req, res, next) => {
         res.status(500).send('Server error');
     }
 };
+
+// exports.getLastPayment = async (req, res) => {
+//     try {
+//       // Get the latest payment using the Stripe API
+//       const paymentList = await stripe.paymentIntents.list({limit: 1});
+  
+//       // Check if there is a payment in the list
+//       if (paymentList.data.length === 0) {
+//         return res.status(404).json({message: 'No payment found.'});
+//       }
+  
+//       // Return the payment object
+//       return res.status(200).json(paymentList.data[0]);
+//     } catch (error) {
+//       console.error(error);
+//       return res.status(500).json({message: 'Internal server error.'});
+//     }
+// };

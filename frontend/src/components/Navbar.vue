@@ -10,7 +10,7 @@
                     <div class="navbar-nav ml-4">
                         <router-link to="/" class="nav-item nav-link w-50 m-auto">Home</router-link>
                         <router-link to="/about" class="nav-item nav-link w-50 m-auto">About</router-link>
-                        <router-link to="/contacts/insert" class="nav-item nav-link w-100 m-auto">Contact Us!</router-link>
+                        <router-link to="/contacts/insert" class="nav-item nav-link w-100 m-auto">Contact</router-link>
                     </div>
                     <div v-if="user.authenticated" class="navbar-nav">
                         <router-link to="/profile" class="nav-link w-50 m-auto">Profile</router-link>
