@@ -1,71 +1,63 @@
 <template>
-<div class="home-view">
-	<ul class="nav justify-content-center category-tab">
-		<li v-for="category in categories" :key="category._id" class="nav-item py-2">
-			<router-link :to="{name: 'categoryProducts', params: {id: category._id}}" class="nav-link text-dark category-link">{{category.categoryName}}</router-link>
-		</li>
-	</ul>
+    <div class="home-view">
 
-	<div class="search-input">
-		<input v-model="searchTerm" class="form-control form-control-lg form-control-borderless px-2" type="search" placeholder="Search...">
-	</div>
-
-    <div class="category-products__page category-products m-auto">
-        <div class="products-grid">
-            <div v-for="product in allProducts" :key="product._id">
-              <router-link :to="{name: 'productDetails', params: {id: product._id}}" class="text-decoration-none"><ProductCard :product="product" /></router-link>
+        <div class="category-products__page category-products m-auto">
+            <h3 v-if="initialMessage">{{initialMessage}}</h3>
+            <div class="products-grid">
+                <div v-for="product in allWishlist" :key="product._id">
+                    <ProductCard @removeFromWishlist="removeFromWishlist" :isWishlist="true" :product="product" />
+                </div>
             </div>
         </div>
     </div>
-</div>
 </template>
 
 <script>
-import FilterProducts from './FilterProducts.vue'
+
 import ProductCard from '@/components/ProductCard.vue'
-import { filterProducts } from '@/eCommerce-sdk/products.js'
+import { getWishlists, removeWishlist } from '@/eCommerce-sdk/wishlists.js'
 
 export default {
     components: {
         ProductCard,
-        FilterProducts
+        
     },
-	data() {
-		return {
-			searchTerm: null,
-			allProducts: null,
-			timeoutId: null
-		}
-	},	
-    async mounted() {
-        await this.$store.dispatch('fetchProducts') 
-		await this.$store.dispatch('fetchCategories')
-		this.allProducts = this.$store.state.products.products
+    data() {
+        return {
+            wishlistProducts: null,
+            initialMessage: null
+        }
     },
     computed: {
-
-		categories() {
-            return this.$store.state.categories.categories
+        allWishlist() {
+            return this.wishlistProducts
         }
     },
-	watch: {
-        'searchTerm': async function() {
-            if(this.timeoutId){
-                clearTimeout(this.timeoutId)
+    mounted() {
+        this.fetchWishlist()
+    },
+    methods: {
+        async removeFromWishlist(wishlistId) {
+            try {
+                await removeWishlist(wishlistId)
+                this.fetchWishlist()
+            } catch(err) {
+                console.log(err)
             }
-            this.timeoutId = setTimeout(() => {
-                this.searchProducts()
-                this.timeoutId = null
-            }, 500)
+        },
+        async fetchWishlist(){
+            try {
+                const response = await getWishlists()
+                this.wishlistProducts = response.data
+                this.wishlistProducts = this.wishlistProducts.filter(product => product.userId === this.$store.state.authenticate.user.data.uid)
+                if(!this.wishlistProducts.length) {
+                    this.initialMessage = "You do not have any products in your wishlist"
+                }
+            } catch(err) {
+                console.log(err)
+            }
         }
-    },
-	methods: {
-		async searchProducts() {
-            const response = await filterProducts(this.searchTerm)
-            this.allProducts = response.data
-        }
-	}
-
+    }
 }
 </script>
 
@@ -76,18 +68,17 @@ export default {
 }
 
 .category-products{
+    height: 100%;
 	max-width: 90%;
     display: flex;
     justify-content: center;
+    padding: 3% 0 5% 0;
 }
 
 .products-grid{
     padding: 0 1%;
     display: flex;
-    flex-wrap: wrap;
-	justify-content: center;
-    gap: 1%;
-	margin-bottom: 5%;
+    gap: 2%;
 }
 
 

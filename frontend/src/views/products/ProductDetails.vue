@@ -48,12 +48,11 @@
                         <div class="col-sm-12 col-md-6 col-lg-6">
                             <b-button type="button" :disabled="!product.stock" @click="createOrder" class="btn btn-success btn-lg">Buy Now ({{ product.productPrice}}&euro;) </b-button>
                         </div>
-                        <!-- <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="col-sm-12 col-md-6 col-lg-6">
                             <div class="btn-group pull-right">
-                                <button class="btn btn-white btn-default"><i class="fa fa-star"></i> Add to wishlist</button>
-                                <button class="btn btn-white btn-default"><i class="fa fa-envelope"></i> Contact Seller</button>
+                                <button v-if="!product.stock" @click="addToWishlist" class="btn btn-white btn-default"><i class="fa fa-star"></i> Add to wishlist</button>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -65,6 +64,7 @@
 </template>
 
 <script>
+import {insertWishlist} from '@/eCommerce-sdk/wishlists'
 import {getProduct, editProduct, stripeCheckoutSession} from '@/eCommerce-sdk/products'
 import OrderProduct from './OrderProduct.vue'
 export default {
@@ -85,6 +85,17 @@ export default {
         this.product = response.data
     },
     methods: {
+      async addToWishlist() {
+            const product = {
+                productName: this.product.productName,
+                productBrand: this.product.productBrand.brandName,
+                productDescription: this.product.productDescription,
+                imageUrl: this.product.imageUrl,
+                userId: this.$store.state.authenticate.user.data.uid
+            }
+            await insertWishlist(product);
+           console.log(product);
+        },
         async redirectToStripe() {
             const response = await stripeCheckoutSession(this.product._id)
             const session = response.data.sessionId

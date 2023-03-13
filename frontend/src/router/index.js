@@ -27,6 +27,18 @@ const routes = [{
         }
     },
     {
+        path: '/wishlist/card',
+        name: 'wishlistCard',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/wishlistCards/WishlistCards.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
+    {
         path: '/products/insert',
         name: 'productsInsert',
         // route level code-splitting
@@ -133,6 +145,18 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "paymentsInsert" */ '../views/paymethods/CreatePayMethod.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
+    {
+        path: '/wishlists',
+        name: 'wishlists',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/wishlists/Listing.vue'),
         beforeEnter: (to, from, next) => {
             beforeEnter.authenticate(to, from, next)
         }

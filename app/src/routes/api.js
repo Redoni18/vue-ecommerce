@@ -14,6 +14,7 @@ const orderController = require('../controllers/orderController');
 const payMethodController = require('../controllers/payMethodController');
 const reviewsController = require('../controllers/reviewsContoller');
 const contactController = require('../controllers/contactController');
+const wishlistController = require('../controllers/wishlistController');
 const pendingOrderController = require('../controllers/pendingOrderController')
 
 /**
@@ -83,6 +84,13 @@ router.get('/api/contacts', contactController.get_contacts);
 router.get('/api/contact/:id', contactController.get_contact);
 router.post('/api/uploadContact', contactController.insert_contacts);
 router.delete('/api/contacts/delete/:id', contactController.delete_contacts);
+
+//Wishlist
+router.get('/api/wishlists', wishlistController.get_wishlists);
+router.get('/api/wishlist/:id', wishlistController.get_wishlist);
+router.post('/api/uploadWishlist', wishlistController.insert_wishlists);
+router.put('/api/editWishlist/:id', wishlistController.edit_wishlists);
+router.delete('/api/wishlists/delete/:id', wishlistController.delete_wishlists);
 
 
 //Stripe checkout session
