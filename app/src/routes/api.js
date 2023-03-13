@@ -36,8 +36,8 @@ router.get('/api/product-cookies', productController.getProductsByCategoriesCook
 //Category
 router.get('/api/categories', categoryController.get_categories);
 router.get('/api/category/:id', categoryController.get_category);
-router.post('/api/uploadCategory', categoryController.upload_category);
-router.put('/api/editCategory/:id', categoryController.edit_category);
+router.post('/api/uploadCategory', categoryController.validate('upload_category'), categoryController.upload_category);
+router.put('/api/editCategory/:id', categoryController.validate('edit_category'), categoryController.edit_category);
 router.delete('/api/categories/delete/:id', categoryController.delete_category);
 
 //Upcoming
