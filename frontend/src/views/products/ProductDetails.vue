@@ -56,6 +56,49 @@
                     </div>
                 </div>
             </div>
+            <hr>
+            <div class="row">
+                <div class="review-container">
+                    <div class="review-form__container">
+                        <h3 style="color:crimson; text-align: left;">Leave a review!</h3>
+                            <form  @submit="onSubmit">
+                                
+                                <div class="row">
+                                    <!-- <div class="col-sm-12 mb-3">
+                                        <div class="form-group" style="display: flex;">
+                                            <label class="required-field" for="firstName">First Name</label>
+                                            <input v-model="review.insertedBy" type="text" class="form-control"  placeholder="Name" style="width:50%" required>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="col-sm-12 mb-3">
+                                        <div class="form-group">
+                                            <!-- <label class="required-field" for="message"></label> -->
+                                            <textarea class="form-control" v-model="review.review"  rows="4" placeholder="My review..." required></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-theme" style="background-color: crimson;color:white; width: 100px;">Submit</button>
+                                        </div>
+
+                                </div>
+                            </form>
+                    </div>
+                        
+                    <div class="category-products__page category-products m-auto">
+                        <h2>Reviews</h2>
+                        <div class="products-grid" >
+                            <div v-for="review in allReviews.slice(0,3)"  :key="review._id" >
+                                <ReviewCard  :review="review" />
+                            </div>
+                            <br>
+                            <a style="float: right"><router-link :to="{name: 'reviews', params: {id: product._id}}" class="text-decoration-none">... show more</router-link></a>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>    
         </div>
         <!-- end product -->
         <OrderProduct v-model="showModal" :showModal="showModal" :productId="product._id" :productName="product.productName" :productPrice="product.productPrice" />
@@ -66,16 +109,27 @@
 <script>
 import {insertWishlist} from '@/eCommerce-sdk/wishlists'
 import {getProduct, editProduct, stripeCheckoutSession} from '@/eCommerce-sdk/products'
+import { insertReview, getReviewsByProductId } from '@/eCommerce-sdk/reviews.js'
+import ReviewCard from '@/components/ReviewCard.vue'
 import OrderProduct from './OrderProduct.vue'
 export default {
     name: 'ProductDetails',
     components: {
+        ReviewCard,
         OrderProduct
     },
     data() {
         return{
+            allReviews: [],
             product : null,
             productId : null,
+            stripe: null,
+            review: {
+                productId: null,
+                review: '',
+                insertedBy: this.$store.state.authenticate.user.data.displayName,
+                insertDate: '',
+            },
             showModal: false,
         }
     },
@@ -83,6 +137,9 @@ export default {
         this.productId = this.$route.params.id
         const response = await getProduct(this.productId)
         this.product = response.data
+        this.stripe = Stripe(process.env.VUE_APP_STRIPE_KEY);
+
+		    await this.getReviews()
     },
     methods: {
       async addToWishlist() {
@@ -110,6 +167,28 @@ export default {
             this.product.stock -= 1
             await editProduct(this.product)
         },
+        async onSubmit() {
+            this.review.productId = this.productId
+            const today = new Date()
+            this.review.insertDate = today.toLocaleString();
+            try {
+                await insertReview(this.review)
+                this.resetForm()
+            } catch (err) {
+                console.log(err)
+            } finally {
+                await this.getReviews()
+            }
+        },
+
+        async getReviews(){
+            const reviewsResponse = await getReviewsByProductId(this.productId)
+            this.allReviews = reviewsResponse.data
+        },
+
+        resetForm() {
+            this.review.review = ""
+        }
         createOrder() {
             this.showModal = true
         }
@@ -384,5 +463,36 @@ export default {
         position: relative
     }
 }
+.review-container{
+    width: 1150px;
+    padding: 2%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
 
+
+.review-form__container {
+    width: 55%;
+}
+
+.products-grid {    
+    width: 400px;
+    text-align: -webkit-left;
+    /* display: flex;
+    flex-direction: column;
+    align-items: flex-start; */
+}
+
+
+@media only screen and (max-width: 1000px) {
+    .review-container {
+        width: 100%;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
 </style>

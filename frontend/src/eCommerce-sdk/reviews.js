@@ -21,3 +21,8 @@ export function removeReview(reviewId) {
 export function getReview(reviewId) {
     return axios.get(`${API_URL}/api/review/${reviewId}`)
 }
+
+export function getReviewsByProductId(productId){
+    console.log(productId+ 'mireooooo')
+    return axios.get(`${API_URL}/api/getReviewsByProductId/${productId}`)
+}
