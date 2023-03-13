@@ -218,6 +218,7 @@ export default {
 
 .container{
   width: 65%;
+  padding: 1% 0;
 }
 
 </style>
