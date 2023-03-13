@@ -35,6 +35,8 @@
 <script>
     import { editCategory } from '@/eCommerce-sdk/categories.js'
     import { getBrands } from '@/eCommerce-sdk/brands.js'
+    import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css'; 
     export default {
         props: {
             showModal: {
@@ -66,7 +68,16 @@
         },
         methods: {
             async onSubmit() {
-                await editCategory(this.category)
+                try{
+                    await editCategory(this.category)
+                    toast("Category edited successfuly", {
+                        autoClose: 1000,
+                    });
+                } catch {
+                    toast("Category edit failed", {
+                    autoClose: 1000,
+                });
+                }
             }
         }
     }

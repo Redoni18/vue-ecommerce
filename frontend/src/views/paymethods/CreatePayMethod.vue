@@ -25,6 +25,8 @@
 
 <script>
 import { insertPayMethod } from '@/eCommerce-sdk/payMethod.js'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css'; 
 export default {
     data() {
         return {
@@ -39,8 +41,17 @@ export default {
         async onSubmit() {
             const today = new Date()
             this.paymentMethod.insertDate = today.toLocaleString();
-            await insertPayMethod(this.paymentMethod)
-            this.resetForm()
+            try{
+                await insertPayMethod(this.paymentMethod)
+                this.resetForm()
+                toast("Payment method uploaded successfuly", {
+                    autoClose: 1000,
+                });
+            } catch {
+                toast("Payment method upload failed", {
+                    autoClose: 1000,
+                });
+            }
         },
 
         resetForm() {

@@ -107,6 +107,8 @@
 import { editOrder } from '@/eCommerce-sdk/orders.js'
 import { getUser } from '@/eCommerce-sdk/user.js'
 import { mapGetters } from 'vuex'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css'; 
 export default {
     props: {
         order: {
@@ -138,7 +140,16 @@ export default {
     },
     methods: {
         async onSubmit() {
-            await editOrder(this.order)
+            try{
+                await editOrder(this.order)
+                toast("Order edited successfuly", {
+                    autoClose: 1000,
+                });
+            } catch {
+                toast("Order edit failed", {
+                    autoClose: 1000,
+                });
+            }
         }
     }
 }

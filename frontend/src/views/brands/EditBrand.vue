@@ -27,6 +27,8 @@
 
 <script>
 import { editBrand } from '@/eCommerce-sdk/brands.js'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css'; 
 export default {
     props: {
         showModal: {
@@ -40,7 +42,16 @@ export default {
     },
     methods: {
         async onSubmit() {
-            await editBrand(this.brand)
+            try {
+                await editBrand(this.brand)
+                toast("Brand edited successfuly", {
+                    autoClose: 1000,
+                });
+            } catch {
+                toast("Brand edit failed", {
+                    autoClose: 1000,
+                });
+            }
         }
     }
 }

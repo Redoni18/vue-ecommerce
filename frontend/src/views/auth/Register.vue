@@ -49,6 +49,8 @@
 <script>
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { insertUser } from '@/eCommerce-sdk/user.js'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';  
 export default {
   data() {
     return {
@@ -67,8 +69,15 @@ export default {
         this.$router.push({ path: "/login" })
       } catch(err) {
         console.log(err)
+         toast("Registration Failed", {
+          autoClose: 1000,
+        });
       } finally {
         this.registerUserWithRole({uid: auth.currentUser.uid, fullname: this.fullname, email: this.email})
+        this.errorMessage = error.message
+         toast("Registration Successful", {
+          autoClose: 1000,
+        });
       }
     },
     async registerUserWithRole(user) {

@@ -79,6 +79,8 @@
 <script>
 import { editProduct } from '@/eCommerce-sdk/products.js'
 import { getCategory } from '@/eCommerce-sdk/categories.js'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css'; 
 export default {
     props: {
         showModal: {
@@ -126,8 +128,13 @@ export default {
         async onSubmit() {
             try{
                 await editProduct(this.product)
+                toast("Product edited successfuly", {
+                    autoClose: 1000,
+                });
             } catch(err) {
-                console.log(err)
+                toast("Product edit failed", {
+                    autoClose: 1000,
+                });
             }
         }
     }

@@ -41,6 +41,8 @@
 
 <script>
 import { insertUpcoming } from '@/eCommerce-sdk/upcomings.js'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css'; 
 export default {
     data() {
         return {
@@ -59,8 +61,17 @@ export default {
         async onSubmit() {
             const today = new Date()
             this.upcoming.insertDate = today.toLocaleString();
-            await insertUpcoming(this.upcoming)
-            this.resetForm()
+            try{
+                await insertUpcoming(this.upcoming)
+                this.resetForm()
+                toast("Upcoming product uploaded successfuly", {
+                    autoClose: 1000,
+                });
+            } catch {
+                toast("Upcoming product upload failed", {
+                    autoClose: 1000,
+                });
+            }
         },
 
         resetForm() {

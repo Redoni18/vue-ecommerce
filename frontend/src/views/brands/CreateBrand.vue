@@ -25,6 +25,8 @@
 
 <script>
 import { insertBrand } from '@/eCommerce-sdk/brands.js'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css'; 
 export default {
     data() {
         return {
@@ -39,8 +41,17 @@ export default {
         async onSubmit() {
             const today = new Date()
             this.brand.insertDate = today.toLocaleString();
-            await insertBrand(this.brand)
-            this.resetForm()
+            try{
+                await insertBrand(this.brand)
+                this.resetForm()
+                toast("Brand uploaded successfuly", {
+                    autoClose: 1000,
+                });
+            } catch {
+                toast("Brand upload failed", {
+                    autoClose: 1000,
+                });
+            }
         },
 
         resetForm() {
