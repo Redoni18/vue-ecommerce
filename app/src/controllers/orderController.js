@@ -1,5 +1,6 @@
 const Orders = require('../models/Orders');
 var ObjectID = require('mongoose').Types.ObjectId
+const Products = require('../models/Products')
 
 exports.get_orders = function(req, res) {
     Orders.find((err, docs) => {
@@ -11,20 +12,36 @@ exports.get_orders = function(req, res) {
     })
 };
 
-exports.upload_order = function(req, res) {
+exports.upload_order = async function(req, res) {
 
     console.log(req.body)
 
     let newOrder = new Orders({
-        userName: req.body.userName,
-        userSurname: req.body.userSurname,
-        userEmail: req.body.userEmail,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
         phoneNumber: req.body.phoneNumber,
-        userAddress: req.body.userAddress,
-        userPaymethod: req.body.userPaymethod
+        address1: req.body.address1,
+        address2: req.body.address2,
+        productId: req.body.productId,
+        productName: req.body.productName,
+        orderPrice: req.body.orderPrice,
+        paymentMethod: req.body.paymentMethod,
+        isCompleted: req.body.isCompleted
     });
 
-    newOrder.save();
+    await newOrder.save();
+
+    const product = await Products.findOneAndUpdate(
+        { _id: req.body.productId, stock: { $gt: 0 } },
+        { $inc: { stock: -1 } },
+        { new: true }
+    );
+
+    if (!product) {
+        return res.status(404).json({ message: 'Product not found or out of stock' });
+    }
+
 
     res.json({
         data: newOrder
@@ -38,12 +55,17 @@ exports.edit_order = function(req, res) {
     }
 
     let updatedOrder = {
-        userName: req.body.userName,
-        userSurname: req.body.userSurname,
-        userEmail: req.body.userEmail,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
         phoneNumber: req.body.phoneNumber,
-        userAddress: req.body.userAddress,
-        userPaymethod: req.body.userPaymethod
+        address1: req.body.address1,
+        address2: req.body.address2,
+        productId: req.body.productId,
+        productName: req.body.productName,
+        orderPrice: req.body.orderPrice,
+        paymentMethod: req.body.paymentMethod,
+        isCompleted: req.body.isCompleted
     }
 
     Orders.findByIdAndUpdate(req.body._id, { $set: updatedOrder }, { new: true }, (err, doc) => {

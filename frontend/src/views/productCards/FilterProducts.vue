@@ -5,8 +5,10 @@
             <h4 class="filter-title">Filter Products</h4>
 
             <div v-for="brand in brands" :key="brand._id" class="checkbox">
-                <label><input type="checkbox" class="icheck"> {{brand.brandName}}</label>
+                <label><input type="radio" :value="brand._id" v-model="selectedBrand"> {{brand.brandName}}</label>
             </div>
+
+            <button class="btn btn-theme w-auto mt-2" @click="clearFilters" style="background-color: crimson;color:white">Clear Filters</button>
         </div>
     </div>
 </template>
@@ -17,12 +19,16 @@ export default {
     data() {
         return {
             brands: null,
+            selectedBrand: null,
         }
     },
     watch: {
         '$route.params.id' : function(){
             this.fetchData()
         },
+        async selectedBrand() {
+            this.$emit('fetchFilteredProducts', this.selectedBrand)
+        }
     },
     mounted() {
         this.fetchData()
@@ -32,7 +38,13 @@ export default {
             this.categoryId = this.$route.params.id
             const response = await getCategory(this.categoryId)
             this.brands = response.data.categoryBrand
+            this.selectedBrand = null
         },
+        clearFilters() {
+            this.selectedBrand = null
+            console.log(this.selectedBrand)
+            this.$emit('fetchData')
+        }
     }
 
 }

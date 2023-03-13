@@ -11,11 +11,11 @@
             <div class="search-input">
                 <input v-model="searchTerm" class="form-control form-control-lg form-control-borderless px-2" type="search" placeholder="Search...">
             </div>
-            <FilterProducts />
+            <FilterProducts @fetchData="fetchData" @fetchFilteredProducts="fetchFilteredProducts" />
         </div>
         <div class="products-grid">
             <div v-for="product in categoryProducts" :key="product._id">
-                <ProductCard :product="product"/>
+                <router-link :to="{name: 'productDetails', params: {id: product._id}}" class="text-decoration-none"><ProductCard :product="product"/></router-link>
             </div>
         </div>
     </div>
@@ -25,6 +25,7 @@
 <script>
 import FilterProducts from '../productCards/FilterProducts.vue'
 import ProductCard from '@/components/ProductCard.vue'
+import {filterProductsWithBrand} from '@/eCommerce-sdk/products.js'
 export default {
     components: {
         ProductCard,
@@ -67,12 +68,20 @@ export default {
             this.categoryId = this.$route.params.id
             await this.$store.dispatch('fetchProducts') 
             await this.$store.dispatch('fetchCategories')
-            this.categoryProducts = this.$store.state.products.products.filter(product => product.productCategory[0]._id === this.categoryId)
+            this.categoryProducts = this.$store.state.products.products.filter(product => product.productCategory._id === this.categoryId)
         },
         async searchProducts() {
-            this.categoryProducts = this.$store.state.products.products.filter(product => product.productCategory[0]._id === this.categoryId)
+            this.categoryProducts = this.$store.state.products.products.filter(product => product.productCategory._id === this.categoryId)
             this.categoryProducts = this.categoryProducts.filter(product => product.productName.includes(this.searchTerm))
             console.log(this.categoryProducts)
+        },
+        async fetchFilteredProducts(selectedBrand) {
+            try {
+                const response = await filterProductsWithBrand(this.categoryId, selectedBrand)
+                this.categoryProducts = response.data
+            } catch (err) {
+                console.log(err.response.data.message)
+            }
         }
     }
 }

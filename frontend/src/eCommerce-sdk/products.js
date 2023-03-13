@@ -28,3 +28,15 @@ export function getProduct(productId) {
 export function filterProducts(searchTerm) {
     return axios.get(`${API_URL}/api/filterProduct?searchTerm=${searchTerm}`)
 }
+
+export function filterProductsWithBrand(category, brands) {
+    return axios.get(`${API_URL}/api/filterProductsByBrand/${category}?brands=${brands}`)
+}
+
+export function stripeCheckoutSession(productId) {
+    return axios.post(`${API_URL}/api/create-checkout-session/${productId}`)
+}
+
+// export function getLastPayment() {
+//     return axios.get(`${API_URL}/api/stripe/last-payment`)
+// }
