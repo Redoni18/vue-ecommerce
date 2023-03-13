@@ -61,45 +61,50 @@
                 </div>
             </div>
             <hr>
-            <div class="review-container">
-                <div class="review-form__container">
-                    <h4 class="h3 mb-30" style="color:crimson; margin-bottom: 50px;">Leave a review about this product!</h4>
-                        <form  @submit="onSubmit">
-                            
-                            <div class="row">
-                                <div class="col-sm-12 mb-3">
-                                    <div class="form-group" style="display: flex;">
-                                        <!-- <label class="required-field" for="firstName">First Name</label> -->
-                                        <input v-model="review.insertedBy" type="text" class="form-control"  placeholder="Name" style="width:50%" required>
-                                    </div>
-                                </div>
+            <div class="row">
+                <div class="review-container">
+                    <div class="review-form__container">
+                        <h4 class="h3 mb-30" style="color:crimson; margin-bottom: 50px;">Leave a review about this product!</h4>
+                            <form  @submit="onSubmit">
+                                
+                                <div class="row">
+                                    <!-- <div class="col-sm-12 mb-3">
+                                        <div class="form-group" style="display: flex;">
+                                            <label class="required-field" for="firstName">First Name</label>
+                                            <input v-model="review.insertedBy" type="text" class="form-control"  placeholder="Name" style="width:50%" required>
+                                        </div>
+                                    </div> -->
 
-                                <div class="col-sm-12 mb-3">
-                                    <div class="form-group">
-                                        <!-- <label class="required-field" for="message"></label> -->
-                                        <textarea class="form-control" v-model="review.review"  rows="4" placeholder="My review..." required></textarea>
+                                    <div class="col-sm-12 mb-3">
+                                        <div class="form-group">
+                                            <!-- <label class="required-field" for="message"></label> -->
+                                            <textarea class="form-control" v-model="review.review"  rows="4" placeholder="My review..." required></textarea>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="d-grid gap-2">
-                                        <button type="submit" class="btn btn-theme" style="background-color: crimson;color:white">Submit</button>
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-theme" style="background-color: crimson;color:white; width: 100px;">Submit</button>
                                         </div>
 
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="category-products__page category-products m-auto">
+                            <h2>Reviews</h2>
+                            <div class="products-grid" >
+                                <div v-for="review in allReviews.slice(0,3)"  :key="review._id" >
+                                    <ReviewCard  :review="review" />
+                                </div>
+                                <br>
+                                <a style="float: right"><router-link :to="{name: 'reviews', params: {id: product._id}}" class="text-decoration-none">... show more</router-link></a>
                             </div>
-                        </form>
-                    </div>
-            </div>
+                        </div>
+                    
+                </div>
+            </div>    
         </div>
         <!-- end product -->
-        <div>
-            <div class="category-products__page category-products m-auto">
-                <div class="products-grid">
-                    <div v-for="review in allReviews" :key="review._id">
-                        <a><ReviewCard :review="review" /></a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 </template>
@@ -122,7 +127,7 @@ export default {
             review: {
                 productId: null,
                 review: '',
-                insertedBy: '',
+                insertedBy: this.$store.state.authenticate.user.data.displayName,
                 insertDate: '',
             },
         }
@@ -135,7 +140,7 @@ export default {
 
 		const reviewsResponse = await getReviewsByProductId(this.productId)
         this.allReviews = reviewsResponse.data
-        console.log("reviews: "+this.allReviews)
+
     },
     methods: {
         async redirectToStripe() {
@@ -441,12 +446,21 @@ export default {
     padding: 2%;
     margin: auto;
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
 
 .review-form__container {
     width: 55%;
+}
+
+.products-grid {
+    width: 400px;
+    text-align: -webkit-left;
+    /* display: flex;
+    flex-direction: column;
+    align-items: flex-start; */
 }
 
 

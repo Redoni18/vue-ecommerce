@@ -48,6 +48,15 @@ const routes = [{
         }
     },
     {
+        path: '/reviews/product/:id',
+        name: 'reviews',
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/reviews/Reviews.vue'),
+        beforeEnter: (to, from, next) => {
+            beforeEnter.authenticate(to, from, next)
+        }
+    },
+    {
         path: '/categories',
         name: 'categories',
         component: () =>
