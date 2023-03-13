@@ -1,29 +1,21 @@
 <template>
     <div class="home-view">
-        <!-- <ul class="nav justify-content-center category-tab">
-            <li v-for="category in categories" :key="category._id" class="nav-item py-2">
-                <router-link :to="{name: 'categoryProducts', params: {id: category._id}}" class="nav-link text-dark category-link">{{category.categoryName}}</router-link>
-            </li>
-        </ul> -->
-    
-        <!-- <div class="search-input">
-            <input v-model="searchTerm" class="form-control form-control-lg form-control-borderless px-2" type="search" placeholder="Search...">
-        </div> -->
-    
-    <div class="category-products__page category-products m-auto">
-        <div class="products-grid">
-            <div v-for="wishlist in allWishlists" :key="wishlist._id">
-                <ProductCard :product="wishlist" />
+
+        <div class="category-products__page category-products m-auto">
+            <h3 v-if="initialMessage">{{initialMessage}}</h3>
+            <div class="products-grid">
+                <div v-for="product in allWishlist" :key="product._id">
+                    <ProductCard @removeFromWishlist="removeFromWishlist" :isWishlist="true" :product="product" />
+                </div>
             </div>
         </div>
     </div>
-</div>
 </template>
 
 <script>
 
 import ProductCard from '@/components/ProductCard.vue'
-import { getWishlists } from '@/eCommerce-sdk/wishlists.js'
+import { getWishlists, removeWishlist } from '@/eCommerce-sdk/wishlists.js'
 
 export default {
     components: {
@@ -32,43 +24,68 @@ export default {
     },
     data() {
         return {
-            allWishlists: null,
+            wishlistProducts: null,
+            initialMessage: null
         }
-    },	
-    async mounted() {
-        const response = await getWishlists()
-        console.log(response)
-        this.allWishlists = response.data
     },
+    computed: {
+        allWishlist() {
+            return this.wishlistProducts
+        }
+    },
+    mounted() {
+        this.fetchWishlist()
+    },
+    methods: {
+        async removeFromWishlist(wishlistId) {
+            try {
+                await removeWishlist(wishlistId)
+                this.fetchWishlist()
+            } catch(err) {
+                console.log(err)
+            }
+        },
+        async fetchWishlist(){
+            try {
+                const response = await getWishlists()
+                this.wishlistProducts = response.data
+                this.wishlistProducts = this.wishlistProducts.filter(product => product.userId === this.$store.state.authenticate.user.data.uid)
+                if(!this.wishlistProducts.length) {
+                    this.initialMessage = "You do not have any products in your wishlist"
+                }
+            } catch(err) {
+                console.log(err)
+            }
+        }
+    }
 }
 </script>
 
 <style lang="scss" scoped>
 
 .home-view {
-    height: 100%;
+	height: 100%;
 }
 
 .category-products{
-    max-width: 90%;
+    height: 100%;
+	max-width: 90%;
     display: flex;
     justify-content: center;
+    padding: 3% 0 5% 0;
 }
 
 .products-grid{
     padding: 0 1%;
     display: flex;
-    flex-wrap: wrap;
-    gap: 1%;
-    margin-left: 5%;
-    margin-bottom: 5%;
+    gap: 2%;
 }
 
 
 .shop-items{
-    max-width: 75%;
-    margin: 20px auto;
-    padding:0px 20px;
+	max-width: 75%;
+	margin: 20px auto;
+	padding:0px 20px;
 }
 
 .container-fluid {
@@ -77,95 +94,95 @@ export default {
 }
 
 .shop-items .item {
-    position: relative;
-    max-width: 230px;
-    margin: 15px auto;
-    padding: 5px;
-    text-align: center;
-    border-radius: 4px;
-    overflow: hidden;
-    border:2px solid #eee;
+	position: relative;
+	max-width: 230px;
+	margin: 15px auto;
+	padding: 5px;
+	text-align: center;
+	border-radius: 4px;
+	overflow: hidden;
+	border:2px solid #eee;
 }
 .shop-items .item:hover{	
-    border:2px solid #32c8de;
+	border:2px solid #32c8de;
 }
 .shop-items .item img {
-    width: 100%;
-    max-width: 360px;
-    margin: 0 auto;
-    border: 1px solid #eee;
-    border-radius: 3px;
+	width: 100%;
+	max-width: 360px;
+	margin: 0 auto;
+	border: 1px solid #eee;
+	border-radius: 3px;
 }
 .shop-items .item  .item-dtls h4 {
-    margin-top: 13px;
-    margin-bottom: 10px;
-    text-transform: uppercase;
+	margin-top: 13px;
+	margin-bottom: 10px;
+	text-transform: uppercase;
 }
 .shop-items .item  .item-dtls .price {
-    display: block;
-    margin-bottom: 13px;
-    font-size: 25px;
+	display: block;
+	margin-bottom: 13px;
+	font-size: 25px;
 }
 .shop-items .item  .ecom {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    padding-bottom:10px;
-    padding-top: 10px;
-    -webkit-transition: all 0.35s ease-in;
-    -moz-transition: all 0.35s ease-in;
-    -ms-transition: all 0.35s ease-in;
-    -o-transition: all 0.35s ease-in;
-    transition: all 0.35s ease-in;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	padding-bottom:10px;
+	padding-top: 10px;
+	-webkit-transition: all 0.35s ease-in;
+	-moz-transition: all 0.35s ease-in;
+	-ms-transition: all 0.35s ease-in;
+	-o-transition: all 0.35s ease-in;
+	transition: all 0.35s ease-in;
 }
 
 .shop-items .item  .ecom  a.btn{
-    border:1px solid #fff;
-    color:#fff;
-    background:transparent;
-    -webkit-transition: all 0.35s ease-in;
-    -moz-transition: all 0.35s ease-in;
-    -ms-transition: all 0.35s ease-in;
-    -o-transition: all 0.35s ease-in;
-    transition: all 0.35s ease-in;
+	border:1px solid #fff;
+	color:#fff;
+	background:transparent;
+	-webkit-transition: all 0.35s ease-in;
+	-moz-transition: all 0.35s ease-in;
+	-ms-transition: all 0.35s ease-in;
+	-o-transition: all 0.35s ease-in;
+	transition: all 0.35s ease-in;
 }
 .shop-items .item  .ecom  a.btn:hover{
-    background:#fff;
-    color:#777;
+	background:#fff;
+	color:#777;
 }    
 
 .category-tab {
-    background: #eee;
-    display: flex;
-    align-items: center;
+	background: #eee;
+	display: flex;
+	align-items: center;
 }
 
 .category-link:hover {
-    color: crimson !important;
-    transition: 0.2s;
+	color: crimson !important;
+	transition: 0.2s;
 }
 
 .category-link a.router-link-exact-active {
-    color: crimson;
+  color: crimson;
 }
 
 .search-input {
-    width: 50%;
-    margin: 3% auto 2% auto;
+	width: 50%;
+	margin: 3% auto 2% auto;
 }
 
 @media only screen and (max-width: 900px) {
     .container-fluid {
         display: flex;
-        align-items: center;
+		align-items: center;
         flex-direction: column;
         gap: 2%;
     }
 
-    .search-input {
-        width: 70%;
-        margin: 5% auto 2% auto;
-    }
+	.search-input {
+		width: 70%;
+		margin: 5% auto 2% auto;
+	}
 }
 </style>

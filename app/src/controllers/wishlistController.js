@@ -19,7 +19,8 @@ exports.insert_wishlists = function(req, res) {
         productName: req.body.productName,
         productBrand: req.body.productBrand,
         productDescription: req.body.productDescription,
-        imageUrl: req.body.imageUrl
+        imageUrl: req.body.imageUrl,
+        userId: req.body.userId
     });
 
     newWishlists.save();

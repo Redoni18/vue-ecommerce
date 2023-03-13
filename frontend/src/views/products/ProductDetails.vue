@@ -90,7 +90,8 @@ export default {
                 productName: this.product.productName,
                 productBrand: this.product.productBrand.brandName,
                 productDescription: this.product.productDescription,
-                imageUrl: this.product.imageUrl
+                imageUrl: this.product.imageUrl,
+                userId: this.$store.state.authenticate.user.data.uid
             }
             await insertWishlist(product);
            console.log(product);
