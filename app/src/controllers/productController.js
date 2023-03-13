@@ -2,7 +2,38 @@ const Products = require('../models/Products');
 var ObjectID = require('mongoose').Types.ObjectId
 const mongoose = require('mongoose');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-var cookieParser = require('cookie-parser')
+
+const { body, validationResult } = require('express-validator/check')
+
+//validation method
+exports.validate = (method) => {
+  switch (method) {
+    case 'upload_product': {
+     return [ 
+            body('productName').exists().isLength({ min: 1 }),
+            body('productDescription').exists().isLength({min: 2, max: 300}),
+            body('stock').exists().isInt(),
+            body('image').optional(),
+            body('imageUrl').exists().isURL(),
+            body('productPrice').exists().isInt(),
+            body('productCategory').exists(),
+            body('productBrand').exists(),
+       ]   
+    }
+    case 'edit_product': {
+        return [ 
+            body('productName').exists().isLength({ min: 1 }),
+            body('productDescription').exists().isLength({min: 2, max: 300}),
+            body('stock').exists().isInt(),
+            body('image').optional(),
+            body('imageUrl').exists().isURL(),
+            body('productPrice').exists().isInt(),
+            body('productCategory').exists(),
+            body('productBrand').exists(),
+          ]   
+       }
+  }
+}
 
 exports.get_products = function(req, res) {
     Products.find((err, docs) => {
@@ -15,8 +46,6 @@ exports.get_products = function(req, res) {
 };
 
 exports.upload_product = async function(req, res) {
-
-    console.log(req.body)
 
     const stripeProduct = await stripe.products.create({
         name: req.body.productName,
@@ -45,6 +74,11 @@ exports.upload_product = async function(req, res) {
 
     console.log(stripeProductPrices)
 
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     newProduct.save();
 
     res.json({
@@ -54,8 +88,14 @@ exports.upload_product = async function(req, res) {
 
 exports.edit_product = function(req, res) {
 
+    const errors = validationResult(req)
+
     if (!ObjectID.isValid(req.body._id)) {
         return res.status(400).send(`No record with given id:   ${req.body._id}`)
+    }
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
     }
 
     let updatedProduct = {

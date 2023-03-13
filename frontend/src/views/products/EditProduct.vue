@@ -124,7 +124,11 @@ export default {
     },
     methods: {
         async onSubmit() {
-            await editProduct(this.product)
+            try{
+                await editProduct(this.product)
+            } catch(err) {
+                console.log(err)
+            }
         }
     }
 }
