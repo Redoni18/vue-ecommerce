@@ -235,14 +235,14 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     if (to.matched.some(route => route.meta.requiresAuth)) {
       
-      const isAuthenticated = checkAuthentication();
-  
-      if (isAuthenticated) {
-        store.commit('storeUser', auth.getUser());
-        next();
-      } else {
-        next('/login');
-      }
+        const isAuthenticated = checkAuthentication();
+
+        if (isAuthenticated) {
+            store.commit('storeUser', auth.getUser());
+            next();
+        } else {
+            next('/login');
+        }
     } else {
       next();
     }

@@ -73,6 +73,11 @@ export default {
 
 .home-view {
 	height: 100%;
+	padding: 2%;
+    margin: auto;
+    display: flex;
+	flex-direction: column;
+    align-items: center;
 }
 
 .category-products{

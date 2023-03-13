@@ -13,7 +13,7 @@
                         <router-link to="/contacts/insert" class="nav-item nav-link w-auto m-auto">Contact Us!</router-link>
                         <router-link to="/wishlist/card" class="nav-link w-auto m-auto">Wishlist</router-link>
                     </div>
-                    <div v-if="user?.authenticated" class="navbar-nav">
+                    <div v-if="userLocalStorage" class="navbar-nav">
                         <router-link to="/profile" class="nav-link w-auto m-auto">Profile</router-link>
                         <router-link to="/login" @click="signOut" class="nav-link w-auto m-auto">Logout</router-link>
                     </div>
@@ -33,6 +33,7 @@ import { mapGetters } from 'vuex'
 export default {
     data() {
         return {
+            userLocalStorage: localStorage.getItem('user'),
             width: null
         }
     },
@@ -49,6 +50,12 @@ export default {
         this.$nextTick(() => {
           window.addEventListener('resize', this.onResize);
         })
+        console.log(this.userLocalStorage)
+    },
+    watch: {
+        '$store.state.authenticate.user.data': function() {
+            this.userLocalStorage = localStorage.getItem('user')
+        }
     },
     beforeDestroy() { 
       window.removeEventListener('resize', this.onResize); 
