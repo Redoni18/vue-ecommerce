@@ -78,7 +78,7 @@ export default {
 .products-grid{
     padding: 0 1%;
     display: flex;
-    gap: 2%;
+    gap: 4%;
 }
 
 
