@@ -88,10 +88,7 @@ export default {
 			}
 		},
 		async fetchRecommendedProducts() {
-			const categoriesCookie = document.cookie
-			.split('; ')
-			.find(row => row.startsWith('categories='))
-			.split('=')[1];
+			const categoriesCookie = document.cookie.split('; ').find(row => row.startsWith('categories=')).split('=')[1];
 
 			const response = await getProductsBasedOnCookies(categoriesCookie)
 			this.recommendedProducts = response.data.sort(() => 0.5 - Math.random());

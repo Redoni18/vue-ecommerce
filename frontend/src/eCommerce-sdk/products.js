@@ -39,7 +39,7 @@ export function stripeCheckoutSession(productId) {
 
 export function getProductsBasedOnCookies(cookieCategories) {
     console.log(cookieCategories)
-    return axios.get(`${API_URL}/api/products`, {
+    return axios.get(`${API_URL}/api/product-cookies`, {
         params: {
           categories: cookieCategories,
         },

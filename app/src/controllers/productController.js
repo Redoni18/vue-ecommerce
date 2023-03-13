@@ -2,6 +2,7 @@ const Products = require('../models/Products');
 var ObjectID = require('mongoose').Types.ObjectId
 const mongoose = require('mongoose');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+var cookieParser = require('cookie-parser')
 
 exports.get_products = function(req, res) {
     Products.find((err, docs) => {
@@ -214,8 +215,7 @@ exports.stripeCheckoutSession = async (req, res, next) => {
 
 exports.getProductsByCategoriesCookie = async (req, res) => {
     // Get categories from cookie
-    const categoriesCookie = req.cookies.categories;
-    console.log(categoriesCookie)
+    const categoriesCookie = req.query.categories;
     const categories = categoriesCookie ? categoriesCookie.split(',') : [];
   
     try {
