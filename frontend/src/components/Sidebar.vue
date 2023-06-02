@@ -145,11 +145,6 @@ import { getUser } from '@/eCommerce-sdk/user.js'
             hiddenOnCollapse: true
           },
           {
-            href: '/',
-            title: 'Home',
-            icon: 'fa fa-home'
-          },
-          {
             href: '/orders',
             title: 'Orders',
             icon: 'fa-solid fa-bag-shopping'
